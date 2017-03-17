@@ -5,7 +5,8 @@ During the installation use Wifi-Menu to enable the wireless networking so the l
 ```
 # wifi-menu
 ```
-## Partitioning the Hard Drive
+## Creating the filesystem
+### Partitioning the Hard Drive
 In addition to our normal partitions we will be adding a EFI boot partition.  I choose to keep everything on one partition so I will only be setting up three (boot, root, swap) partitions.  Regardless of your setup, you will need at least these three.
 
 First verify your system is running in EFI mode.
@@ -43,7 +44,7 @@ And finally the swap partition.
 * Name: `swap`
 
 Finally choose Write and enter `y` to confirm then choose Quit to exit.
-## Formatting and Mounting partitions
+### Formatting and Mounting partitions
 First we will format the partitions then mount them.  If you set up your partitions differently please assure to change the commands below to fit your scheme. Lets starts with formatting the EFI partition ensuring to use FAT32.
 ```
 # mkfs.fat -F32 /dev/sda1
@@ -69,4 +70,39 @@ For the EFI partition we need to make the boot directory now that the root parti
 # mount /dev/sda1 /mnt/boot
 ```
 ***NOTE: Make sure that you mount the root partition before making the directory and mounting the boot partition.  If you mount the boot partition first then the root, it will "overwrite" the mounting of the boot partition***
-## Copying Arch Linux
+## Installing the Operating System
+### Establishing the Mirror List
+Let's start by keeping only the US based mirrors from the mirror list.
+```
+# cp /etc/pacman.d/mirrorlist /etc/packman.d/mirrorlist.backup
+# sed -n '/United\ States/{n;p;}' /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist.us
+```
+Now using the `rankmirrors` command we can find out the fastest mirrors.  Usually six will suffice but you can do all of them if you chose and if you have the time.
+```
+rankmirrors -n 6 /etc/pacman.d/mirrorlist.us > /etc/pacman.d/mirrorlist
+```
+### Creating Chroot Environment
+To use the Arch User Repository (AUR) we will need to install the `base-devel` in addition to the `base` package.
+```
+# pacstrap -i /mnt base base-devel
+```
+Next we will create the file system table (fstab) file with the currently mounted partitions and edit the settings in the file.
+```
+# genfstab -U -p /mnt >> /mnt/etc/fstab
+# vi /mnt/etc/fstab
+```
+Inside the file navigate to the options column of the swap line and enter `defaults,discard`.  Save and exit.  The time has come to enter the Chroot environment.
+```
+# arch-chroot /mnt
+```
+## Configuring the System
+### Locale and Time
+
+### Hostname and Repositories
+
+### Users
+
+## Final Touches
+### EFI Installation
+
+### Intel Microcode
