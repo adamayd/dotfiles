@@ -97,12 +97,67 @@ Inside the file navigate to the options column of the swap line and enter `defau
 ```
 ## Configuring the System
 ### Locale and Time
-
+```
+# vi /etc/locale.gen
+```
+```
+# locale-gen
+```
+```
+# echo LANG=en_US.UTF-8 > /etc/locale.conf
+# export LANG=en_US.UTF-8
+```
+```
+# ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+# hwclock --systohc --utc
+```
 ### Hostname and Repositories
-
+```
+# echo YOURHOSTNAME > /etc/hostname
+```
+```
+# vi /etc/pacman.conf
+```
+```
+[multilib]
+Include = /etc/pacman.d/mirrorlist
+```
+```
+# AUR Repository
+[archlinux.fr]
+SigLevel = Never
+Server = http://repo.archlinux.fr/$arch
+```
+```
+# pacman -Syu
+```
 ### Users
-
+```
+passwd
+```
+```
+useradd -m -g users -G wheel,storage,power -s /bin/bash adam
+passwd adam
+```
+```
+# visudo
+%wheel ALL=(ALL) ALL
+```
 ## Final Touches
 ### EFI Installation
-
+```
+# mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+# bootctl install
+```
+```
+# vi /boot/loader/entries/arch.conf
+title Arch Linux
+linux /vmlinuz-linux
+initrd /intel-ucode.img
+initrd /initramfs-linux.img
+options root=PARTUUID=YOURPARTUUID rw
+```
 ### Intel Microcode
+```
+pacman -S intel-ucode
+```
