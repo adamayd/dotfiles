@@ -8,6 +8,9 @@ echo -e "Today is \c ";date
 echo -e "Number of user login : \c" ; who | wc -l
 echo "Calendar"
 cal
+
+
+pacman -S intel-ucode
 output=$(blkid -s PARTUUID -o value /dev/sda5)
 echo "title Arch Linux" > arch.conf
 echo "linux /vmlinuz-linux" >> arch.conf
