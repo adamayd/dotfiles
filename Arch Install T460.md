@@ -166,10 +166,6 @@ Mount and install the EFI boot system.
 # mount -t efivarfs efivarfs /sys/firmware/efi/efivars
 # bootctl install
 ```
-Determine the PARTUUID of the root partition.
-```
-#blkid -s PARTUUID -o value /dev/sda2
-```
 Create the boot loader entry.
 ```
 # vi /boot/loader/entries/arch.conf
@@ -177,7 +173,11 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options root=PARTUUID=YOURPARTUUID rw
+```
+Determine the PARTUUID of the root partition and add it to the entry.  Using a little shell scripting makes it less likely for error.
+```
+#OUTPUT=$(blkid -s PARTUUID -o value /dev/sda5)
+#echo "options root=PARTUUID=$OUTPUT rw" >> arch.conf
 ```
 ### Intel Microcode
 Install Intel Microcode prior to reboot to support the `initrd /intel-ucode.img` line in the boot loader entry.
