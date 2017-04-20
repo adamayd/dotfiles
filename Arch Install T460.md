@@ -133,10 +133,10 @@ Edit the `pacman.conf` file to enable 32-bit support by uncommenting the lines f
 [multilib]
 Include = /etc/pacman.d/mirrorlist
 ```
-Add Arch User Repository (AUR) to the end of the file.
+Add Arch User Repository (AUR) for Yaourt to the end of the file.
 ```
 # AUR Repository
-[archlinux.fr]
+[archlinuxfr]
 SigLevel = Never
 Server = http://repo.archlinux.fr/$arch
 ```
