@@ -21,16 +21,11 @@ instdisk="/dev/$instdisk"
 echo "Install to $instdisk"
 
 # Hostname & Repositories
-echo "Enter your host name"
-read hostname
-echo "You entered: $hostname"
-echo $hostname > /etc/hostname
-echo -e "127.0.0.1 \t $hostname.localdomain \t $hostname" >> /etc/hosts
-# sed mirrorlist to remove 
-echo '# AUR Repository' >> /etc/pacman.conf
-echo '[archlinuxfr]' >> /etc/pacman.conf
-echo 'SigLevel = Never' >> /etc/pacman.conf
-echo 'Server = http://repo.archlinux.fr/$arch' >> /etc/pacman.conf
+read -p "Enter your host name: " hostname
+printf "$hostname\n" > test.txt
+printf "127.0.0.1 \t $hostname.localdomain \t $hostname\n" >> test.txt
+# sed mirrorlist to remove comment before US mirrors 
+printf "# AUR Repository\n[archlinuxfr]\nSigLevel = Never\nServer = http://repo.archlinux.fr/\$arch\n" >> /etc/pacman.conf
 
 # Users Section
 passwd
