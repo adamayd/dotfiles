@@ -1,5 +1,5 @@
-# Arch Linux UEFI Install on Thinkpad T430
-This document provides instructions for installing Arch Linux on a Lenovo Thinkpad T430 in UEFI mode as a clean installation with no other operating system.
+# Arch Linux UEFI Install on Thinkpad T460
+This document provides instructions for installing Arch Linux on a Lenovo Thinkpad T460 in UEFI mode as a clean installation with no other operating system.
 ## Configure the Install Environment
 ### Enable Wireless Networking
 Use Wifi-Menu to enable the wireless networking
