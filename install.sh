@@ -24,26 +24,25 @@ echo "Install to $instdisk"
 read -p "Enter your host name: " hostname
 printf "$hostname\n" > test.txt
 printf "127.0.0.1 \t $hostname.localdomain \t $hostname\n" >> test.txt
-# sed mirrorlist to remove comment before US mirrors 
+#####TODO: sed mirrorlist to remove comment before US mirrors 
 printf "# AUR Repository\n[archlinuxfr]\nSigLevel = Never\nServer = http://repo.archlinux.fr/\$arch\n" >> /etc/pacman.conf
 
 # Users Section
 passwd
-echo "Enter a username:"
-read username
+read "Enter your administrator username: " username
 useradd -m -g users -G wheel,storage,power -s /bin/bash $username
 passwd $username
-visudo
+#####TODO visudo
 
-# EFI & Micro Code Section 
+# Boot Loader Section 
 mount -t efivarfs efivarfs /sys/firmware/efi/efivarfs
 bootctl install
 pacman -S intel-ucode
-output=$(blkid -s PARTUUID -o value /dev/sda5)
-echo 'title Arch Linux' > arch.conf
-echo 'linux /vmlinuz-linux' >> arch.conf
-echo 'initrd /intel-ucode.img' >>arch.conf
-echo 'initrd /initramfs-linux.img' >> arch.conf
-echo "options root=PARTUUID=$output rw" >> arch.conf
+clear
+lsblk
+read -p "Enter the root partition (eg. sda1): " rootpart 
+rootpart="/dev/$rootpart"
+PUUID="$(blkid -s PARTUUID -o value $rootpart)"
+printf "title Arch Linux\nlinux /vmlinuz-linux\ninitrd /intel-ucode.img\ninitrd /initramfs-linux.img\noptions root=PARTUUID=$PUUID rw\n" > test.txt 
 
 exit 0
