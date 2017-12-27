@@ -1,5 +1,4 @@
-clear
-lsblk
-read -p "Enter the installation target disk: " instdisk
-instdisk="/dev/$instdisk"
-echo "Install to $instdisk"
+read -p "Enter your host name: " hostname
+echo "You entered: $hostname"
+printf "$hostname\n" > test.txt
+printf "127.0.0.1 \t $hostname.localdomain \t $hostname\n" >> test.txt

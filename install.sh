@@ -1,3 +1,18 @@
+# Enable WiFi
+wifi-menu
+
+# Set Time and Date
+timedatectl set-ntp true
+
+# Determine EFI status
+if efivar -l; then
+     echo "You have UEFI enabled"
+     :
+else
+    printf '%s\n' 'install.sh: UEFI Not Enabled. Please enable and restart!' >&2
+    exit 1
+fi
+
 # Determine Installation Target
 clear
 lsblk
