@@ -1,8 +1,9 @@
-#
-#
-# Script to update with pacman
-#
+# Determine Installation Target
 clear
+lsblk
+read -p "Enter the installation target disk: " instdisk
+instdisk="/dev/$instdisk"
+echo "Install to $instdisk"
 
 # Hostname & Repositories
 echo "Enter your host name"
