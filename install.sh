@@ -20,6 +20,20 @@ read -p "Enter the installation target disk: " instdisk
 instdisk="/dev/$instdisk"
 echo "Install to $instdisk"
 
+# Partition Hard Drive
+clear
+echo "THIS WILL WIPE YOUR HDD"
+read -p "Are you sure you want to continue [y/N]" hdwipe
+if [[ $hdwipe =~ ^[yY]$ ]]; then
+    sgdisk --zap-all
+    sgdisk --clear --mbrtogpt
+    sgdisk --new 1:2048:413695 --change-name 1:"EFI Boot Partition" --typecode 1:EF00 $instdisk
+    sgdisk --new 2:413695:2000000 --change-name 2:"Linux Swap" --typecode 2:8200 $instdisk
+    sgdisk --new 3:2000000:0 --change-name 3:"Linux Root" --typecode 3:8300 $instdisk
+else
+    echo "No changes were made" && exit 1
+fi
+
 # Hostname & Repositories
 read -p "Enter your host name: " hostname
 printf "$hostname\n" > test.txt

@@ -1,6 +1,9 @@
 clear
-lsblk
-read -p "Enter the root partition (eg. sda1): " rootpart 
-rootpart="/dev/$rootpart"
-PUUID="$(blkid -s PARTUUID -o value $rootpart)"
-printf "title Arch Linux\nlinux /vmlinuz-linux\ninitrd /intel-ucode.img\ninitrd /initramfs-linux.img\noptions root=PARTUUID=$PUUID rw\n" > test.txt 
+echo "THIS WILL WIPE YOUR HDD"
+read -p "Are you sure you want to continue [y/N]" hdwipe
+if [[ $hdwipe =~ ^[yY]$ ]]; then
+    echo "Do Bad Things to Your Hard Drive"
+else
+    echo "No changes were made" 
+fi
+
