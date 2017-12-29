@@ -1,7 +1,7 @@
 # Enable WiFi
 wifi-menu
 
-# Set Time and Date
+# Set System Time & Date
 timedatectl set-ntp true
 
 # Determine EFI status
@@ -58,21 +58,40 @@ mount $ROOTPART /mnt
 mkdir /mnt/boot
 mount $EFIPART /mnt/boot
 
+# Establish the Mirrorlist
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+#####TODO: sed mirrorlist to remove comment before US mirrors 
+sed -n '/United\ States/{n;p;}' /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist.us
+rankmirrors -n 6 /etc/pacman.d/mirrorlist.us > /etc/pacman.d/mirrorlist
 
+# Create & Enter Chroot Environment
+pacstrap -i /mnt base base-devel
+genfstab -U -p /mnt >> /mnt/etc/fstab
+#####TODO: sed fstab to add sdd support
+arch-chroot /mnt
+
+# Locale & Time
+####TODO: sed /etc/locale.gen to uncomment en_US.UTF-8 UTF-8 line
+locale-gen
+printf 'LANG=en_US.UTF-8' > /etc/locale.conf
+ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+#####TODO: check args and vs timedatectl
+hwclock --systohc --utc
 
 # Hostname & Repositories
 read -p "Enter your host name: " HOSTNAME
 printf "$HOSTNAME\n" > /etc/hostname
 printf "127.0.0.1 \t $HOSTNAME.localdomain \t $HOSTNAME\n" >> /etc/hosts
-#####TODO: sed mirrorlist to remove comment before US mirrors 
+#####TODO: sed /etc/pacman.conf for multilib/32-bit support
 printf "# AUR Repository\n[archlinuxfr]\nSigLevel = Never\nServer = http://repo.archlinux.fr/\$arch\n" >> /etc/pacman.conf
+pacman -Syu
 
 # Users Section
 passwd
 read -p "Enter your administrator username: " USERNAME
 useradd -m -g users -G wheel,storage,power -s /bin/bash $USERNAME
 passwd $USERNAME
-#####TODO visudo
+#####TODO: visudo
 
 # Boot Loader Section 
 mount -t efivarfs efivarfs /sys/firmware/efi/efivarfs
