@@ -23,7 +23,7 @@ printf '%s\n' 'THIS WILL ERASE EVERYTHING ON YOUR HDD/SDD'
 read -p 'Are you sure you want to continue [y/N] ' HDWIPE
 if [[ $HDWIPE =~ ^[yY]$ ]]; then
     dd bs=446 count=1 if=/dev/zero of=$INSTDISK
-    sgdisk --Z $INSTDISK
+    sgdisk -Z -o $INSTDISK
     sgdisk -n 1:0:+500M -t 1:ef00 -c 1:"EFI Boot Partition" $INSTDISK || {
         printf '%s\n' 'install.sh: Could not create EFI Boot Partition' >&2
         exit 1
@@ -33,12 +33,12 @@ if [[ $HDWIPE =~ ^[yY]$ ]]; then
         printf '%s\n' 'install.sh: Could not create Linux Swap Partition' >&2
         exit 1
     }
-    SWAPPART="${INSTDISK}2"
+    SWAPPART="${INSTDISK}3"
     sgdisk -n 2:0:0 -t 2:8300 -c 2:"Arch Linux Partition" $INSTDISK || {
         printf '%s\n' 'install.sh: Could not create Arch Linux Partition' >&2
         exit 1
     }
-    ROOTPART="${INSTDISK}3"
+    ROOTPART="${INSTDISK}2"
 else
     printf '%s\n' 'install.sh: User Cancelled! No changes to drive were made.' && exit 0
 fi
@@ -65,7 +65,11 @@ genfstab -U -p /mnt >> /mnt/etc/fstab
 sed -i 's/relatime,data/relatime,discard,data/g' /mnt/etc/fstab
 curl --remote-name https://raw.githubusercontent.com/adamayd/T460dotfiles/master/vsdo.sh
 cp vsdo.sh /mnt
+
+read -p 'Press Enter to continue to chroot environment'
 arch-chroot /mnt
+
+read -p 'You are in the chroot environment'
 
 # Locale & Time
 sed -i '/en_US\.UTF/s/^#//g' /etc/locale.gen
