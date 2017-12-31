@@ -6,7 +6,7 @@ Use Wifi-Menu to enable the wireless networking
 ```
 # wifi-menu
 ```
-### Set the Time
+### Set the System Time
 ```
 # timedatectl set-ntp true
 ```
@@ -32,19 +32,19 @@ Once in *gdisk* hit `x` to enter expert mode, then `z` to zap GPT table then `y`
 ```
 Take care to enter the correct hex codes and put the EFI partition first if you plan to use other non-linux operating systems.
 * Select *New* for new partition
-* At prompt for first sector enter size: `512Mib`
+* At prompt for first sector enter size: `512M`
 * EFI Hex Code: `EF00`
 * Name: `boot`
 
 Root partition.
 * Select *New*
-* First sector: `230.5Gib`
+* First sector: `230.5`
 * Linux filesystem Hex Code: `8300`
 * Name: `root`
 
 Swap partition.
 * Select *New*
-* First sector: `8Gib`
+* First sector: `8G`
 * Linux swap Hex Code: `8200`
 * Name: `swap`
 
@@ -93,7 +93,7 @@ Generate the file system table.
 # genfstab -U -p /mnt >> /mnt/etc/fstab
 # vi /mnt/etc/fstab
 ```
-Adjust the options of the `/` line to equal `rw,relatime,discard,data=ordered` with no spaces between options.  Options of the `swap` line should equal `defaults` and `/boot` can stay as generated.
+Adjust the options of the `/` line from `rw,relatime,data=ordered` to `rw,relatime,discard,data=ordered` with no spaces between options.  Options of the `swap` line should equal `defaults` and `/boot` can stay as generated.
 
 Enter the Chroot environment
 ```
@@ -112,9 +112,9 @@ Set the language variable
 ```
 # echo LANG=en_US.UTF-8 > /etc/locale.conf
 ```
-Set the time zone and system clock
+Set the time zone and hardware clock
 ```
-# ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+# ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 # hwclock --systohc --utc
 ```
 ### Hostname and Repositories
