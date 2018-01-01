@@ -64,42 +64,15 @@ pacstrap -i /mnt base base-devel
 genfstab -U -p /mnt >> /mnt/etc/fstab
 sed -i 's/relatime,data/relatime,discard,data/g' /mnt/etc/fstab
 curl --remote-name https://raw.githubusercontent.com/adamayd/T460dotfiles/master/vsdo.sh
+chmod 755 vsdo.sh
 cp vsdo.sh /mnt
+curl --remote-name https://raw.githubusercontent.com/adamayd/T460dotfiles/master/chrt.sh
+chmod 755 chrt.sh
+cp chrt.sh /mnt
 
 read -p 'Press Enter to continue to chroot environment'
-arch-chroot /mnt
+arch-chroot /mnt ./chrt.sh
 
-read -p 'You are in the chroot environment'
-
-# Locale & Time
-sed -i '/en_US\.UTF/s/^#//g' /etc/locale.gen
-locale-gen
-printf '%s\n' 'LANG=en_US.UTF-8' > /etc/locale.conf
-ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
-hwclock --systohc --utc
-
-# Hostname & Repositories
-read -p 'Enter your host name: ' HOSTNAME
-printf '%s\n' "$HOSTNAME" > /etc/hostname
-printf '%s\t%s\t%s\n' '127.0.0.1' "$HOSTNAME.localdomain" "$HOSTNAME" >> /etc/hosts
-sed -i '/\[multilib\]/s/^#//g' /etc/pacman.conf
-sed -i '/\[multilib\]/!b;n;cInclude\ =\ \/etc\/pacman\.d\/mirrorlist' /etc/pacman.conf
-printf '\n%s\n%s\n%s\n%s\n' '# AUR Repository' '[archlinuxfr]' 'SigLevel = Never' 'Server = http://repo.archlinux.fr/$arch' >> /etc/pacman.conf
-pacman -Syu
-
-# Users Section
-passwd
-read -p 'Enter your username: ' USERNAME
-useradd -m -g users -G wheel,storage,power -s /bin/bash $USERNAME
-passwd $USERNAME
-./vsdo.sh
-export EDITOR=vi
-
-# Boot Loader Section 
-mount -t efivarfs efivarfs /sys/firmware/efi/efivars
-bootctl install
-pacman -S intel-ucode
-PUUID="$(blkid -s PARTUUID -o value $ROOTPART)"
-printf '%s\n%s\n%s\n%s\n%s\n' 'title Arch Linux' 'linux /vmlinuz-linux' 'initrd /intel-ucode.img' 'initrd /initramfs-linux.img' "options root=PARTUUID=$PUUID rw" > /boot/loader/entries/arch.conf
+printf '%s\n' 'You have exited the chroot environment'
 
 exit 0
