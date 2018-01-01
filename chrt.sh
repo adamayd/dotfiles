@@ -32,7 +32,17 @@ visudo
 mount -t efivarfs efivarfs /sys/firmware/efi/efivars
 bootctl install
 pacman -S intel-ucode
-PUUID="$(blkid -s PARTUUID -o value $ROOTPART)"
+PUUID="$(blkid -s PARTUUID -o value /dev/sda2)"
 printf '%s\n%s\n%s\n%s\n%s\n' 'title Arch Linux' 'linux /vmlinuz-linux' 'initrd /intel-ucode.img' 'initrd /initramfs-linux.img' "options root=PARTUUID=$PUUID rw" > /boot/loader/entries/arch.conf
+
+# Prepare for reboot
+pacman -S --noconfirm networkmanager cronie
+curl --remote-name https://raw.githubusercontent.com/adamayd/T460dotfiles/master/software.sh
+chown adam:users software.sh
+chmod 755 software.sh
+cp software.sh /home/adam/
+printf '%s\n' '@reboot ~/software.sh' >> tempfile
+crontab -u adam tempfile
+rm tempfile
 
 exit 0
