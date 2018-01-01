@@ -21,8 +21,12 @@ passwd
 read -p 'Enter your username: ' USERNAME
 useradd -m -g users -G wheel,storage,power -s /bin/bash $USERNAME
 passwd $USERNAME
-./vsdo.sh
+#####TODO: further testing needed for visudo script
+# ./vsdo.sh
 export EDITOR=vi
+clear
+read -p 'Press Enter to edit the sudoers file with vi'
+visudo
 
 # Boot Loader Section 
 mount -t efivarfs efivarfs /sys/firmware/efi/efivars
