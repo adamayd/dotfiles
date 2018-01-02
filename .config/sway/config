@@ -18,6 +18,9 @@ set $term termite
 # Your preferred application launcher
 set $menu rofi
 
+# Specify Font
+font pango:System San Francisco Display 9
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)

@@ -32,7 +32,7 @@ set foldlevelstart=99 " sets level of foldes to open
 set foldnestmax=10  " sets the deepest level of nests allowed
 set foldmethod=indent " sets the identifier of the folds
 
-execute pathogen#infect()
+"execute pathogen#infect()
 " launch pathogen plugin manager
 
 " netrw settings
