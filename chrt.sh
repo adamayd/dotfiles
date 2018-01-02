@@ -39,10 +39,14 @@ printf '%s\n%s\n%s\n%s\n%s\n' 'title Arch Linux' 'linux /vmlinuz-linux' 'initrd 
 pacman -S --noconfirm networkmanager cronie
 curl --remote-name https://raw.githubusercontent.com/adamayd/T460dotfiles/master/software.sh
 chown adam:users software.sh
+read -p 'Press Enter to continue' 
 chmod 755 software.sh
 cp software.sh /home/adam/
 printf '%s\n' '@reboot ~/software.sh' >> tempfile
 crontab -u adam tempfile
 rm tempfile
+# systemctl disable dhcpcd@wlp4s0.service
+# systemctl disable netctl-auto@wlp4s0.service
+systemctl enable NetworkManager.service
 
 exit 0
