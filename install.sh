@@ -45,7 +45,7 @@ fi
 
 # Format the new partitions and turn on the swap
 mkfs.fat -F32 $EFIPART
-mkfs.ext4 $ROOTPART
+mkfs.ext4 -F $ROOTPART
 mkswap $SWAPPART
 swapon $SWAPPART
 
