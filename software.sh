@@ -11,6 +11,9 @@ nmcli dev wifi connect $SSID password $WPAPASS
 sudo pacman -S --noconfirm git lm_sensors tlp htop archey3 openssh exfat-utils vim bash-completion ranger termite yaourt
 
 # Clone repo and start installations by segment
+cd ~ && git clone https://github.com/adamayd/T460dotfiles.git
+mv T460dotfiles/* T460dotfiles/.* .
+rmdir T460dotfiles
 
 # Install XOrg and i3wm
 
@@ -20,5 +23,9 @@ sudo pacman -S --noconfirm git lm_sensors tlp htop archey3 openssh exfat-utils v
 
 # Install System Fonts
 
+# Install Dev Environment
+
 # Install LAMP
 
+# Configure SSH
+#./configssh.sh

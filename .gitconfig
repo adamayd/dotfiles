@@ -1,3 +1,10 @@
 [user]
 	name = Adam Ayd
 	email = adamayd@gmail.com
+[alias]
+	co = commit
+	ch = checkout
+	br = branch
+	st = status
+	unstage = reset HEAD --
+	ll = ls-tree -r master --name-only
