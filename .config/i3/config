@@ -51,7 +51,7 @@ bindsym $mod+Shift+q kill
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # Start Rofi (program launcher)
-bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -font "System San Francisco Display 14" -width 100 -padding 400 
+bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -font "System San Francisco Display 14" -width 100 -padding 500 
 
 # change focus
 bindsym $mod+j focus left
@@ -200,15 +200,16 @@ bindsym $mod+Shift+n move workspace to output LVDS1
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-        status_command i3status
-	colors {
-		background $bg-color
-		separator #757575
-		#			border			background		text
-		focused_workspace	$bg-color		$bg-color		$text-color
-		inactive_workspace	$inactive-bg-color	$inactive-bg-color	$inactive-text-color
-		urgent_workspace	$urgent-bg-color	$urgent-bg-color	$text-color
-	}	
-}
-
+#bar {
+#        status_command i3status
+#	colors {
+#		background $bg-color
+#		separator #757575
+#		#			border			background		text
+#		focused_workspace	$bg-color		$bg-color		$text-color
+#		inactive_workspace	$inactive-bg-color	$inactive-bg-color	$inactive-text-color
+#		urgent_workspace	$urgent-bg-color	$urgent-bg-color	$text-color
+#	}	
+#}
+# Start Polybar in place of i3bar
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
