@@ -94,3 +94,5 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ll="ls -lhA"
 alias vi="vim"
+
+source ~/.sshrc

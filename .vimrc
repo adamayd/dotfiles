@@ -44,7 +44,6 @@ let g:netrw_winsize = 20          " sets the browser window size to 20%
 
 "autocmd!      
 "autocmd VimEnter * :Vexplore
-autocmd BufNewFile * Vexplore
 
 " ***** Keyboard Mappings *****
 " Moving Between Windows
