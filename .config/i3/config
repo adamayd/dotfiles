@@ -54,10 +54,10 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -font "System San Francisco Display 14" -width 100 -padding 500 
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -66,10 +66,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -78,7 +78,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+Shift+v split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -168,16 +168,16 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width 5 px or 5 ppt
+        bindsym j resize grow height 5 px or 5 ppt
+        bindsym k resize shrink height 5 px or 5 ppt
+        bindsym l resize grow width 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width 5 px or 5 ppt
+        bindsym Down resize grow height 5 px or 5 ppt
+        bindsym Up resize shrink height 5 px or 5 ppt
+        bindsym Right resize grow width 5 px or 5 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -187,29 +187,36 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Set Wallpaper
-exec_always feh --bg-scale /usr/share/pixmaps/Mask_Code_1920x1200.jpg
+exec_always feh --bg-scale ~/Pictures/wallpaper.jpg
 
 # Correct Color on T430 laptop screen
 exec_always xrandr --output LVDS1 --gamma 0.85:0.75:0.85 
 
 # Monitor Hot Keys
-bindsym $mod+m exec xrandr --output DP2 --auto --left-of LVDS1
+bindsym $mod+m exec xrandr --output DP2 --auto --left-of eDP1 
 bindsym $mod+Shift+m move workspace to output DP2
 bindsym $mod+n exec xrandr --output DP2 --off
-bindsym $mod+Shift+n move workspace to output LVDS1
+bindsym $mod+Shift+n move workspace to output eDP1 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-#bar {
-#        status_command i3status
-#	colors {
-#		background $bg-color
-#		separator #757575
-#		#			border			background		text
-#		focused_workspace	$bg-color		$bg-color		$text-color
-#		inactive_workspace	$inactive-bg-color	$inactive-bg-color	$inactive-text-color
-#		urgent_workspace	$urgent-bg-color	$urgent-bg-color	$text-color
-#	}	
-#}
+bar {
+        status_command i3status
+	colors {
+		background $bg-color
+		separator #757575
+		#			border			background		text
+		focused_workspace	$bg-color		$bg-color		$text-color
+		inactive_workspace	$inactive-bg-color	$inactive-bg-color	$inactive-text-color
+		urgent_workspace	$urgent-bg-color	$urgent-bg-color	$text-color
+	}	
+}
+
 # Start Polybar in place of i3bar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+#exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# Screen Lock
+bindsym $mod+shift+x exec i3lock
+
+# PassMenu
+bindsym $mod+p exec --no-startup-id passmenu

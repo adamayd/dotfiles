@@ -41,9 +41,14 @@ let g:netrw_liststyle = 3         " sets the viewing style to tree
 let g:netrw_browse_split = 4      " sets selection to open in same window (same as netrw)
 let g:netrw_altv = 1              " 
 let g:netrw_winsize = 20          " sets the browser window size to 20%
-augroup TreeDrawer 
-  autocmd!
-  autocmd VimEnter * :Vexplore
-augroup END
-" creates group for tree listing drawer, clears all running autocmds in case .vimrc is sourced twice 
-" or keeps the drawer running only once, runs the netrw Veritcal explorer, end the auto group
+
+"autocmd!      
+"autocmd VimEnter * :Vexplore
+autocmd BufNewFile * Vexplore
+
+" ***** Keyboard Mappings *****
+" Moving Between Windows
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
