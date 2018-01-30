@@ -142,7 +142,7 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # default workspace assignments
-#assign [class="Chromium"] $workspace2
+#######assign [class="Chromium"] $workspace2
 
 # Window Colors
 #				border			background		text			indicator
@@ -189,13 +189,10 @@ bindsym $mod+r mode "resize"
 # Set Wallpaper
 exec_always feh --bg-scale ~/Pictures/wallpaper.jpg
 
-# Correct Color on T430 laptop screen
-exec_always xrandr --output LVDS1 --gamma 0.85:0.75:0.85 
-
 # Monitor Hot Keys
-bindsym $mod+m exec xrandr --output DP2 --auto --left-of eDP1 
-bindsym $mod+Shift+m move workspace to output DP2
-bindsym $mod+n exec xrandr --output DP2 --off
+bindsym $mod+m exec xrandr --output DP2-1 --auto --left-of eDP1 --output eDP1 --mode 1600x900
+bindsym $mod+Shift+m move workspace to output DP2-1
+bindsym $mod+n exec xrandr --output DP2-1 --off --output eDP1 --mode 1920x1080
 bindsym $mod+Shift+n move workspace to output eDP1 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
