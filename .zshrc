@@ -95,4 +95,7 @@ source $ZSH/oh-my-zsh.sh
 alias ll="ls -lhA"
 alias vi="vim"
 
+PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+
 source ~/.sshrc
