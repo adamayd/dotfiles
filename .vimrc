@@ -11,7 +11,7 @@ set shiftwidth=2    " sets the space on autoindents
 
 set number          " show line numbers
 set cursorline      " highline line number of current line
-set lazyredraw      " redraws only when needed
+"set lazyredraw      " redraws only when needed
 
 filetype plugin indent on
 " enables filetype detection (on) filetype specific plugins (plugin)
