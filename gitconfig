@@ -3,7 +3,7 @@
 	email = adamayd@gmail.com
 [alias]
 	co = commit
-  coam = commit -am
+	coam = commit -am
 	ch = checkout
 	br = branch
 	st = status
