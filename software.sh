@@ -13,9 +13,9 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 source vimrc bashrc zshrc
 
 # Clone repo and start installations by segment
-cd ~ && git clone https://github.com/adamayd/T460dotfiles.git
-mv T460dotfiles/* T460dotfiles/.* .
-rmdir T460dotfiles
+cd  && git clone https://github.com/adamayd/T460dotfiles.git
+printf "%s\n" "[include]" > $HOME/.gitconfig
+printf "\t%s\n" "path = $HOME/T460dotfiles/gitconfig"1
 
 # Install XOrg and i3wm
 sudo pacman -S xorg-server xorg-apps i3 feh scrot xclip rofi
