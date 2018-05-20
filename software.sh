@@ -13,6 +13,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 printf "%s\n" "source $HOME/T460dotfiles/zshrc" > $HOME/.zshrc
 printf "%s\n" "source $HOME/T460dotfiles/bashrc" > $HOME/.bashrcz
 printf "%s\n" "so $HOME/T460dotfiles/vimrc" > $HOME/.vimrc
+mkdir $HOME/.config/termite
+ln -s $HOME/T460dotfiles/config/termite/config $HOME/.config/termite/config
 
 # Clone repo and start installations by segment
 cd  && git clone https://github.com/adamayd/T460dotfiles.git
