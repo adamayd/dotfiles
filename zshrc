@@ -95,9 +95,5 @@ source $ZSH/oh-my-zsh.sh
 alias ll="ls -lhA --group-directories-first"
 alias vi="vim"
 
-PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
-export GEM_HOME=$(ruby -e 'print Gem.user_dir')
-
-source ~/.sshrc
-source ~/.nvmrc
+source $HOME/T460dotfiles/addonrc
 
