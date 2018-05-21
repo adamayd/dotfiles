@@ -29,7 +29,7 @@ if [[ $HDWIPE =~ ^[yY]$ ]]; then
         exit 1
     }
     EFIPART="${INSTDISK}1"
-    sgdisk -n 3:-8G:0 -t 3:8300 -c 3:"Linux Swap" $INSTDISK || {
+    sgdisk -n 3:-8G:0 -t 3:8200 -c 3:"Linux Swap" $INSTDISK || {
         printf '%s\n' 'install.sh: Could not create Linux Swap Partition' >&2
         exit 1
     }
