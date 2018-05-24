@@ -8,7 +8,8 @@ read -p 'Enter the password: ' WPAPASS
 nmcli dev wifi connect $SSID password $WPAPASS
 
 # Install CLI Installation Utilities
-pacman -S --noconfirm vim bash-completion zsh ranger termite yaourt lm_sensors tlp htop archey3 exfat-utils 
+pacman -S --noconfirm vim bash-completion zsh ranger termite yaourt lm_sensors util-linux tlp htop archey3 exfat-utils unzip
+systemctl enable fstrim.timer
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 # Clone Dotfiles Repo and Source Files
@@ -63,13 +64,14 @@ cp -f $HOME/T460dotfiles/remoteconf/cups-pdf.conf /etc/cups/cups-pdf.conf
 pacman -S --noconfirm mpv calendar mutt cmusic
 
 # Install GUI Base Software
-pacman -S --noconfirm pdfviewer printtool scantool tools-needed-for-ranger-above bluez dunst/notifications?? slack gitter transmission calendar mutt
+pacman -S --noconfirm pdfviewer printtool scantool tools-needed-for-ranger-above bluez dunst/notifications?? transmission calendar mutt qutebrowser 
 
 # Install CLI Dev Environment
+pacman -S --noconfirm nodejs nvm npm python python3 pypy pip ruby rvm rbenv mongodb
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 
 # Install GUI Dev Software
-pacamn -S --noconfirm chromium postman vscode slack qutebrowser firefox-developer-edition
+pacamn -S --noconfirm chromium postman vscode gitter slack firefox-developer-edition
 
 # Install LAMP
 install apache
@@ -80,4 +82,9 @@ install mariadb
 copy mariadb config
 link php to mariadb
 enable mysql service
+
+# Install Android Dev Software
+pacman -S --noconfirm android-studio android-tools android-udev
+pacman -S --noconfirm bc bison base-devel ccache curl flex png++ gccbase-devel git gnupg gperf imagemagick lib32-ncurses lib32-readline lib32-zlib lz4 ncurses sdl openssl wxgtk3 libxml2 lzop pngcrush rsync schedtool squashfs-tools libxslt zip zlib maven
+yaourt -S esound
 

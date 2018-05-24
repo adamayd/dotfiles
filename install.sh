@@ -62,7 +62,7 @@ rankmirrors -n 6 /etc/pacman.d/mirrorlist.us > /etc/pacman.d/mirrorlist
 # Create & Enter Chroot Environment
 pacstrap -i /mnt base base-devel
 genfstab -U -p /mnt >> /mnt/etc/fstab
-sed -i 's/relatime,data/relatime,discard,data/g' /mnt/etc/fstab
+#sed -i 's/relatime,data/relatime,discard,data/g' /mnt/etc/fstab
 curl --remote-name https://raw.githubusercontent.com/adamayd/T460dotfiles/master/vsdo.sh
 chmod 755 vsdo.sh
 cp vsdo.sh /mnt

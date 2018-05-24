@@ -217,3 +217,7 @@ bindsym $mod+shift+x exec i3lock
 
 # PassMenu
 bindsym $mod+p exec --no-startup-id passmenu
+
+# Floating Window Applications
+for_window [class="XCalc"] floating enable
+
