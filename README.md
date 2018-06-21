@@ -53,3 +53,7 @@ note: I tried Wayland/Weston and Sway but had issues with lag and compositing.  
 * MariaDB - fully mysql compatible database
 
 I'm sure I've forgotten things.  I'll add them as I work through the scripts.
+
+## Adding support for Ubuntu 18.04 on Windows Subsystem for Linux
+
+To help quickly get up to speed on C#, I've decided to dual boot Windows 10 Pro and Arch Linux.  With the Windows Subsystem for Linux getting better with every major update, I've also decided to run the Ubunut 18.04 WSL to ease my transition back into windows.  You may even start seeing some PowerShell scripts show up.  The majority of WSL goodies are in the `wsl` directory along with a `wslinstall.md` that will start as my notes and expand to scripts and instructions.
