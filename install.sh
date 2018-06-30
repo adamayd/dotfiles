@@ -55,6 +55,7 @@ mkdir /mnt/boot
 mount $EFIPART /mnt/boot
 
 # Establish the Mirrorlist
+pacman -Sy pacman-contrib
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 sed -n '/United\ States/{n;p;}' /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist.us
 rankmirrors -n 6 /etc/pacman.d/mirrorlist.us > /etc/pacman.d/mirrorlist

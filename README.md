@@ -54,6 +54,20 @@ note: I tried Wayland/Weston and Sway but had issues with lag and compositing.  
 
 I'm sure I've forgotten things.  I'll add them as I work through the scripts.
 
+## Clean install steps
+
+On boot of the Arch Linux ISO image as of 06/2018 you will need to do the following commands to get going:
+
+```
+wifi-menu
+```
+
+I usually `ping -c 3 www.google.com` first to make sure I've connected properly.  Then download `install.sh` with the following command and run it.  Make sure your permissions are correct before running with `chmod 755 install.sh`
+
+```
+curl --remote-name https://raw.githubusercontent.com/adamayd/T460dotfiles/master/install.sh
+```
+
 ## Adding support for Ubuntu 18.04 on Windows Subsystem for Linux
 
 To help quickly get up to speed on C#, I've decided to dual boot Windows 10 Pro and Arch Linux.  With the Windows Subsystem for Linux getting better with every major update, I've also decided to run the Ubunut 18.04 WSL to ease my transition back into windows.  You may even start seeing some PowerShell scripts show up.  The majority of WSL goodies are in the `wsl` directory along with a `wslinstall.md` that will start as my notes and expand to scripts and instructions.
