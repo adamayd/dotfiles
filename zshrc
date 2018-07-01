@@ -95,5 +95,5 @@ source $ZSH/oh-my-zsh.sh
 alias ll="ls -lhA --group-directories-first"
 alias vi="vim"
 
-source $HOME/T460dotfiles/addonrc
+source $HOME/T460dotfiles/shellsrc
 

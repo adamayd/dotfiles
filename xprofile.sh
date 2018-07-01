@@ -1,5 +1,7 @@
 #! /bin/bash
 
 eval "$(ssh-agent)"
-cp -f ~/T460dotfiles/config/i3/config ~/.config/i3/config
+if [ -e $HOME/.config/i3 ]; then
+    cp -f ~/T460dotfiles/config/i3/config ~/.config/i3/config
+fi
 

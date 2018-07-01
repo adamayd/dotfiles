@@ -10,5 +10,5 @@ alias ll='ls -lhA --group-directories-first'
 alias vi='vim'
 PS1='[\u@\h \W]\$ '
 
-source $HOME/T460dotfiles/addonrc
+source $HOME/T460dotfiles/shellsrc
 
