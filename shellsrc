@@ -1,10 +1,15 @@
 #PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 #export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 
+# Aliases
+alias ll='ls -lhA --group-directories-first'
+
+# SSH
 if [ -e $HOME/.sshrc ]; then
     source ~/.sshrc
 fi
 
+# Node Version Manager (NVM)
 if [ -e $HOME/.nvmrc ]; then
     source ~/.nvmrc
 fi
