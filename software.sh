@@ -8,7 +8,7 @@ read -p 'Enter the password: ' WPAPASS
 nmcli dev wifi connect $SSID password $WPAPASS
 
 # Install CLI Installation Utilities
-pacman -S --noconfirm vim bash-completion zsh ranger termite yaourt lm_sensors util-linux tlp htop archey3 exfat-utils unzip autofs
+pacman -S --noconfirm vim bash-completion zsh ranger termite yaourt lm_sensors git tlp htop archey3 exfat-utils unzip autofs
 systemctl enable fstrim.timer
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
@@ -18,7 +18,7 @@ cd && git clone https://github.com/adamayd/T460dotfiles.git
 printf "%s\n" "source $HOME/T460dotfiles/zshrc" > $HOME/.zshrc
 printf "%s\n" "source $HOME/T460dotfiles/bashrc" > $HOME/.bashrcz
 printf "%s\n" "so $HOME/T460dotfiles/vimrc" > $HOME/.vimrc
-mkdir $HOME/.config/termite
+mkdir -p $HOME/.config/termite
 ln -s $HOME/T460dotfiles/config/termite/config $HOME/.config/termite/config
 printf "%s\n\t%s\n" "[include]" "path = $HOME/T460dotfiles/gitconfig" > $HOME/.gitconfig 
 
@@ -30,7 +30,7 @@ chmod 755 $HOME/T460dotfiles/xprofile.sh
 printf "%s\n" "$HOME/T460dotfiles/xprofile.sh" > $HOME/.xprofile
 
 # Install XOrg and i3WM
-pacman -S xorg-server xorg-apps i3 feh scrot xclip rofi xcalc
+pacman -S xorg-server xorg-apps i3 feh scrot xclip rofi xorg-xcalc
 
 # Install Light DM
 pacman -S --noconfirm lightdm lightdm-gtk-greeter
