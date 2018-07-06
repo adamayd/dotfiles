@@ -2,7 +2,7 @@
 	name = Adam Ayd
 	email = adamayd@gmail.com
 [alias]
-	co = commit
+	co = commit -m
 	coam = commit -am
 	ch = checkout
 	br = branch

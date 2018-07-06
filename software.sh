@@ -31,6 +31,7 @@ read -p 'Enter your email address for your SSH Key: ' EMAIL
 ssh-keygen -t rsa -b 4096 -C $EMAIL
 chmod 755 $HOME/T460dotfiles/xprofile.sh
 printf "%s\n" "$HOME/T460dotfiles/xprofile.sh" > $HOME/.xprofile
+ln -s ~/T460dotfiles/sshrc ~/.sshrc
 
 # Install XOrg and i3WM
 pacman -S xorg-server xorg-apps i3 feh scrot xclip rofi xorg-xcalc
@@ -75,12 +76,13 @@ cp -f $HOME/T460dotfiles/remoteconf/cups-pdf.conf /etc/cups/cups-pdf.conf
 pacman -S --noconfirm mpv neomutt calcurse cmus w3m transmission-cli perl-image-exiftool
 
 # Install GUI Base Software
-pacman -S --noconfirm qutebrowser libreoffice-fresh transmission-gtk pdfsam # tools-needed-for-ranger-above bluez dunst/notifications??
+pacman -S --noconfirm gimp libreoffice-fresh transmission-gtk pdfsam # tools-needed-for-ranger-above bluez dunst/notifications??
 
 # Install CLI Dev Environment
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 source ~/T460dotfiles/nvmrc && nvm install --lts
-pacman -S --noconfirm python-pip python2-pip ruby mongodb
+ln -s ~/T460dotfiles/nvmrc ~/.nvmrc
+pacman -S --noconfirm python-pip python2-pip ruby mongodb tmux
 yay -S rbenv
 
 # Install GUI Dev Software
@@ -101,4 +103,14 @@ yay -S postman-bin visual-studio-code-bin slack-desktop gitter gitkraken robo3t-
 #pacman -S --noconfirm android-studio android-tools android-udev mtpfs
 pacman -S --noconfirm bc bison base-devel ccache curl flex png++ gccbase-devel git gnupg gperf imagemagick lib32-ncurses lib32-readline lib32-zlib lz4 ncurses sdl openssl wxgtk3 libxml2 lzop pngcrush rsync schedtool squashfs-tools libxslt zip zlib maven
 yay -S esound
+
+# Rice to fix on i3
+# Powerline everywhere
+# Lemon Bar/Poly Bar/ Status Bar
+# Lock Screen
+# Light DM Avatar and Background
+# libinput-gestures (3 finger swipes)
+
+# Rice to fix on OpenBox
+# TBD
 
