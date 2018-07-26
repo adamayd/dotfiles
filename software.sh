@@ -29,6 +29,9 @@ printf "%s\n\t%s\n" "[include]" "path = $HOME/T460dotfiles/gitconfig" > $HOME/.g
 pacman -S --noconfirm openssh
 read -p 'Enter your email address for your SSH Key: ' EMAIL
 ssh-keygen -t rsa -b 4096 -C $EMAIL
+eval $(ssh-agent)
+ssh-add
+# TODO: Add SSH config file to ~/.ssh/config with AddKeysToAgent yes for persistence
 chmod 755 $HOME/T460dotfiles/xprofile.sh
 printf "%s\n" "$HOME/T460dotfiles/xprofile.sh" > $HOME/.xprofile
 ln -s ~/T460dotfiles/sshrc ~/.sshrc
@@ -63,8 +66,8 @@ yay -S system-san-francisco-font-git ttf-font-awesome ttf-ms-fonts ttf-mac-fonts
 pacman -S --noconfirm cups cups-pdf
 systemctl enable org.cups.cupsd.service
 cp -f $HOME/T460dotfiles/remoteconf/cups-pdf.conf /etc/cups/cups-pdf.conf
-# install Samsung drivers
-# network printing
+# TODO: install Samsung drivers
+# TODO: network printing
 
 # Install Scanning Services
 # SANE services
@@ -72,11 +75,24 @@ cp -f $HOME/T460dotfiles/remoteconf/cups-pdf.conf /etc/cups/cups-pdf.conf
 # network scanning
 # gscan2pdf 
 
+# Install Notification System
+pacman -S --noconfirm dunst
+# TODO: dunst configuration?? libnotifiy?? tie to pidgen/irc/slack and media apps
+
+# Install Bluetooth
+# TODO:  bluez
+
+# Install GUI File Explorer and Preview Dependencies
+# TODO: yeah that, pick a gui file manager first
+
+# Install Ranger Preview Dependencies
+# TODO: w3m? pdf2text?? exiftool??
+
 # Install CLI Base Software
 pacman -S --noconfirm mpv neomutt calcurse cmus w3m transmission-cli perl-image-exiftool
 
 # Install GUI Base Software
-pacman -S --noconfirm gimp libreoffice-fresh transmission-gtk pdfsam # tools-needed-for-ranger-above bluez dunst/notifications??
+pacman -S --noconfirm gimp libreoffice-fresh transmission-gtk pdfsam
 
 # Install CLI Dev Environment
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash

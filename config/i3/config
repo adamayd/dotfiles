@@ -221,3 +221,6 @@ bindsym $mod+p exec --no-startup-id passmenu
 # Floating Window Applications
 for_window [class="XCalc"] floating enable
 
+# Three-Finger Swipe Between Workspaces
+bindsym --whole-window button19 workspace prev
+bindsym --whole-window button17 workspace next
