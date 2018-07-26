@@ -56,6 +56,8 @@ I'm sure I've forgotten things.  I'll add them as I work through the scripts.
 
 ## Clean install steps
 
+If you clone the repo, remember to change the github user name to yours in the `install.sh`.  It should still work, but if you make any changes to the `vsdo.sh` or `chrt.sh` the `install.sh` will still point to my repo
+
 On boot of the Arch Linux ISO image as of 06/2018 you will need to do the following commands to get going:
 
 ```

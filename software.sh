@@ -27,10 +27,7 @@ printf "%s\n\t%s\n" "[include]" "path = $HOME/T460dotfiles/gitconfig" > $HOME/.g
 
 # Install SSH
 pacman -S --noconfirm openssh
-read -p 'Enter your email address for your SSH Key: ' EMAIL
-ssh-keygen -t rsa -b 4096 -C $EMAIL
-eval $(ssh-agent)
-ssh-add
+./sshsetup.sh
 # TODO: Add SSH config file to ~/.ssh/config with AddKeysToAgent yes for persistence
 chmod 755 $HOME/T460dotfiles/xprofile.sh
 printf "%s\n" "$HOME/T460dotfiles/xprofile.sh" > $HOME/.xprofile
