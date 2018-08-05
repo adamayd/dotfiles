@@ -86,7 +86,7 @@ pacman -S --noconfirm dunst
 # TODO: w3m? pdf2text?? exiftool??
 
 # Install CLI Base Software
-pacman -S --noconfirm mpv neomutt calcurse cmus w3m transmission-cli perl-image-exiftool
+pacman -S --noconfirm mpv neomutt calcurse cmus w3m transmission-cli perl-image-exiftool #TODO: slack-term wormhole irssi vitetris
 
 # Install GUI Base Software
 pacman -S --noconfirm gimp libreoffice-fresh transmission-gtk pdfsam
@@ -111,6 +111,9 @@ yay -S postman-bin visual-studio-code-bin slack-desktop gitter gitkraken robo3t-
 #copy mariadb config
 #link php to mariadb
 #enable mysql service
+
+# Container Services
+# install docker heroku kubernetes lxd 
 
 # Install Android Dev Software
 #pacman -S --noconfirm android-studio android-tools android-udev mtpfs
