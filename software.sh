@@ -54,6 +54,11 @@ cp -f ~/T460dotfiles/remoteconf/20-intel.conf /etc/X11/xorg.conf.d
 sudo pacman -S --noconfirm synaptics
 cp -f ~/T460dotfiles/remoteconf/70-synaptics.conf /etc/X11/xorg.conf.d
 
+# Install Filesystem Support
+yay -s hfsprogs
+# TODO: ntfs / samba
+# TODO: cd/dvd/bd support
+
 # Install System Fonts
 sudo pacman -S --noconfirm ttf-dejavu xorg-fonts-100dpi powerline powerline-fonts
 yay -S system-san-francisco-font-git ttf-font-awesome ttf-ms-fonts ttf-mac-fonts ttf-font-icons
