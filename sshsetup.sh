@@ -12,4 +12,8 @@ mkdir -p $HOME/.config/systemd/user/
 cp $HOME/T460dotfiles/config/systemd/user/ssh-agent.service $HOME/.config/systemd/user/
 systemctl --user enable ssh-agent
 
+printf "%s\n" "To add the key to website use xclip: "
+printf "%s\n" "xclip -sel clip < ~/.ssh/id_rsa.pub"
+read -p "Press any key to continue"
+
 exit 0
