@@ -101,6 +101,7 @@ source ~/T460dotfiles/nvmrc && nvm install --lts
 ln -s ~/T460dotfiles/nvmrc ~/.nvmrc
 sudo pacman -S --noconfirm python-pip python2-pip ruby mongodb tmux
 yay -S rbenv
+npm i -g yarn
 
 # Install GUI Dev Software
 sudo pacman -S --noconfirm chromium firefox-developer-edition pycharm-community-edition 
