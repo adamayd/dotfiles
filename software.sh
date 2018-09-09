@@ -8,32 +8,36 @@ read -p 'Enter the password: ' WPAPASS
 nmcli dev wifi connect $SSID password $WPAPASS
 
 # Install CLI Installation Utilities
-sudo pacman -S --noconfirm vim bash-completion zsh ranger termite lm_sensors git tlp htop archey3 exfat-utils unzip autofs
+sudo pacman -S --noconfirm vim bash-completion zsh ranger lm_sensors git tlp htop archey3 unzip 
 sudo systemctl enable fstrim.timer
-git clone https://aur.archlinux.org/yay.git && cd yay
+git clone https://aur.archlinux.org/pikaur.git && cd pikaur
 makepkg -si
-cd && rm -rf yay
+cd && rm -rf pikaur
+
+# Install SSH
+sudo pacman -S --noconfirm openssh
+./sshsetup.sh
+# TODO: Use Github API and curl to add ssh key to github before dotfiles
+#chmod 755 $HOME/T460dotfiles/xprofile.sh
+#printf "%s\n" "$HOME/T460dotfiles/xprofile.sh" > $HOME/.xprofile
+#ln -s ~/T460dotfiles/sshrc ~/.sshrc
+
+# Install GnuPG
+sudo pacman -S gnupg
 
 # Clone Dotfiles Repo and Source Files
-sudo pacman -S --noconfirm git
 cd && git clone https://github.com/adamayd/T460dotfiles.git
 printf "%s\n" "source $HOME/T460dotfiles/zshrc" > $HOME/.zshrc
-printf "%s\n" "source $HOME/T460dotfiles/bashrc" > $HOME/.bashrcz
+printf "%s\n" "source $HOME/T460dotfiles/bashrc" > $HOME/.bashrc
 printf "%s\n" "so $HOME/T460dotfiles/vimrc" > $HOME/.vimrc
 mkdir -p $HOME/.config/termite
 ln -s $HOME/T460dotfiles/config/termite/config $HOME/.config/termite/config
 printf "%s\n\t%s\n" "[include]" "path = $HOME/T460dotfiles/gitconfig" > $HOME/.gitconfig 
 
-# Install SSH
-sudo pacman -S --noconfirm openssh
-./sshsetup.sh
-# TODO: Add SSH config file to ~/.ssh/config with AddKeysToAgent yes for persistence
-chmod 755 $HOME/T460dotfiles/xprofile.sh
-printf "%s\n" "$HOME/T460dotfiles/xprofile.sh" > $HOME/.xprofile
-ln -s ~/T460dotfiles/sshrc ~/.sshrc
-
 # Install XOrg and i3WM
-sudo pacman -S xorg-server xorg-apps i3 feh scrot xclip rofi xorg-xcalc
+sudo pacman -S xorg-server xorg-apps i3 feh scrot xclip rofi xorg-xcalc termite
+mkdir -p $HOME/.config/i3/
+ln -s $HOME/T460dotfiles/config/i3/config $HOME/.config/i3/config
 
 # Install Light DM
 sudo pacman -S --noconfirm lightdm lightdm-gtk-greeter
@@ -55,13 +59,14 @@ sudo pacman -S --noconfirm synaptics
 cp -f ~/T460dotfiles/remoteconf/70-synaptics.conf /etc/X11/xorg.conf.d
 
 # Install Filesystem Support
-yay -s hfsprogs
+sudo pacman -S exfat-utils dosfstools autofs
+pikaur -s hfsprogs
 # TODO: ntfs / samba
 # TODO: cd/dvd/bd support
 
 # Install System Fonts
 sudo pacman -S --noconfirm ttf-dejavu xorg-fonts-100dpi powerline powerline-fonts
-yay -S system-san-francisco-font-git ttf-font-awesome ttf-ms-fonts ttf-mac-fonts ttf-font-icons
+pikaur -S system-san-francisco-font-git ttf-font-awesome ttf-ms-fonts ttf-mac-fonts ttf-font-icons
 
 # Install Printing Services
 sudo pacman -S --noconfirm cups cups-pdf
@@ -100,12 +105,12 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | 
 source ~/T460dotfiles/nvmrc && nvm install --lts
 ln -s ~/T460dotfiles/nvmrc ~/.nvmrc
 sudo pacman -S --noconfirm python-pip python2-pip ruby mongodb tmux
-yay -S rbenv
-npm i -g yarn
+pikaur -S rbenv
+npm i -g yarn create-react-app
 
 # Install GUI Dev Software
 sudo pacman -S --noconfirm chromium firefox-developer-edition pycharm-community-edition 
-yay -S postman-bin visual-studio-code-bin slack-desktop gitter gitkraken robo3t-bin
+pikaur -S postman-bin visual-studio-code-bin slack-desktop gitter gitkraken robo3t-bin
 
 # Install LAMP
 #install apache
@@ -123,7 +128,7 @@ yay -S postman-bin visual-studio-code-bin slack-desktop gitter gitkraken robo3t-
 # Install Android Dev Software
 #pacman -S --noconfirm android-studio android-tools android-udev mtpfs
 sudo pacman -S --noconfirm bc bison base-devel ccache curl flex png++ gccbase-devel git gnupg gperf imagemagick lib32-ncurses lib32-readline lib32-zlib lz4 ncurses sdl openssl wxgtk3 libxml2 lzop pngcrush rsync schedtool squashfs-tools libxslt zip zlib maven
-yay -S esound
+pikaur -S esound
 
 # Rice to fix on i3
 # Powerline everywhere
