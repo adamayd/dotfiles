@@ -22,8 +22,11 @@ sudo pacman -S --noconfirm openssh
 #printf "%s\n" "$HOME/T460dotfiles/xprofile.sh" > $HOME/.xprofile
 #ln -s ~/T460dotfiles/sshrc ~/.sshrc
 
-# Install GnuPG
-sudo pacman -S gnupg
+# Install Pass Password Manager
+sudo pacman -S gnupg pass 
+gpg --full-gen-key
+read -p 'Enter email address associated with your PGP key' PGPEMAIL
+pass init $PGPEMAIL
 
 # Clone Dotfiles Repo and Source Files
 cd && git clone https://github.com/adamayd/T460dotfiles.git
@@ -35,7 +38,7 @@ ln -s $HOME/T460dotfiles/config/termite/config $HOME/.config/termite/config
 printf "%s\n\t%s\n" "[include]" "path = $HOME/T460dotfiles/gitconfig" > $HOME/.gitconfig 
 
 # Install XOrg and i3WM
-sudo pacman -S xorg-server xorg-apps i3 feh scrot xclip rofi xorg-xcalc termite
+sudo pacman -S xorg-server xorg-apps i3 feh scrot xclip rofi xorg-xcalc termite dmenu
 mkdir -p $HOME/.config/i3/
 ln -s $HOME/T460dotfiles/config/i3/config $HOME/.config/i3/config
 
