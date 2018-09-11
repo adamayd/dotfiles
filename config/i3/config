@@ -190,7 +190,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Set Wallpaper
-exec_always feh --bg-scale ~/Pictures/wallpaper.jpg
+exec_always feh --bg-scale ~/Pictures/wallpaper.png
 
 # Monitor Hot Keys
 bindsym $mod+m exec xrandr --output DP2-1 --auto --left-of eDP1 --output eDP1 --mode 1600x900

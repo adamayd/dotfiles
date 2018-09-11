@@ -97,8 +97,13 @@ sudo pacman -S --noconfirm dunst
 # Install Ranger Preview Dependencies
 # TODO: w3m? pdf2text?? exiftool??
 
+# Install NeoMutt Email
+sudo pacman -S --noconfirm neomutt dialog offlineimap msmtp
+git clone https://github.com/LukeSmithxyz/mutt-wizard.git ~/.config/mutt
+cd ~/.config/mutt && ./mutt-wizard.sh
+
 # Install CLI Base Software
-sudo pacman -S --noconfirm mpv neomutt calcurse cmus w3m transmission-cli perl-image-exiftool #TODO: slack-term wormhole irssi vitetris
+sudo pacman -S --noconfirm mpv calcurse cmus w3m transmission-cli perl-image-exiftool #TODO: slack-term wormhole irssi vitetris
 
 # Install GUI Base Software
 sudo pacman -S --noconfirm gimp libreoffice-fresh transmission-gtk pdfsam
