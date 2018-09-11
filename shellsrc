@@ -3,6 +3,8 @@ export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 
 # Aliases
 alias ll='ls -lhA --group-directories-first'
+alias mutt='neomutt'
+alias vi='vim'
 
 # SSH
 if [ -e $HOME/.sshrc ]; then
