@@ -17,7 +17,6 @@ cd && rm -rf pikaur
 # Install SSH
 sudo pacman -S --noconfirm openssh
 ./sshsetup.sh
-# TODO: Use Github API and curl to add ssh key to github before dotfiles
 #chmod 755 $HOME/T460dotfiles/xprofile.sh
 #printf "%s\n" "$HOME/T460dotfiles/xprofile.sh" > $HOME/.xprofile
 #ln -s ~/T460dotfiles/sshrc ~/.sshrc
