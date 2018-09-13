@@ -11,6 +11,8 @@ hwclock --systohc --utc
 read -p 'Enter your host name: ' HOSTNAME
 printf '%s\n' "$HOSTNAME" > /etc/hostname
 printf '%s\t%s\t%s\n' '127.0.0.1' "$HOSTNAME.localdomain" "$HOSTNAME" >> /etc/hosts
+sed -i '/\[community-testing\]/s/^#//g' /etc/pacman.conf
+sed -i '/\[community-testing\]/!b;n;cInclude\ =\ \/etc\/pacman\.d\/mirrorlist' /etc/pacman.conf
 sed -i '/\[multilib\]/s/^#//g' /etc/pacman.conf
 sed -i '/\[multilib\]/!b;n;cInclude\ =\ \/etc\/pacman\.d\/mirrorlist' /etc/pacman.conf
 printf '\n%s\n%s\n%s\n%s\n' '# AUR Repository' '[archlinuxfr]' 'SigLevel = Never' 'Server = http://repo.archlinux.fr/$arch' >> /etc/pacman.conf

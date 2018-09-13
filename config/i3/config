@@ -148,11 +148,11 @@ bindsym $mod+Shift+0 move container to workspace 10
 #######assign [class="Chromium"] $workspace2
 
 # Window Colors
-#				border			background		text			indicator
-client.focused			$bg-color		$bg-color		$text-color		#00ff00
-client.unfocused		$inactive-bg-color	$inactive-bg-color	$inactive-text-color	#00ff00
+#	                   			border			background		text			indicator
+client.focused		      	$bg-color		$bg-color		$text-color		#00ff00
+client.unfocused		      $inactive-bg-color	$inactive-bg-color	$inactive-text-color	#00ff00
 client.unfocused.inactive	$inactive-bg-color	$inactive-bg-color	$inacive-text-color	#00ff00
-client.urgent			$urgent-bg-color	$urgent-bg-color	$text-color		#00ff00
+client.urgent			        $urgent-bg-color	$urgent-bg-color	$text-color		#00ff00
 
 hide_edge_borders both
 

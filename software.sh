@@ -118,7 +118,10 @@ npm i -g yarn create-react-app
 
 # Install GUI Dev Software
 sudo pacman -S --noconfirm chromium firefox-developer-edition pycharm-community-edition 
-pikaur -S postman-bin visual-studio-code-bin slack-desktop gitter gitkraken robo3t-bin
+pikaur -S postman-bin slack-desktop gitter gitkraken robo3t-bin
+
+# Install .NET Core
+sudo pacamn -S --noconfirm dotnet-runtime dotnet-sdk code
 
 # Install LAMP
 #install apache
