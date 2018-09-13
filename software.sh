@@ -57,8 +57,9 @@ speaker-test -c 2 -l 2
 sudo pacman -S --noconfirm xf86-video-intel
 cp -f ~/T460dotfiles/remoteconf/20-intel.conf /etc/X11/xorg.conf.d
 
-# Install Synaptics Touchpad
+# Install Synaptics Clickpad
 sudo pacman -S --noconfirm synaptics
+# TODO: libinput for Clickpad
 cp -f ~/T460dotfiles/remoteconf/70-synaptics.conf /etc/X11/xorg.conf.d
 
 # Install Filesystem Support

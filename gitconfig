@@ -1,6 +1,6 @@
 [user]
 	name = Adam Ayd
-	email = adamayd@gmail.com
+	email = adam.ayd@gmail.com
 [alias]
 	co = commit -m
 	coam = commit -am
