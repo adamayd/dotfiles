@@ -2,6 +2,8 @@
 
 # Set System Time & Date
 timedatectl set-ntp true
+# if dual booting with Windows add a DWORD with a value of 1 to the registry at
+# HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation\RealTimeIsUniversal
 
 # Determine EFI status
 if ! efivar -l; then

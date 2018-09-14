@@ -5,6 +5,8 @@ sed -i '/en_US\.UTF/s/^#//g' /etc/locale.gen
 locale-gen
 printf '%s\n' 'LANG=en_US.UTF-8' > /etc/locale.conf
 ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
+# if dual booting with Windows add a DWORD with a value of 1 to the registry at
+# HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation\RealTimeIsUniversal
 hwclock --systohc --utc
 
 # Hostname & Repositories
