@@ -112,9 +112,10 @@ sudo pacman -S --noconfirm gimp libreoffice-fresh transmission-gtk pdfsam
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 source ~/T460dotfiles/nvmrc && nvm install --lts
 ln -s ~/T460dotfiles/nvmrc ~/.nvmrc
+# TODO: Get nvm check out of shellsrc, maybe xinit.rc??
 sudo pacman -S --noconfirm python-pip python2-pip ruby mongodb tmux
 pikaur -S rbenv
-npm i -g yarn create-react-app
+npm i -g yarn create-react-app vue-cli eslint
 
 # Install GUI Dev Software
 sudo pacman -S --noconfirm chromium firefox-developer-edition pycharm-community-edition 
