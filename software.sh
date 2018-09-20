@@ -20,12 +20,15 @@ sudo pacman -S --noconfirm openssh
 #chmod 755 $HOME/T460dotfiles/xprofile.sh
 #printf "%s\n" "$HOME/T460dotfiles/xprofile.sh" > $HOME/.xprofile
 #ln -s ~/T460dotfiles/sshrc ~/.sshrc
+# ****** May need to look into taking SSH keys over in another way *****
 
 # Install Pass Password Manager
 sudo pacman -S gnupg pass 
 gpg --full-gen-key
 read -p 'Enter email address associated with your PGP key' PGPEMAIL
 pass init $PGPEMAIL
+# TODO: copy password database over
+# ***** May need to look into taking PGP key with as well as SSH keys *****
 
 # Clone Dotfiles Repo and Source Files
 cd && git clone https://github.com/adamayd/T460dotfiles.git
@@ -123,6 +126,9 @@ pikaur -S postman-bin slack-desktop gitter gitkraken robo3t-bin
 
 # Install .NET Core
 sudo pacamn -S --noconfirm dotnet-runtime dotnet-sdk code
+
+# Install Embedded Software
+pikaur -S cutecom beye
 
 # Install LAMP
 #install apache
