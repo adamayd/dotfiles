@@ -71,7 +71,7 @@ pikaur -s hfsprogs
 # TODO: cd/dvd/bd support
 
 # Install System Fonts
-sudo pacman -S --noconfirm ttf-dejavu xorg-fonts-100dpi powerline powerline-fonts
+sudo pacman -S --noconfirm ttf-dejavu xorg-fonts-100dpi powerline powerline-fonts noto-fonts-emoji
 pikaur -S system-san-francisco-font-git ttf-font-awesome ttf-ms-fonts ttf-mac-fonts ttf-font-icons
 
 # Install Printing Services
@@ -118,7 +118,7 @@ ln -s ~/T460dotfiles/nvmrc ~/.nvmrc
 # TODO: Get nvm check out of shellsrc, maybe xinit.rc??
 sudo pacman -S --noconfirm python-pip python2-pip ruby mongodb tmux
 pikaur -S rbenv
-npm i -g yarn create-react-app vue-cli eslint
+npm i -g yarn create-react-app vue-cli eslint gatsby
 
 # Install GUI Dev Software
 sudo pacman -S --noconfirm chromium firefox-developer-edition pycharm-community-edition 

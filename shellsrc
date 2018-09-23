@@ -1,4 +1,4 @@
-PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH:$HOME/.yarn/bin"
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 
 # Aliases
