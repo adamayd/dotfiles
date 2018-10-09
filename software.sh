@@ -118,6 +118,7 @@ ln -s ~/T460dotfiles/nvmrc ~/.nvmrc
 # TODO: Get nvm check out of shellsrc, maybe xinit.rc??
 sudo pacman -S --noconfirm python-pip python2-pip ruby mongodb tmux
 pikaur -S rbenv
+# TODO: create NVM install script that installs global packages in each verison of Node
 npm i -g yarn create-react-app vue-cli eslint gatsby
 
 # Install GUI Dev Software
