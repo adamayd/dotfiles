@@ -65,7 +65,7 @@ sudo pacman -S --noconfirm synaptics
 cp -f ~/T460dotfiles/remoteconf/70-synaptics.conf /etc/X11/xorg.conf.d
 
 # Install Filesystem Support
-sudo pacman -S exfat-utils dosfstools autofs
+sudo pacman -S exfat-utils dosfstools udisks2 autofs
 pikaur -s hfsprogs
 # TODO: ntfs / samba
 # TODO: cd/dvd/bd support
@@ -116,7 +116,7 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | 
 source ~/T460dotfiles/nvmrc && nvm install --lts
 ln -s ~/T460dotfiles/nvmrc ~/.nvmrc
 # TODO: Get nvm check out of shellsrc, maybe xinit.rc??
-sudo pacman -S --noconfirm python-pip python2-pip ruby mongodb tmux
+sudo pacman -S --noconfirm python-pip python2-pip ruby mongodb tmux jdk8-openjdk
 pikaur -S rbenv
 # TODO: create NVM install script that installs global packages in each verison of Node
 npm i -g yarn create-react-app vue-cli eslint gatsby
