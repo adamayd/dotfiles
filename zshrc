@@ -92,7 +92,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ll="ls -lhA --group-directories-first"
 alias vi="vim"
 
 source $HOME/T460dotfiles/shellsrc

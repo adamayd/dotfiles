@@ -2,7 +2,8 @@ export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH:$HOME/.yarn/bin"
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 
 # Aliases
-alias ll='ls -lhA --group-directories-first'
+alias ls='ls -lhA --group-directories-first --color'
+alias ll='echo USE LS ASSHOLE'
 alias mutt='neomutt'
 alias vi='vim'
 

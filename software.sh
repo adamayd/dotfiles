@@ -106,7 +106,7 @@ git clone https://github.com/LukeSmithxyz/mutt-wizard.git ~/.config/mutt
 cd ~/.config/mutt && ./mutt-wizard.sh
 
 # Install CLI Base Software
-sudo pacman -S --noconfirm mpv calcurse cmus w3m transmission-cli perl-image-exiftool #TODO: slack-term wormhole irssi vitetris
+sudo pacman -S --noconfirm mpv calcurse cmus w3m transmission-cli perl-image-exiftool rsync #TODO: slack-term wormhole irssi vitetris
 
 # Install GUI Base Software
 sudo pacman -S --noconfirm gimp libreoffice-fresh transmission-gtk pdfsam
