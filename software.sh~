@@ -9,7 +9,7 @@ nmcli dev wifi connect $SSID password $WPAPASS
 
 # Install CLI Installation Utilities
 sudo pacman -S --noconfirm vim bash-completion zsh ranger lm_sensors git tlp htop archey3 unzip 
-# TODO: neofetch vs archey3, dmidecode, cmatrix
+# TODO: neofetch vs archey3, dmidecode
 sudo systemctl enable fstrim.timer
 git clone https://aur.archlinux.org/pikaur.git && cd pikaur
 makepkg -si
