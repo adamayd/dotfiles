@@ -1,16 +1,43 @@
 #! /bin/bash
 
+error_exit()
+{
+  echo "$1" 1>&2
+  exit 1
+}
+
+if cd $1; then
+  echo "Found It!!"
+else
+  error_exit "Change Directory Error!  Aborting."
+fi
+
 # Attach to Wifi
-clear
-nmcli dev wifi list
-read -p 'Enter the SSID of the network: ' SSID
-read -p 'Enter the password: ' WPAPASS
-nmcli dev wifi connect $SSID password $WPAPASS
+connect_wifi()
+{
+  clear
+  nmcli dev wifi 
+  read -p 'Enter the SSID of the network: ' SSID
+  read -p 'Enter the password: ' WPAPASS
+  nmcli dev wifi connect $SSID password $WPAPASS || {
+    echo >&2 "Failed to connect to WiFi"
+    read -p 'Press Enter to try again'
+    connect_wifi
+  }
+}
+
+connect_wifi
+
+exit 0
 
 # Install CLI Installation Utilities
 sudo pacman -S --noconfirm vim bash-completion zsh ranger lm_sensors git tlp htop archey3 unzip 
 # TODO: neofetch vs archey3, dmidecode, cmatrix
+
+# Turn on SSD Trimming
 sudo systemctl enable fstrim.timer
+
+# Install AUR Package Manager
 git clone https://aur.archlinux.org/pikaur.git && cd pikaur
 makepkg -si
 cd && rm -rf pikaur
