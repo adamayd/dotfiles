@@ -120,7 +120,7 @@ sudo pacman -S --noconfirm dunst
 # TODO: dunst configuration?? libnotifiy?? tie to pidgen/irc/slack and media apps
 
 # Install Bluetooth
-# TODO:  bluez
+sudo pacman -S --noconfirm bluez bluez-utils
 
 # Install GUI File Explorer and Preview Dependencies
 # TODO: yeah that, pick a gui file manager first
@@ -154,7 +154,7 @@ sudo pacman -S --noconfirm chromium firefox-developer-edition pycharm-community-
 pikaur -S postman-bin slack-desktop gitter gitkraken robo3t-bin
 
 # Install .NET Core
-sudo pacamn -S --noconfirm dotnet-runtime dotnet-sdk code
+sudo pacman -S --noconfirm dotnet-runtime dotnet-sdk code
 
 # Install Embedded Software
 pikaur -S cutecom beye
