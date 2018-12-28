@@ -16,3 +16,6 @@ fi
 if [ -e $HOME/.nvmrc ]; then
     source ~/.nvmrc
 fi
+
+# Add .NET Core SDK tools
+export PATH="$PATH:/home/adam/.dotnet/tools"

@@ -79,9 +79,12 @@ sudo systemctl enable lightdm.service
 # TODO: finish avatar and background install
 
 # Install Audio
-sudo pacman -S --noconfirm alsa-utils pulseaudio
+sudo pacman -S --noconfirm alsa-utils pulseaudio pulseaudio-alsa
 amixer sset Master unmute 50
 speaker-test -c 2 -l 2
+
+# Install Bluetooth
+sudo pacman -S --noconfirm bluez bluez-utils pulseaudio-bluetooth
 
 # Install Intel Video
 sudo pacman -S --noconfirm xf86-video-intel
@@ -94,7 +97,7 @@ cp -f ~/T460dotfiles/remoteconf/70-synaptics.conf /etc/X11/xorg.conf.d
 
 # Install Filesystem Support
 sudo pacman -S exfat-utils dosfstools udisks2 autofs
-pikaur -s hfsprogs
+pikaur -S hfsprogs
 # TODO: ntfs / samba
 # TODO: cd/dvd/bd support
 
@@ -115,12 +118,13 @@ sudo cp -f $HOME/T460dotfiles/remoteconf/cups-pdf.conf /etc/cups/cups-pdf.conf
 # network scanning
 # gscan2pdf 
 
+# Install VPN & Remote Desktop
+sudo pacman -S --noconfirm rdesktop ppp
+pikaur -S netextender
+
 # Install Notification System
 sudo pacman -S --noconfirm dunst
 # TODO: dunst configuration?? libnotifiy?? tie to pidgen/irc/slack and media apps
-
-# Install Bluetooth
-sudo pacman -S --noconfirm bluez bluez-utils
 
 # Install GUI File Explorer and Preview Dependencies
 # TODO: yeah that, pick a gui file manager first
