@@ -1,0 +1,30 @@
+set editor=`echo \$EDITOR`
+set my_name="Adam Ayd"
+
+# Passwords Import
+source "gpg -dq ~/.mutt/mutt-pwds.gpg |"
+
+# GMAIL
+set imap_user = adam.ayd@gmail.com
+set imap_pass = $my_pass
+set folder    = imaps://adam.ayd@imap.gmail.com/
+set spoolfile = +INBOX
+mailboxes     = +INBOX
+
+# Store message headers locally
+set header_cache = ~/.cache/mutt
+
+# Store message locally
+set message_cachedir = "~/.cache/mutt"
+
+# Specify where to save and look for postponed message
+set postponed = +[Gmail]/Drafts
+
+# Allow Mutt to open a new IMAP connection automatically
+unset imap_passive
+
+# Keep the IMAP connection alive by polling intermittently (seconds)
+set imap_keepalive = 300
+
+# How often to check for new mail (seconds)
+set mail_check = 120

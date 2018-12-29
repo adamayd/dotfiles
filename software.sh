@@ -134,8 +134,10 @@ sudo pacman -S --noconfirm dunst
 
 # Install NeoMutt Email
 sudo pacman -S --noconfirm neomutt dialog offlineimap msmtp
-git clone https://github.com/LukeSmithxyz/mutt-wizard.git ~/.config/mutt
-cd ~/.config/mutt && ./mutt-wizard.sh
+mkdir $HOME/.mutt
+ln -s $HOME/T460dotfiles/muttrc $HOME/.mutt/muttrc
+#git clone https://github.com/LukeSmithxyz/mutt-wizard.git ~/.config/mutt
+#cd ~/.config/mutt && ./mutt-wizard.sh
 
 # Install CLI Base Software
 sudo pacman -S --noconfirm mpv calcurse cmus w3m transmission-cli perl-image-exiftool rsync #TODO: slack-term wormhole irssi vitetris
