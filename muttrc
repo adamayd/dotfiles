@@ -28,3 +28,5 @@ set imap_keepalive = 300
 
 # How often to check for new mail (seconds)
 set mail_check = 120
+
+set sort = 'reverse-date'

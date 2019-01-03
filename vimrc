@@ -22,6 +22,8 @@ filetype plugin indent on
 set showmatch       " matches []{}()
 highlight MatchParen cterm=underline ctermbg=none ctermfg=red
 " sets the paren/bracket/brace matches to a red underline
+set scrolloff=10    " sets the context lines above and below the cursor
+" set scrolloff=999   " sets the cursor to stay in the middle of the screen
 
 set incsearch       " search as characters are entered
 set hlsearch        " highlights matches
