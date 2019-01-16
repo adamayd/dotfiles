@@ -19,6 +19,7 @@ fi
 
 # Add .NET Core SDK tools
 export PATH="$PATH:/home/adam/.dotnet/tools"
+export ASPNETCORE_ENVIRONMENT=development
 
 # Ruby 
 export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH:$HOME/.yarn/bin"
