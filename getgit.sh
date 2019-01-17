@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Grab github username
-read -p "Enter your github user name: " $GHUSER
+read -p "Enter your github user name: " GHUSER
 
 # Create repo directory
 mkdir -p ~/source/repos
