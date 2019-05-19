@@ -71,6 +71,7 @@ printf "%s\n\t%s\n" "[include]" "path = $HOME/T460dotfiles/gitconfig" > $HOME/.g
 sudo pacman -S xorg-server xorg-apps i3 feh scrot xclip rofi xorg-xcalc termite dmenu
 mkdir -p $HOME/.config/i3/
 ln -s $HOME/T460dotfiles/config/i3/config $HOME/.config/i3/config
+ln -s $HOME/T460dotfiles/i3status.conf $HOME/.i3status.conf
 
 # Install Light DM
 sudo pacman -S --noconfirm lightdm lightdm-gtk-greeter
