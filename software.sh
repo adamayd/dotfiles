@@ -31,7 +31,7 @@ connect_wifi
 exit 0
 
 # Install CLI Installation Utilities
-sudo pacman -S --noconfirm vim bash-completion zsh ranger lm_sensors git tlp htop archey3 unzip 
+sudo pacman -S --noconfirm vim bash-completion zsh ranger lm_sensors git tlp htop archey3 unzip acpi
 # TODO: neofetch vs archey3, dmidecode, cmatrix
 
 # Turn on SSD Trimming
@@ -165,6 +165,11 @@ sudo pacman -S --noconfirm dotnet-runtime dotnet-sdk code
 
 # Install Embedded Software
 pikaur -S cutecom beye
+
+# Install Elixir/Erlang Software
+#install asdf
+#install phoenix
+#install nerves
 
 # Install LAMP
 #install apache
