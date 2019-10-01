@@ -10,6 +10,7 @@ set shiftwidth=2    " sets the space on autoindents
 " set autoindent      " copies indentation from previous line
 
 set number          " show line numbers
+set relativenumber  " show line number relative to current line
 set cursorline      " highline line number of current line
 "set lazyredraw      " redraws only when needed
 
@@ -45,6 +46,8 @@ let g:netrw_liststyle = 3         " sets the viewing style to tree
 let g:netrw_browse_split = 4      " sets selection to open in same window (same as netrw)
 let g:netrw_altv = 1              " 
 let g:netrw_winsize = 20          " sets the browser window size to 20%
+nmap <leader>ne :Vexplore<cr>     " shortcut to run netrw
+nmap <leader>nt :NERDTree<cr>     " shortcut to run NERDTree
 
 "autocmd!      
 "autocmd VimEnter * :Vexplore
