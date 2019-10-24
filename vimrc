@@ -31,6 +31,10 @@ set hlsearch        " highlights matches
 nnoremap <leader><space> :nohlsearch<CR>
 " removes highlighted matches with ,<space>
 
+set nobackup        " no backup files
+set nowritebackup   " only in case you don't want a backup file while editing
+set noswapfile      " no swap files
+
 set foldenable      " enable folding
 set foldlevelstart=99 " sets level of foldes to open
 " 99 is all folds open, 10 is good for deep nesting, 0 is all folds closed
