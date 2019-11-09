@@ -3,6 +3,7 @@ alias ls='ls -lhA --group-directories-first --color'
 alias ll='echo USE LS ASSHOLE'
 alias mutt='neomutt'
 alias vi='vim'
+alias psg="ps -aux | grep -v grep | grep "
 
 # Enviroment Variables
 export EDITOR='vim'
@@ -13,14 +14,14 @@ if [ -e $HOME/.sshrc ]; then
 fi
 
 # Node Version Manager (NVM)
-if [ -e $HOME/.nvmrc ]; then
-    source ~/.nvmrc
-fi
+#if [ -e $HOME/.nvmrc ]; then
+#    source ~/.nvmrc
+#fi
 
-# Add .NET Core SDK tools
-export PATH="$PATH:/home/adam/.dotnet/tools"
-export ASPNETCORE_ENVIRONMENT=development
+## Scripts for ASDF Version Manager
+#. $HOME/.asdf/asdf.sh
+#. $HOME/.asdf/completions/asdf.bash
 
-# Ruby 
-export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH:$HOME/.yarn/bin"
-export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+## Ruby 
+#export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+#export GEM_HOME=$(ruby -e 'print Gem.user_dir')
