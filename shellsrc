@@ -10,18 +10,20 @@ export EDITOR='vim'
 
 # SSH
 if [ -e $HOME/.sshrc ]; then
-    source ~/.sshrc
+    source $HOME/.sshrc
 fi
 
 # Node Version Manager (NVM)
-#if [ -e $HOME/.nvmrc ]; then
-#    source ~/.nvmrc
-#fi
+if [ -e $HOME/.nvmrc ]; then
+    source $HOME/.nvmrc
+fi
 
-## Scripts for ASDF Version Manager
-#. $HOME/.asdf/asdf.sh
-#. $HOME/.asdf/completions/asdf.bash
+## ASDF Version Manager
+if [ -e $HOME/.asdfrc ]; then
+    source $HOME/.asdfrc
+fi
 
 ## Ruby 
-#export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
-#export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+if [ -e $HOME/.rubyrc ]; then
+    source $HOME/.rubyrc
+fi
