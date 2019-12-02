@@ -4,8 +4,8 @@
 read -p "Enter your github user name: " GHUSER
 
 # Create repo directory
-mkdir -p ~/source/repos
-cd ~/source/repos
+mkdir -p ~/Code/projects
+cd ~/Code/projects
 
 # Get repo names from Github
 curl -k --request GET https://api.github.com/users/$GHUSER/repos\?per_page\=100 > curlrepos.txt
