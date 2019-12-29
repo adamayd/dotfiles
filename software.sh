@@ -154,7 +154,7 @@ ln -s ~/T460dotfiles/nvmrc ~/.nvmrc
 sudo pacman -S --noconfirm python-pip python2-pip ruby mongodb tmux jdk8-openjdk
 pikaur -S rbenv
 # TODO: create NVM install script that installs global packages in each verison of Node
-npm i -g yarn create-react-app vue-cli eslint gatsby-cli
+npm i -g yarn create-react-app @vue/cli eslint gatsby-cli eslint @gridsome/cli jest
 
 # Install GUI Dev Software
 sudo pacman -S --noconfirm chromium firefox-developer-edition pycharm-community-edition 
