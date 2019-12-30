@@ -100,6 +100,7 @@ echo "source $HOME/dotfiles/shellsrc" >> $HOME/.bashrc
 if [[ $? -ne 0 ]]; then
   error_exit "Error appending to .bashrc! Aborting."
 fi
+ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
 
 # Install Snaps Classic
 #if snap install chromium postman; then 
