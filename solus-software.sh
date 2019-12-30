@@ -20,10 +20,6 @@ fi
 
 # Create SSH Key
 
-# Clone dotfiles repo
-
-# Link dotifles
-
 # Install Base Development System
 sudo eopkg install -y -c system.devel
 if [[ $? -ne 0 ]]; then
@@ -64,22 +60,45 @@ if [[ $? -ne 0 ]]; then
   error_exit "Error installing Java! Aborting."
 fi
 
-# Install Browsers
+# Install QuteBrowser 
+# Install mpv and youtube-dl as well and qutebrowser config
 sudo eopkg install -y qutebrowser
 if [[ $? -ne 0 ]]; then
   error_exit "Error installing browsers! Aborting."
 fi
 
 # Install Fonts
-sudo eopkg install -y font-awesome-ttf font-awesome-4 powerline-fonts
+sudo eopkg install -y font-awesome-ttf font-awesome-4 powerline-fonts font-firacode-ttf font-firacode-otf
 if [[ $? -ne 0 ]]; then
   error_exit "Error installing fonts! Aborting."
 fi
 
+# Install Powerline
+pip3 install --user powerline-status powerline-gitstatus
+if [[ $? -ne 0 ]]; then
+  error_exit "Error installing Powerline! Aborting."
+fi
+
 # Install Rice
-sudo eopkg install -y powerline
+echo "Rice"
 if [[ $? -ne 0 ]]; then
   error_exit "Error installing rice! Aborting."
+fi
+
+# Clone dotfiles repo
+git clone https://github.com/adamayd/dotfiles.git $HOME/dotfiles
+if [[ $? -ne 0 ]]; then
+  error_exit "Error cloning dotfiles! Aborting."
+fi
+
+# Link dotifles
+ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
+if [[ $? -ne 0 ]]; then
+  error_exit "Error linking .vimrc! Aborting."
+fi
+echo "source $HOME/dotfiles/shellsrc" >> $HOME/.bashrc
+if [[ $? -ne 0 ]]; then
+  error_exit "Error appending to .bashrc! Aborting."
 fi
 
 # Install Snaps Classic
