@@ -7,7 +7,7 @@ error_exit()
 }
 
 # Install Command Line Utilities
-sudo eopkg install -y zsh ranger lm_sensors htop unzip git neofetch cmatrix
+sudo eopkg install -y zsh ranger lm_sensors htop unzip git neofetch cmatrix strace
 if [[ $? -ne 0 ]]; then
   error_exit "Error installing command line utilities! Aborting."
 fi
