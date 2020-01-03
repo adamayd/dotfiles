@@ -4,6 +4,7 @@ alias ll='echo USE LS ASSHOLE'
 alias mutt='neomutt'
 alias vi='vim'
 alias psg="ps -aux | grep -v grep | grep "
+alias fetchYml="$HOME/Code/solus/packages/common/Scripts/yauto.py"
 
 # Enviroment Variables
 export EDITOR='vim'
