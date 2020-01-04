@@ -60,6 +60,16 @@ if [[ $? -ne 0 ]]; then
   error_exit "Error installing Java! Aborting."
 fi
 
+# Install .NET Core
+sudo snap install dotnet-sdk --classic
+if [[ $? -ne 0 ]]; then
+  error_exit "Error installing .NET SDK! Aborting."
+fi
+sudo snap install dotnet-runtime-22 dotnet-runtime-30 dotnet-runtime-31
+if [[ $? -ne 0 ]]; then
+  error_exit "Error installing .NET Runtime! Aborting."
+fi
+
 # Install i3wm
 sudo eopkg it -y i3 rofi xbacklight feh
 
@@ -70,11 +80,37 @@ if [[ $? -ne 0 ]]; then
   error_exit "Error installing browsers! Aborting."
 fi
 
+# Install Chats
+sudo snap install slack discord
+if [[ $? -ne 0 ]]; then
+  error_exit "Error installing chat client snaps! Aborting."
+fi
+sudo eopkg it -y hexchat
+if [[ $? -ne 0 ]]; then
+  error_exit "Error installing hexchat! Aborting."
+fi
+
 # Install Fonts
 sudo eopkg install -y font-awesome-ttf font-awesome-4 powerline-fonts font-firacode-ttf font-firacode-otf
 if [[ $? -ne 0 ]]; then
   error_exit "Error installing fonts! Aborting."
 fi
+
+# Install API Tools
+sudo snap install postman
+if [[ $? -ne 0 ]]; then
+  error_exit "Error installing Postman snap! Aborting."
+fi
+
+# Install Microsoft Tools
+# Download and install Teams
+# Download and install Azure Data Studio
+sudo snap install vscode --classic
+
+# Install Cloud Provider CLIs
+# Install AWS and Boto3
+# Install Azure CLI
+# Install GCP CLI
 
 # Install Powerline
 pip3 install --user powerline-status powerline-gitstatus
@@ -105,20 +141,8 @@ if [[ $? -ne 0 ]]; then
 fi
 ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
 
-# Install Snaps Classic
-#if snap install chromium postman; then 
-  #error_exit "Error installing command line utilities! Aborting."
-#fi
 
-# Install Snaps Regular
-#if sudo snap install slack --classic; then
-  #error_exit "Error installing command line utilities! Aborting."
-#fi
-
-#sudo snap install dotnet-sdk --classic
-#sudo snap install dotnet-runtime-22
 #sudo snap install pycharm-community --classic
-#sudo snap install vscode --classic
 
 # TODO: Confirm Commands
 #
