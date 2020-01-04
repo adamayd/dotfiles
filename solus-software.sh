@@ -7,7 +7,7 @@ error_exit()
 }
 
 # Install Command Line Utilities
-sudo eopkg install -y zsh ranger lm_sensors htop unzip git neofetch cmatrix strace xbacklight
+sudo eopkg install -y zsh ranger lm_sensors htop unzip git neofetch cmatrix strace 
 if [[ $? -ne 0 ]]; then
   error_exit "Error installing command line utilities! Aborting."
 fi
@@ -59,6 +59,9 @@ sudo eopkg install -y mongodb tmux openjdk-8
 if [[ $? -ne 0 ]]; then
   error_exit "Error installing Java! Aborting."
 fi
+
+# Install i3wm
+sudo eopkg it -y i3 rofi xbacklight feh
 
 # Install QuteBrowser 
 # Install mpv and youtube-dl as well and qutebrowser config
