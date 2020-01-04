@@ -106,6 +106,7 @@ fi
 # Download and install Teams
 # Download and install Azure Data Studio
 sudo snap install vscode --classic
+sudo snap install powershell --classic
 
 # Install Cloud Provider CLIs
 # Install AWS and Boto3
