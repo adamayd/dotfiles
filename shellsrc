@@ -29,4 +29,7 @@ if [ -e $HOME/.rubyrc ]; then
     source $HOME/.rubyrc
 fi
 
+## .NET Core
+alias dotnet='dotnet-sdk.dotnet'
+
 . /usr/lib64/python3.6/site-packages/powerline/bindings/bash/powerline.sh
