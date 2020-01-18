@@ -32,4 +32,6 @@ fi
 ## .NET Core
 alias dotnet='dotnet-sdk.dotnet'
 
-. /usr/lib64/python3.6/site-packages/powerline/bindings/bash/powerline.sh
+if [ -e /usr/lib64/python3.6/site-packages/powerline/bindings/bash/powerline.sh ]; then
+    . /usr/lib64/python3.6/site-packages/powerline/bindings/bash/powerline.sh
+fi

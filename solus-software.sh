@@ -49,10 +49,6 @@ yarn global add create-react-app @vue/cli eslint gatsby-cli @gridsome/cli jest
 if [[ $? -ne 0 ]]; then
   error_exit "Error installing Node utilities using Yarn! Aborting."
 fi
-#sudo yarn global add @gridsome/cli 
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing Node utilities in NPM! Aborting."
-#fi
 
 # Install Java
 sudo eopkg install -y mongodb tmux openjdk-8
@@ -65,6 +61,7 @@ sudo snap install dotnet-sdk --classic
 if [[ $? -ne 0 ]]; then
   error_exit "Error installing .NET SDK! Aborting."
 fi
+# TODO: error handling for re-run to handle no snap refresh on dotnet runtimes
 sudo snap install dotnet-runtime-22 dotnet-runtime-30 dotnet-runtime-31
 if [[ $? -ne 0 ]]; then
   error_exit "Error installing .NET Runtime! Aborting."
@@ -81,9 +78,13 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # Install Chats
-sudo snap install slack discord
+sudo snap install slack --classic
 if [[ $? -ne 0 ]]; then
-  error_exit "Error installing chat client snaps! Aborting."
+  error_exit "Error installing Slack! Aborting."
+fi
+sudo snap install discord
+if [[ $? -ne 0 ]]; then
+  error_exit "Error installing Discord! Aborting."
 fi
 sudo eopkg it -y hexchat
 if [[ $? -ne 0 ]]; then
@@ -126,10 +127,10 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # Clone dotfiles repo
-git clone https://github.com/adamayd/dotfiles.git $HOME/dotfiles
-if [[ $? -ne 0 ]]; then
-  error_exit "Error cloning dotfiles! Aborting."
-fi
+#git clone https://github.com/adamayd/dotfiles.git $HOME/dotfiles
+#if [[ $? -ne 0 ]]; then
+  #error_exit "Error cloning dotfiles! Aborting."
+#fi
 
 # Link dotifles
 ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
@@ -141,6 +142,7 @@ if [[ $? -ne 0 ]]; then
   error_exit "Error appending to .bashrc! Aborting."
 fi
 ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
+ln -s $HOME/dotfiles/gitconfig $HOME/.gitconfig
 
 
 #sudo snap install pycharm-community --classic
