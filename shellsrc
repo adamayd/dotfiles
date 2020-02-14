@@ -1,6 +1,5 @@
 # Aliases
-alias ls='ls -lhA --group-directories-first --color'
-alias ll='echo USE LS ASSHOLE'
+alias ll='ls -lhA --group-directories-first --color=auto'
 alias mutt='neomutt'
 alias vi='vim'
 alias psg="ps -aux | grep -v grep | grep "
