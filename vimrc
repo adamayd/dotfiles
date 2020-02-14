@@ -45,16 +45,25 @@ set foldmethod=indent " sets the identifier of the folds
 " launch pathogen plugin manager
 
 " netrw settings
-let g:netrw_banner = 0            " removes the info banner
-let g:netrw_liststyle = 3         " sets the viewing style to tree
-let g:netrw_browse_split = 4      " sets selection to open in same window (same as netrw)
-let g:netrw_altv = 1              " 
-let g:netrw_winsize = 20          " sets the browser window size to 20%
-nmap <leader>ne :Vexplore<cr>     " shortcut to run netrw
-nmap <leader>nt :NERDTree<cr>     " shortcut to run NERDTree
-
+"let g:netrw_banner = 0            " removes the info banner
+"let g:netrw_liststyle = 3         " sets the viewing style to tree
+"let g:netrw_browse_split = 4      " sets selection to open in same window (same as netrw)
+"let g:netrw_altv = 1              " 
+"let g:netrw_winsize = 20          " sets the browser window size to 20%
+"nmap <leader>ne :Vexplore<cr>     " shortcut to run netrw
 "autocmd!      
 "autocmd VimEnter * :Vexplore
+
+" Starts with NERDTree open if no file is passed on command line
+function! StartUp()
+  if 0 == argc()
+    NERDTree
+  end
+endfunction
+autocmd VimEnter * call StartUp()
+
+let NERDTreeQuitOnOpen=1
+nmap <leader>nt :NERDTree<cr>     " shortcut to run NERDTree
 
 " ***** Word Handling *****
 " makes daw and ciw accept dash separated words as one word
