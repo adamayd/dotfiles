@@ -66,6 +66,12 @@ Should always support at least the following:
 * Go
 * Java
 
+### Databases
+
+* MySQL
+* PostgreSQL
+* Mongo
+
 ### Containerization
 
 Lets containerize all the things.  Learning more about containers, I want to move to all container based development.  Look for examples of volumes mounted in the container with nodemon running.
