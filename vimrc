@@ -2,7 +2,6 @@
 if !exists("g:syntax_on")
     syntax enable
 endif
-set background=dark
 
 set tabstop=2	    	" number of visual spaces per TAB
 set softtabstop=2 	" number of spaces in tab when editing
@@ -54,13 +53,12 @@ filetype off        " required for Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-sensible'
-Plugin 'pangloss/vim-javascript'
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'morhetz/gruvbox'
 Plugin 'mxw/vim-jsx'
 Plugin 'godlygeek/tabular' " must be before vim-markdown
-Plugin 'plasticboy/vim-markdown'
-Plugin 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 call vundle#end()
 
 " ***** Turn back on filetype after Vundle *****
@@ -69,6 +67,9 @@ filetype plugin indent on
 " and filetype specific identation rules (ident)
 " ident files located ~/.vim/indent/*.vim
 " i.e. ~/.vim/indent/python.vim loads with *.py
+
+colorscheme gruvbox
+set background=dark 
 
 " ***** NERDTree Options *****
 " Starts with NERDTree open if no file is passed on command line

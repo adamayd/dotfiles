@@ -41,8 +41,13 @@ All software installation will be moved to ansible playbooks.
 
 There may be different paths and this will most definitely change with knowledge increase of containerized development envs.  All development is going to push to VIM instead of VS Code.  Look at the following:
 
-* tpope 
-* thePrimeagen
+* thePrimeagen vimrc
+
+Notable Vim Plugins
+* Vundle
+* fugitive
+* YouCompleteMe
+* gruvbox
 
 Should always support at least the following:
 
@@ -53,13 +58,15 @@ Should always support at least the following:
   * Vue - Vue CLI, Gridsome
   * ESLint
   * Testing - Mocha, Jest, Cypress
-* Python
+* Python (3)
   * pipenv
   * Django
   * Flask
   * Testing
+* Go
+* Java
 
-## Containerization
+### Containerization
 
 Lets containerize all the things.  Learning more about containers, I want to move to all container based development.  Look for examples of volumes mounted in the container with nodemon running.
 
@@ -68,15 +75,24 @@ Install the following:
 * Docker CE client / service
 * MiniKube for kubernetes local testing
 
-## Cloud
+### Microservices Architecture
+
+Build apps based on event driven Microservices Architecture.  This is going to be overkill for most apps but good practice for larger scale apps.
+
+* MQTT
+* RabbitMQ 
+
+### Cloud
 
 For interaction with cloud providers.  Currently using AWS and DO but hope to expand knowledge
 
 * AWS CLI - pip install
 * Digital Ocean Cloud Controller Manager (CCM) - git clone
 
-## CI/CD
+### CI/CD
 
 All projects should be utilizing CI/CD/CD in some shape or form.  I want to use a mix of Jenkins and CirclCI.  Testing needs to be integrated as well.  I am pushing for TDD on all projects going forward and retroactively for continuing projects.
 
+## Progressive Builds
 
+The initial builds will be done and tested on bare metal and VMs to work through the installation and configuration processes.  Then go through the process of converting to containers for the practice.

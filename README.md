@@ -1,3 +1,9 @@
+# Version 2 On The Way
+
+I am currently working on Version 2 of my dotfiles that will be much more flexible to either of my systems or a new build.  Also I'm re-aligning my system builds to help my project developement and studies for cloud native development and transformations.
+
+Please look at [dotfilesv2.md](dotfilesv2.md) for more information.
+
 # .T460dotfiles
 These dotfiles are not intended for use other than my personal Thinkpad.  Feel free to use them in anyway you wish, but be advised.  There are many irreversible changes that WILL ERASE YOUR HARD DRIVE.  I started recently with a clean nuke and pave and have been moving in an outline then script model.  Once I get through the base system installs I will start working on the unixporn stuff and get some screenshots posted.  As of now, this is my system:
 ### Arch Base System
