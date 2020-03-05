@@ -57,15 +57,15 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # Install .NET Core
-sudo snap install dotnet-sdk --classic
-if [[ $? -ne 0 ]]; then
-  error_exit "Error installing .NET SDK! Aborting."
-fi
+#sudo snap install dotnet-sdk --classic
+#if [[ $? -ne 0 ]]; then
+#  error_exit "Error installing .NET SDK! Aborting."
+#fi
 # TODO: error handling for re-run to handle no snap refresh on dotnet runtimes
-sudo snap install dotnet-runtime-22 dotnet-runtime-30 dotnet-runtime-31
-if [[ $? -ne 0 ]]; then
-  error_exit "Error installing .NET Runtime! Aborting."
-fi
+#sudo snap install dotnet-runtime-22 dotnet-runtime-30 dotnet-runtime-31
+#if [[ $? -ne 0 ]]; then
+#  error_exit "Error installing .NET Runtime! Aborting."
+#fi
 
 # Install i3wm
 sudo eopkg it -y i3 rofi xbacklight feh
@@ -86,10 +86,10 @@ sudo snap install discord
 if [[ $? -ne 0 ]]; then
   error_exit "Error installing Discord! Aborting."
 fi
-sudo eopkg it -y hexchat
-if [[ $? -ne 0 ]]; then
-  error_exit "Error installing hexchat! Aborting."
-fi
+#sudo eopkg it -y hexchat
+#if [[ $? -ne 0 ]]; then
+#  error_exit "Error installing hexchat! Aborting."
+#fi
 
 # Install Fonts
 sudo eopkg install -y font-awesome-ttf font-awesome-4 powerline-fonts font-firacode-ttf font-firacode-otf
@@ -106,8 +106,8 @@ fi
 # Install Microsoft Tools
 # Download and install Teams
 # Download and install Azure Data Studio
-sudo snap install vscode --classic
-sudo snap install powershell --classic
+#sudo snap install vscode --classic
+#sudo snap install powershell --classic
 
 # Install Cloud Provider CLIs
 # Install AWS and Boto3
@@ -115,10 +115,10 @@ sudo snap install powershell --classic
 # Install GCP CLI
 
 # Install Powerline
-pip3 install --user powerline-status powerline-gitstatus
-if [[ $? -ne 0 ]]; then
-  error_exit "Error installing Powerline! Aborting."
-fi
+#pip3 install --user powerline-status powerline-gitstatus
+#if [[ $? -ne 0 ]]; then
+#  error_exit "Error installing Powerline! Aborting."
+#fi
 
 # Install Rice
 echo "Rice"
