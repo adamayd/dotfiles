@@ -56,6 +56,12 @@ if [[ $? -ne 0 ]]; then
   error_exit "Error installing Java! Aborting."
 fi
 
+curl -o- -L https://slss.io/install | bash
+if [[ $? -ne 0 ]]; then
+  error_exit "Error installing Serverless Framework! Aborting."
+fi
+
+
 # Install .NET Core
 #sudo snap install dotnet-sdk --classic
 #if [[ $? -ne 0 ]]; then
