@@ -7,7 +7,7 @@ error_exit()
 }
 
 # Install Command Line Utilities
-sudo eopkg install -y ranger lm_sensors htop unzip git neofetch cmatrix strace curl tmux xclip
+sudo eopkg install -y vim ranger lm_sensors htop unzip git neofetch cmatrix strace curl tmux xclip
 if [[ $? -ne 0 ]]; then
   error_exit "Error installing command line utilities! Aborting."
 fi
@@ -120,7 +120,7 @@ sudo eopkg it -y i3 rofi xbacklight feh
 #printf "\s\n", "Press any key to open Chromium and set up syncing.  Close Chromium when finished"
 #read -p "Enter s to skip: " SKIPPER
 #if [[ $SKIPPER != 's' ]] || [[ $SKIPPER != 'S' ]]; then
-  #firefox -new-tab "https://www.mozilla.org/en-US/firefox/developer/"
+  #chromium 
 #fi
 printf "%s\n" "Press any key to open Firefox and download Firefox Developer Edition. Close Firefox when finished"
 read -p "Enter s to skip: " skipper
@@ -135,7 +135,7 @@ printf "%s\n" "Press any key to open Firefox Developer Edition and set up syncin
 read -p "Enter s to skip: " skipper
 echo $skipper
 if [[ $skipper != 's' ]] && [[ $skipper != 'S' ]]; then
-  /opt/firefox-developer-edition/firefox -new-tab "https://www.mozilla.org/en-US/firefox/developer/"
+  /opt/firefox-developer-edition/firefox 
 fi
 
 # Add SSH to Github/GitLab
@@ -156,12 +156,6 @@ fi
 #TODO: 
 
 # Install Code Editors and IDE's 
-sudo eopkg install vim
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-vim +PluginInstall +qall
-cd $HOME/.vim/bundle/YouCompleteMe
-python3 install.py --all
-
 sudo eopkg install -y vscode
 if [[ $? -ne 0 ]]; then
   error_exit "Error installing code editors and IDEs! Aborting."
@@ -214,11 +208,17 @@ if [[ $? -ne 0 ]]; then
   error_exit "Error cloning dotfiles! Aborting."
 fi
 
-# Link dotifles TODO: FINISH
+# Install Vim Plugins
 ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
 if [[ $? -ne 0 ]]; then
   error_exit "Error linking .vimrc! Aborting."
 fi
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vim +PluginInstall +qall
+cd $HOME/.vim/bundle/YouCompleteMe
+python3 install.py --all
+
+# Link dotifles TODO: FINISH
 echo "source $HOME/dotfiles/shellsrc" >> $HOME/.bashrc
 if [[ $? -ne 0 ]]; then
   error_exit "Error appending to .bashrc! Aborting."
