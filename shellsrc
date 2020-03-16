@@ -19,6 +19,12 @@ if [ -e $HOME/.nvmrc ]; then
     source $HOME/.nvmrc
 fi
 
+# Go Path
+if [ -e $HOME/go ]; then
+    export GOPATH="$HOME/go"
+    export PATH=$PATH:$GOPATH
+fi
+
 ## ASDF Version Manager
 if [ -e $HOME/.asdfrc ]; then
     source $HOME/.asdfrc
@@ -28,9 +34,6 @@ fi
 if [ -e $HOME/.rubyrc ]; then
     source $HOME/.rubyrc
 fi
-
-## .NET Core
-alias dotnet='dotnet-sdk.dotnet'
 
 if [ -e /usr/lib64/python3.6/site-packages/powerline/bindings/bash/powerline.sh ]; then
     . /usr/lib64/python3.6/site-packages/powerline/bindings/bash/powerline.sh
