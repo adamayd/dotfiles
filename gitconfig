@@ -1,6 +1,8 @@
 [user]
 	name = Adam Ayd
 	email = adam.ayd@gmail.com
+[pager]
+  branch = false
 [alias]
 	co = commit -m
 	coam = commit -am
