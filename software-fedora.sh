@@ -1,6 +1,14 @@
+#! /bin/bash
+
+error_exit()
+{
+  echo "$1" 1>&2
+  exit 1
+}
+
 sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-sudo dnf install -y vim ranger exfat-utils fuse-exfat neofetch cmatrix strace curl wget tmux xclip
+sudo dnf install -y ranger exfat-utils fuse-exfat neofetch cmatrix strace curl wget tmux xclip
 
 # Install Security Utilities
 #sudo eopkg install -y gnupg password-store
@@ -19,11 +27,15 @@ fi
 # Install Base Development System
 sudo dnf groupinstall -y "Development Tools"
 if [[ $? -ne 0 ]]; then
-  error_exit "Error installing the base development system! Aborting."
+  error_exit "Error installing the development tools! Aborting."
 fi
 sudo dnf groupinstall -y "C Development Tools and Libraries"
 if [[ $? -ne 0 ]]; then
-  error_exit "Error installing the base development system! Aborting."
+  error_exit "Error installing the c development tools and libraries! Aborting."
+fi
+sudo dnf install -y python3-devel cmake
+if [[ $? -ne 0 ]]; then
+  error_exit "Error installing additional development tools and libraries! Aborting."
 fi
 
 # Install ACPI and TLP
@@ -45,28 +57,28 @@ export NVM_DIR="$HOME/.nvm"
 nvm install --lts
 
 # Install Yarn for Node JS
-#sudo eopkg it -y yarn
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing Yarn! Aborting."
-#fi
+sudo dnf install -y yarnpkg
+if [[ $? -ne 0 ]]; then
+  error_exit "Error installing Yarn! Aborting."
+fi
 
 # Install Node Utilities
-#yarn global add create-react-app @vue/cli eslint gatsby-cli @gridsome/cli jest
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing Node utilities using Yarn! Aborting."
-#fi
+sudo yarn global add create-react-app @vue/cli eslint gatsby-cli @gridsome/cli jest
+if [[ $? -ne 0 ]]; then
+  error_exit "Error installing Node utilities using Yarn! Aborting."
+fi
 
 # Install Python
-#sudo eopkg install pip pipenv
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing Python! Aborting."
-#fi
+sudo dnf install -y  python3-devel pipenv
+if [[ $? -ne 0 ]]; then
+  error_exit "Error installing Python! Aborting."
+fi
 
 # Install Go
-#sudo eopkg install golang
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing Go! Aborting."
-#fi
+sudo dnf install -y golang
+if [[ $? -ne 0 ]]; then
+  error_exit "Error installing Go! Aborting."
+fi
 
 # Install Elixir
 #sudo eopkg install elixir stuff (asdf)
@@ -108,6 +120,67 @@ nvm install --lts
 # Install i3wm
 #sudo eopkg it -y i3 rofi xbacklight feh
 
+# Install Firefox Developer Edition
+install_firefox_dev() {
+  local skipper
+  printf "%s\n" "Press any key to open Firefox and download Firefox Developer Edition. Close Firefox when finished"
+  printf "%s\n" "This will close any open Firefox session, save work and continue or Ctrl-C now to exit"
+  read -p "Enter s to skip: " skipper
+  if [[ $skipper != 's' && $skipper != 'S' ]]; then
+    killall firefox
+    firefox "https://www.mozilla.org/en-US/firefox/developer/"
+    if [[ -d "/opt/firefox" || -d "/opt/firefox-developer-edition" ]]; then
+      sudo rm -rf /opt/firefox
+      sudo rm -rf /opt/firefox-developer-edition
+    fi
+    sudo tar -xvf $HOME/Downloads/firefox* -C /opt/
+    sudo mv /opt/firefox/ /opt/firefox-developer-edition/
+    sudo chown adam /opt/firefox-developer-edition/
+    if [ -L /usr/share/applications/firefox-developer-edition.desktop ]; then
+      sudo rm /usr/share/applications/firefox-developer-edition.desktop
+    elif [ -e /usr/share/applications/firefox-developer-edition.desktop ]; then
+      sudo cp /usr/share/applications/firefox-developer-edition.desktop /usr/share/applications/firefox-developer-edition.desktop.old
+    fi
+    sudo ln -s $HOME/dotfiles/gnome/firefox-developer-edition.desktop /usr/share/applications/
+    firefox_dev_installed=true
+  fi
+}
+
+# Turn On Sync for Firefox
+sync_firefox_dev() {
+  local skipper
+  printf "%s\n" "Press any key to open Firefox Developer Edition and set up syncing. Close Firefox when finished"
+  read -p "Enter s to skip: " skipper
+  echo $skipper
+  if [[ $skipper != 's' && $skipper != 'S' ]]; then
+    killall firefox
+    /opt/firefox-developer-edition/firefox 
+  fi
+}
+
+# Add SSH to Github/GitLab
+add_ssh_to_gits() {
+  local skipper
+  printf "%s\n" "Press any key to open Firefox and set up Github and GitLab.  Close Firefox when finished"
+  read -p "Enter s to skip: " skipper
+  echo $skipper
+  if [[ $skipper != 's' && $skipper != 'S' ]]; then
+    killall firefox
+    xclip -sel clip < $HOME/.ssh/id_rsa.pub
+    /opt/firefox-developer-edition/firefox www.github.com www.gitlab.com
+  fi
+}
+
+# Call Firefox Functions
+firefox_dev_installed=false
+install_firefox_dev
+if [ "$firefox_dev_installed" = true ]; then
+  sync_firefox_dev
+  add_ssh_to_gits
+fi 
+
+# Install Brave
+
 # Install Browsers
 #sudo eopkg install -y chromium
 #printf "\s\n", "Press any key to open Chromium and set up syncing.  Close Chromium when finished"
@@ -115,31 +188,6 @@ nvm install --lts
 #if [[ $SKIPPER != 's' ]] || [[ $SKIPPER != 'S' ]]; then
   #chromium 
 #fi
-printf "%s\n" "Press any key to open Firefox and download Firefox Developer Edition. Close Firefox when finished"
-read -p "Enter s to skip: " skipper
-echo $skipper
-if [[ $skipper != 's' ]] && [[ $skipper != 'S' ]]; then
-  firefox -new-tab "https://www.mozilla.org/en-US/firefox/developer/"
-fi
-sudo tar -xvf $HOME/Downloads/firefox* -C /opt/
-sudo mv /opt/firefox/ /opt/firefox-developer-edition/
-sudo chown adam /opt/firefox-developer-edition/
-printf "%s\n" "Press any key to open Firefox Developer Edition and set up syncing. Close Firefox when finished"
-read -p "Enter s to skip: " skipper
-echo $skipper
-if [[ $skipper != 's' ]] && [[ $skipper != 'S' ]]; then
-  /opt/firefox-developer-edition/firefox 
-fi
-
-# Add SSH to Github/GitLab
-printf "%s\n" "Press any key to open Firefox and set up Github and GitLab.  Close Firefox when finished"
-read -p "Enter s to skip: " skipper
-echo $skipper
-if [[ $skipper != 's' ]] && [[ $skipper != 'S' ]]; then
-  xclip -sel clip < $HOME/.ssh/id_rsa.pub
-  /opt/firefox-developer-edition/firefox -new-tab "www.github.com"
-  #/opt/firefox-developer-edition/firefox -new-tab "www.gitlab.com"
-fi
 
 # Install QuteBrowser 
 #sudo eopkg install -y qutebrowser
@@ -191,10 +239,10 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # Install Powerline
-#sudo pip3 install --user powerline-status
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing Powerline! Aborting."
-#fi
+sudo pip3 install --user powerline-status
+if [[ $? -ne 0 ]]; then
+  error_exit "Error installing Powerline! Aborting."
+fi
 
 # Clone dotfiles repo
 #git clone https://github.com/adamayd/dotfiles.git $HOME/dotfiles
@@ -202,7 +250,13 @@ fi
   #error_exit "Error cloning dotfiles! Aborting."
 #fi
 
-# Install Vim Plugins
+# Install Vim
+sudo dnf install -y vim 
+if [ -L $HOME/.vimrc ]; then
+  rm $HOME/.vimrc
+elif [ -e $HOME/.vimrc ]; then
+  cp $HOME/.vimrc $HOME/.vimrc_old
+fi
 ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
 if [[ $? -ne 0 ]]; then
   error_exit "Error linking .vimrc! Aborting."
