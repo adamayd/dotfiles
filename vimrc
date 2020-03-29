@@ -85,6 +85,7 @@ let NERDTreeQuitOnOpen=1  " closes NERDTree when file is opened
 nmap <leader><space> :NERDTreeToggle<cr>     
 
 " ***** Powerline Plugin *****
+set rtp+=~/.local/lib/python3.7/site-packages/powerline/bindings/vim/
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
 python3 del powerline_setup

@@ -6,122 +6,163 @@ error_exit()
   exit 1
 }
 
-sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+update_repos() { 
+  sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+  sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+  sudo ln -s $HOME/dotfiles/fedora/repos/vscode.repo /etc/yum.repos.d/vscode.repo
+  sudo dnf update -y && sudo dnf upgrade -y
+}
 
-sudo dnf install -y ranger exfat-utils fuse-exfat neofetch cmatrix strace curl wget tmux xclip
+install_base_utilities() {
+  sudo dnf install -y ranger exfat-utils fuse-exfat neofetch cmatrix strace curl wget tmux xclip
+}
 
-# Install Security Utilities
-#sudo eopkg install -y gnupg password-store
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing security utilities! Aborting."
-#fi
+install_security_utilities() {
+  echo "TODO: Security Utilities"
+  #sudo dnf install -y gnupg password-store
+  #if [[ $? -ne 0 ]]; then
+  #  error_exit "Error installing security utilities! Aborting."
+  #fi
+}
 
-# Create SSH Key
-if [ ! -d "$HOME/.ssh" ]; then
-  ssh-keygen -t rsa -b 4096 -C adam.ayd@gmail.com
-  eval "$(ssh-agent -s)"
-  ssh-add $HOME/.ssh/id_rsa
-fi
+create_ssh_key() {
+  if [ ! -d "$HOME/.ssh" ]; then
+    ssh-keygen -t rsa -b 4096 -C adam.ayd@gmail.com
+    eval "$(ssh-agent -s)"
+    ssh-add $HOME/.ssh/id_rsa
+  fi
+}
 
+install_acpi_tlp() {
+  echo "TODO: ACPI and TLP"
+  #sudo dnf install tlp libelf linux-current-headers
+  #git clone acpi_call package
+  #cd acpi_call && make
+  #sudo make install
+  #cd .. && rm -rf acpi_call
+  #sudo tlp start
+}
 
-# Install Base Development System
-sudo dnf groupinstall -y "Development Tools"
-if [[ $? -ne 0 ]]; then
-  error_exit "Error installing the development tools! Aborting."
-fi
-sudo dnf groupinstall -y "C Development Tools and Libraries"
-if [[ $? -ne 0 ]]; then
-  error_exit "Error installing the c development tools and libraries! Aborting."
-fi
-sudo dnf install -y python3-devel cmake
-if [[ $? -ne 0 ]]; then
-  error_exit "Error installing additional development tools and libraries! Aborting."
-fi
+install_base_development_system() {
+  sudo dnf groupinstall -y "Development Tools"
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing the development tools! Aborting."
+  fi
+  sudo dnf groupinstall -y "C Development Tools and Libraries"
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing the c development tools and libraries! Aborting."
+  fi
+  sudo dnf install -y python3-devel cmake
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing additional development tools and libraries! Aborting."
+  fi
+}
 
-# Install ACPI and TLP
-#sudo eopkg install tlp libelf linux-current-headers
-#git clone acpi_call package
-#cd acpi_call && make
-#sudo make install
-#cd .. && rm -rf acpi_call
-#sudo tlp start
+install_fedora_packaging() {
+  echo "TODO: Install Packaging tooling for F31"
+  #TODO: Install tooling for Fedora Packaging
+}
 
-# Install Node JS
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-if [[ $? -ne 0 ]]; then
-  error_exit "Error installing Node Version Manager! Aborting."
-fi
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-nvm install --lts
+install_fedora_releng() {
+  echo "TODO: Install RelEng tooling for F31"
+  #TODO: Install tooling for Fedora Release Engineering
+}
 
-# Install Yarn for Node JS
-sudo dnf install -y yarnpkg
-if [[ $? -ne 0 ]]; then
-  error_exit "Error installing Yarn! Aborting."
-fi
+install_node() {
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Node Version Manager! Aborting."
+  fi
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  nvm install --lts
 
-# Install Node Utilities
-sudo yarn global add create-react-app @vue/cli eslint gatsby-cli @gridsome/cli jest
-if [[ $? -ne 0 ]]; then
-  error_exit "Error installing Node utilities using Yarn! Aborting."
-fi
+  # Install Yarn for Node JS
+  sudo dnf install -y yarnpkg
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Yarn! Aborting."
+  fi
 
-# Install Python
-sudo dnf install -y  python3-devel pipenv
-if [[ $? -ne 0 ]]; then
-  error_exit "Error installing Python! Aborting."
-fi
+  # Install Node Utilities
+  sudo yarn global add create-react-app @vue/cli eslint gatsby-cli @gridsome/cli jest
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Node utilities using Yarn! Aborting."
+  fi
+}
 
-# Install Go
-sudo dnf install -y golang
-if [[ $? -ne 0 ]]; then
-  error_exit "Error installing Go! Aborting."
-fi
+install_python() {
+  sudo dnf install -y  python3-devel pipenv
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Python! Aborting."
+  fi
+}
 
-# Install Elixir
-#sudo eopkg install elixir stuff (asdf)
+install_go() {
+  sudo dnf install -y golang
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Go! Aborting."
+  fi
+}
 
-# Install Java
-#sudo eopkg install -y mongodb openjdk-8
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing Java! Aborting."
-#fi
+install_elixir() {
+  echo "TODO: Determine how and if to install Elixir on F31"
+  #TODO: Install Elixir
+  #sudo dnf install elixir stuff (asdf)
+}
 
-# Install Gradle
-#TODO: sudo eopkg install gradle
+install_java() {
+  sudo dnf install -y java-11-openjdk-devel java-1.8.0-openjdk-devel
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Java! Aborting."
+  fi
+}
 
-# Install Docker
-#sudo eopkg install -y docker
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing Docker! Aborting."
-#fi
+install_build_tools() {
+  echo "TODO: Determine how to install Gradle on F31"
+  # Install Gradle
+  #TODO: sudo dnf install gradle
+}
 
-# Install Ansible
-#TODO: sudo eopkg install ansible
+install_docker() {
+  echo "TODO: Determine the podman and podman-compose route"
+  #TODO: Install Podman in place of Docker and Docker Compose
+  #sudo dnf install -y docker
+  #if [[ $? -ne 0 ]]; then
+    #error_exit "Error installing Docker! Aborting."
+  #fi
+}
 
-# Install Digital Ocean Tools
-# Install AWS and Boto3
-#TODO: sudo eopkg install boto3
-#TODO: pip3 install --user awscli
-# Install Azure CLI
-# Install GCP CLI
+install_config_mgmt() {
+  # Install Ansible
+  sudo dnf install -y ansible
+}
 
-# Install Terraform
-#TODO: sudo eopkg install terraform
+install_provisioning() {
+  echo "TODO: Determine how to install terraform on F31"
+  # Install Terraform
+  #TODO: sudo dnf install terraform
+}
 
-# Install Serverless Framework
-#curl -o- -L https://slss.io/install | bash
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing Serverless Framework! Aborting."
-#fi
+install_serverless_framework() {
+  curl -o- -L https://slss.io/install | bash
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Serverless Framework! Aborting."
+  fi
+}
 
-# Install i3wm
-#sudo eopkg it -y i3 rofi xbacklight feh
+install_cloud_cli_tools() {
+  #TODO: Install Digital Ocean Tools
+  # Install AWS and Boto3
+  #TODO: boto3 error on install asking for dependency botocore
+  sudo dnf install -y python3-boto3
+  pip3 install --user awscli
+  #TODO: Install Azure CLI
+  #TODO: Install GCP CLI
+}
 
-# Install Firefox Developer Edition
 install_firefox_dev() {
+  firefox_dev_installed=false
   local skipper
   printf "%s\n" "Press any key to open Firefox and download Firefox Developer Edition. Close Firefox when finished"
   printf "%s\n" "This will close any open Firefox session, save work and continue or Ctrl-C now to exit"
@@ -144,6 +185,10 @@ install_firefox_dev() {
     sudo ln -s $HOME/dotfiles/gnome/firefox-developer-edition.desktop /usr/share/applications/
     firefox_dev_installed=true
   fi
+  if [ "$firefox_dev_installed" = true ]; then
+    sync_firefox_dev
+    add_ssh_to_gits
+  fi 
 }
 
 # Turn On Sync for Firefox
@@ -158,7 +203,7 @@ sync_firefox_dev() {
   fi
 }
 
-# Add SSH to Github/GitLab
+# Add SSH to Github/GitLab using Firefox Developer Edition
 add_ssh_to_gits() {
   local skipper
   printf "%s\n" "Press any key to open Firefox and set up Github and GitLab.  Close Firefox when finished"
@@ -171,110 +216,185 @@ add_ssh_to_gits() {
   fi
 }
 
-# Call Firefox Functions
-firefox_dev_installed=false
-install_firefox_dev
-if [ "$firefox_dev_installed" = true ]; then
-  sync_firefox_dev
-  add_ssh_to_gits
-fi 
+install_brave() {
+  echo "TODO: Determine how to install brave on F31"
+  #TODO: Install Brave
+}
 
-# Install Brave
+install_chromium() {
+  sudo dnf install -y chromium
+  printf "%s\n" "Press any key to open Chromium and set up syncing.  Close Chromium when finished"
+  read -p "Enter s to skip: " SKIPPER
+  if [[ $SKIPPER != 's' && $SKIPPER != 'S' ]]; then
+    chromium 
+  fi
+}
 
-# Install Browsers
-#sudo eopkg install -y chromium
-#printf "\s\n", "Press any key to open Chromium and set up syncing.  Close Chromium when finished"
-#read -p "Enter s to skip: " SKIPPER
-#if [[ $SKIPPER != 's' ]] || [[ $SKIPPER != 'S' ]]; then
-  #chromium 
-#fi
+install_qutebrowser() {
+  sudo dnf install -y qutebrowser mpv youtube-dl
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Qutebrowser! Aborting."
+  fi
+  #TODO: Install qutebrowser config
+}
 
-# Install QuteBrowser 
-#sudo eopkg install -y qutebrowser
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing browsers! Aborting."
-#fi
-# Install mpv and youtube-dl as well and qutebrowser config
-#TODO: 
+install_vscode() {
+  sudo dnf install -y code
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Visual Studio Code! Aborting."
+  fi
+}
 
-# Install Code Editors and IDE's 
-#sudo eopkg install -y vscode
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing code editors and IDEs! Aborting."
-#fi
+install_snapd() {
+  sudo dnf install -y snapd
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Snap Daemon! Aborting."
+  fi
+  sudo systemctl start snapd
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error starting Snap Daemon! Aborting."
+  fi
+  sudo systemctl enable snapd
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error enabling Snap Daemon! Aborting."
+  fi
+  sudo ln -s /var/lib/snapd/snap /snap
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error linking to /snap for classic confinement! Aborting."
+  fi
+}
 
-# Install BitWarden
-#sudo snap install bitwarden
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing BitWarden! Aborting."
-#fi
+install_postman() {
+  sudo snap install postman
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Postman snap! Aborting."
+  fi
+}
 
-# Install Chats
-#sudo snap install slack --classic
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing Slack! Aborting."
-#fi
-#TODO: figure out the issue with xdg-open that "eventually" self-heals
-#sudo snap install discord
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing Discord! Aborting."
-#fi
+install_bitwarden() {
+  sudo snap install bitwarden
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing BitWarden! Aborting."
+  fi
+}
 
-# Install Fonts
-#sudo eopkg install -y font-awesome-ttf font-awesome-4 powerline-fonts font-firacode-ttf font-firacode-otf
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing fonts! Aborting."
-#fi
+install_chats() {
+  sudo snap install slack --classic
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Slack! Aborting."
+  fi
+  sudo snap install discord
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Discord! Aborting."
+  fi
+}
 
-# Install API Tools
-#sudo snap install postman
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error installing Postman snap! Aborting."
-#fi
+install_fonts() {
+  sudo dnf install -y fontawesome-fonts fontawesome-fonts-web powerline-fonts fira-code-fonts
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing fonts! Aborting."
+  fi
+  # TODO: web-fonts, ms and mac standard fonts
+}
 
-# Install Rice
-echo "Rice"
-if [[ $? -ne 0 ]]; then
-  error_exit "Error installing rice! Aborting."
-fi
+install_i3wm() {
+  echo "TODO: Install i3wm or sway"
+  #TODO: Install i3wm
+  #sudo dnf it -y i3 rofi xbacklight feh
+}
 
-# Install Powerline
-sudo pip3 install --user powerline-status
-if [[ $? -ne 0 ]]; then
-  error_exit "Error installing Powerline! Aborting."
-fi
+install_rice() {
+  echo "Rice"
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing rice! Aborting."
+  fi
+}
 
-# Clone dotfiles repo
-#git clone https://github.com/adamayd/dotfiles.git $HOME/dotfiles
-#if [[ $? -ne 0 ]]; then
-  #error_exit "Error cloning dotfiles! Aborting."
-#fi
+install_powerline() {
+  pip3 install --user powerline-status
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Powerline! Aborting."
+  fi
+  #TODO: Vim powerline not working
+}
 
-# Install Vim
-sudo dnf install -y vim 
-if [ -L $HOME/.vimrc ]; then
-  rm $HOME/.vimrc
-elif [ -e $HOME/.vimrc ]; then
-  cp $HOME/.vimrc $HOME/.vimrc_old
-fi
-ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
-if [[ $? -ne 0 ]]; then
-  error_exit "Error linking .vimrc! Aborting."
-fi
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-vim +PluginInstall +qall
-cd $HOME/.vim/bundle/YouCompleteMe
-python3 install.py --all
+clone_dotfiles() {
+  echo "TODO: Determine the best place for cloning dotfile"
+  #TODO: Clone dotfiles repo - this is only neccessary if I'm going to curl the script down
+  #git clone https://github.com/adamayd/dotfiles.git $HOME/dotfiles
+  #if [[ $? -ne 0 ]]; then
+    #error_exit "Error cloning dotfiles! Aborting."
+  #fi
+}
 
-# Link dotifles TODO: FINISH
-echo "source $HOME/dotfiles/shellsrc" >> $HOME/.bashrc
-if [[ $? -ne 0 ]]; then
-  error_exit "Error appending to .bashrc! Aborting."
-fi
-ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
-ln -s $HOME/dotfiles/gitconfig $HOME/.gitconfig
-sudo ln -s $HOME/dotfiles/gnome/firefox-developer-edition.desktop /usr/share/applications/
+link_dotfiles() {
+  echo "source $HOME/dotfiles/shellsrc" >> $HOME/.bashrc
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error appending to .bashrc! Aborting."
+  fi
+  if [ -L $HOME/.vimrc ]; then
+    rm $HOME/.vimrc
+  elif [ -e $HOME/.vimrc ]; then
+    cp $HOME/.vimrc $HOME/.vimrc_old
+  fi
+  ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error linking .vimrc! Aborting."
+  fi
+  ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
+  ln -s $HOME/dotfiles/gitconfig $HOME/.gitconfig
+  sudo ln -s $HOME/dotfiles/gnome/firefox-developer-edition.desktop /usr/share/applications/
+}
 
+install_vim() {
+  sudo dnf install -y vim 
+  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  vim +PluginInstall +qall
+  cd $HOME/.vim/bundle/YouCompleteMe
+  #TODO: Install only the languages needed instead of all (ie don't need C#, Rust, etc...)
+  python3 install.py --all
+}
 
-# Install Oh-My-Bash
-#sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+install_oh_my_bash() {
+  echo "TODO: Install Oh-My-Bash"
+  # Install Oh-My-Bash
+  #sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+}
+
+#update_repos
+#install_base_utilities
+install_security_utilities
+#create_ssh_key
+install_acpi_tlp
+#install_base_development_system
+install_fedora_packaging
+install_fedora_releng
+#install_node
+#install_python
+#install_go
+#install_elixir
+#install_java
+install_build_tools
+install_docker
+#install_config_mgmt
+install_provisioning
+#TODO: install_cloud_cli_tools
+#install_serverless_framework
+#install_firefox_dev
+#install_brave
+#install_chromium
+#TODO: install_qutebrowser
+#install_vscode
+#install_snapd
+#install_postman
+#install_bitwarden
+#install_chats
+#TODO: install_fonts
+install_i3wm
+install_rice
+#install_powerline
+clone_dotfiles
+#TODO: link_dotfiles
+#TODO: install_vim
+install_oh_my_bash
+

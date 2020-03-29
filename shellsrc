@@ -15,9 +15,9 @@ if [ -e $HOME/.sshrc ]; then
 fi
 
 # Node Version Manager (NVM)
-if [ -e $HOME/.nvmrc ]; then
-    source $HOME/.nvmrc
-fi
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Go Path
 if [ -e $HOME/go ]; then
@@ -35,6 +35,13 @@ if [ -e $HOME/.rubyrc ]; then
     source $HOME/.rubyrc
 fi
 
-if [ -e /usr/lib64/python3.6/site-packages/powerline/bindings/bash/powerline.sh ]; then
-    . /usr/lib64/python3.6/site-packages/powerline/bindings/bash/powerline.sh
+if [ -e ~/.local/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh ]; then
+    . ~/.local/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
 fi
+
+# Added by serverless binary installer
+export PATH="$HOME/.serverless/bin:$PATH"
+
+# tabtab source for packages
+# uninstall by removing these lines
+[ -f ~/.config/tabtab/__tabtab.bash ] && . ~/.config/tabtab/__tabtab.bash || true
