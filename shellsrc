@@ -30,6 +30,9 @@ if [ -e $HOME/.asdfrc ]; then
     source $HOME/.asdfrc
 fi
 
+## Gradle
+export PATH=$PATH:/opt/gradle-6.3/bin
+
 ## Ruby 
 if [ -e $HOME/.rubyrc ]; then
     source $HOME/.rubyrc

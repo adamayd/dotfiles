@@ -7,7 +7,7 @@ error_exit()
 }
 
 update_repos() { 
-  sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+  sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm http://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release.fc$(rpm -E %fedora).noarch.rpm 
   sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
   sudo ln -s $HOME/dotfiles/fedora/repos/vscode.repo /etc/yum.repos.d/vscode.repo
   sudo dnf update -y && sudo dnf upgrade -y
@@ -18,11 +18,10 @@ install_base_utilities() {
 }
 
 install_security_utilities() {
-  echo "TODO: Security Utilities"
-  #sudo dnf install -y gnupg password-store
-  #if [[ $? -ne 0 ]]; then
-  #  error_exit "Error installing security utilities! Aborting."
-  #fi
+  sudo dnf install -y gnupg1 gnupg2 pass
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing security utilities! Aborting."
+  fi
 }
 
 create_ssh_key() {
@@ -34,13 +33,18 @@ create_ssh_key() {
 }
 
 install_acpi_tlp() {
-  echo "TODO: ACPI and TLP"
-  #sudo dnf install tlp libelf linux-current-headers
-  #git clone acpi_call package
-  #cd acpi_call && make
-  #sudo make install
-  #cd .. && rm -rf acpi_call
-  #sudo tlp start
+  sudo dnf install -y tlp tlp-rdw smartmontools
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing TLP! Aborting."
+  fi
+  sudo dnf install -y kernel-devel akmod-acpi_call akmod-tp_smapi
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing ACPI Kernal Module! Aborting."
+  fi
+  sudo tlp start
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error starting TLP! Aborting."
+  fi
 }
 
 install_base_development_system() {
@@ -74,8 +78,8 @@ install_node() {
     error_exit "Error installing Node Version Manager! Aborting."
   fi
   export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" 
   nvm install --lts
 
   # Install Yarn for Node JS
@@ -119,9 +123,9 @@ install_java() {
 }
 
 install_build_tools() {
-  echo "TODO: Determine how to install Gradle on F31"
-  # Install Gradle
-  #TODO: sudo dnf install gradle
+  wget -O $HOME/Downloads/gradle-6.3-bin.zip https://services.gradle.org/distributions/gradle-6.3-bin.zip
+  sudo unzip -d /opt/ $HOME/Downloads/gradle-6.3-bin.zip
+  export PATH=$PATH:/opt/gradle-6.3/bin
 }
 
 install_docker() {
@@ -133,6 +137,11 @@ install_docker() {
   #fi
 }
 
+install_kubernetes_tools() {
+  echo "TODO: Install kubernetes tools (MiniKube, OKD, etc...)"
+  #TODO: Install MiniKube, OKD
+}
+
 install_config_mgmt() {
   # Install Ansible
   sudo dnf install -y ansible
@@ -141,7 +150,8 @@ install_config_mgmt() {
 install_provisioning() {
   echo "TODO: Determine how to install terraform on F31"
   # Install Terraform
-  #TODO: sudo dnf install terraform
+  wget -O $HOME/Downloads/terraform_0.12.24_linux_amd64.zip https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
+  sudo unzip -d /usr/local/bin/ $HOME/Downloads/terraform_0.12.24_linux_amd64.zip
 }
 
 install_serverless_framework() {
@@ -304,7 +314,7 @@ install_i3wm() {
 }
 
 install_rice() {
-  echo "Rice"
+  echo "TODO: Rice"
   if [[ $? -ne 0 ]]; then
     error_exit "Error installing rice! Aborting."
   fi
@@ -363,9 +373,9 @@ install_oh_my_bash() {
 
 #update_repos
 #install_base_utilities
-install_security_utilities
+#install_security_utilities
 #create_ssh_key
-install_acpi_tlp
+#install_acpi_tlp
 #install_base_development_system
 install_fedora_packaging
 install_fedora_releng
@@ -374,10 +384,11 @@ install_fedora_releng
 #install_go
 #install_elixir
 #install_java
-install_build_tools
+#install_build_tools
 install_docker
+install_kubernetes_tools
 #install_config_mgmt
-install_provisioning
+#install_provisioning
 #TODO: install_cloud_cli_tools
 #install_serverless_framework
 #install_firefox_dev
