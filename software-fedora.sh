@@ -14,8 +14,19 @@ update_repos() {
 }
 
 install_base_utilities() {
-  sudo dnf install -y ranger exfat-utils fuse-exfat neofetch cmatrix strace curl wget tmux xclip
+  sudo dnf install -y ranger exfat-utils fuse-exfat strace curl wget tmux xclip jq
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing base utilities! Aborting."
+  fi
 }
+
+install_command_line_fun() {
+  sudo dnf install -y cmatrix neofetch fortune-mod cowsay
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing command line fun! Aborting."
+  fi
+}
+
 
 install_security_utilities() {
   sudo dnf install -y gnupg1 gnupg2 pass
@@ -373,6 +384,7 @@ install_oh_my_bash() {
 
 #update_repos
 #install_base_utilities
+install_command_line_fun
 #install_security_utilities
 #create_ssh_key
 #install_acpi_tlp
