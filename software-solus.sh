@@ -59,6 +59,7 @@ install_power_management() {
 
 install_acpi_call() {
   git clone https://github.com/mkottman/acpi_call.git $TEMP_DIR/acpi_call
+  #git clone https://github.com/nix-community/acpi_call.git $TEMP_DIR/acpi_call <= New Fork!
   sed -i 's/#include <acpi\/acpi.h>/#include <linux\/acpi.h>/' $TEMP_DIR/acpi_call/acpi_call.c
   sed -i 's/#include <asm\/uaccess.h>/#include <linux\/uaccess.h>/' $TEMP_DIR/acpi_call/acpi_call.c
   make -C $TEMP_DIR/acpi_call/
