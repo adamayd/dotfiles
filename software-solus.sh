@@ -6,6 +6,13 @@ error_exit()
   exit 1
 }
 
+create_install_temp_dir() {
+  if [ -z $TEMP_DIR ]; then TEMP_DIR=$(mktemp -d); fi
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error createing temporary install directory! Aborting."
+  fi
+}
+
 install_base_utilities() {
   sudo eopkg install -y vim ranger exfat-utils fuse-exfat lm_sensors htop unzip git strace curl wget tmux xclip jq
   if [[ $? -ne 0 ]]; then
@@ -306,9 +313,19 @@ install_chats() {
 }
 
 install_fonts() {
-  sudo eopkg install -y font-awesome-ttf font-awesome-4 powerline-fonts font-firacode-ttf font-firacode-otf
+  sudo eopkg install -y font-awesome-ttf font-awesome-4 powerline-fonts font-firacode-ttf font-firacode-otf font-manager
   if [[ $? -ne 0 ]]; then
-    error_exit "Error installing fonts! Aborting."
+    error_exit "Error installing font packages! Aborting."
+  fi
+  curl -o $TEMP_DIR/AnonymousPro-1.002.zip https://www.marksimonson.com/assets/content/fonts/AnonymousPro-1.002.zip
+  unzip -d $TEMP_DIR/ $TEMP_DIR/AnonymousPro-1.002.zip
+  sudo cp $TEMP_DIR/AnonymousPro-1.002*/*.ttf /usr/share/fonts/truetype/
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error copying downloaed fonts! Aborting."
+  fi
+  fc-cache
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error updating font cache! Aborting."
   fi
 }
 
@@ -368,6 +385,7 @@ install_oh_my_bash() {
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 }
 
+create_install_temp_dir
 #install_base_utilities
 #install_command_line_fun
 #install_security_utilities
@@ -397,6 +415,7 @@ install_oh_my_bash() {
 #install_bitwarden
 #install_chats
 #install_rice
+#install_fonts
 #install_powerline
 #clone_dotfiles
 #link_dotfiles
