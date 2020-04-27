@@ -45,26 +45,30 @@ create_ssh_key() {
   ssh-add $HOME/.ssh/id_rsa
 }
 
-install_acpi_tlp() {
-  sudo eopkg install -y tlp tlp-rdw smartmontools
+install_power_management() {
+  sudo eopkg install -y tlp libelf-devel linux-current-headers ethtool smartmontools
   if [[ $? -ne 0 ]]; then
     error_exit "Error installing TLP! Aborting."
   fi
-  sudo eopkg install -y kernel-devel akmod-acpi_call akmod-tp_smapi
-  if [[ $? -ne 0 ]]; then
-    error_exit "Error installing ACPI Kernal Module! Aborting."
-  fi
+  #TODO: install_acpi_call <= Fix with kernal 5.6.4
   sudo tlp start
   if [[ $? -ne 0 ]]; then
     error_exit "Error starting TLP! Aborting."
   fi
-  #sudo eopkg install tlp libelf linux-current-headers
-  # TODO: move to tmp dir
-  #git clone acpi_call package
-  #cd acpi_call && make
-  #sudo make install
-  #cd .. && rm -rf acpi_call
-  #sudo tlp start
+}
+
+install_acpi_call() {
+  git clone https://github.com/mkottman/acpi_call.git $TEMP_DIR/acpi_call
+  sed -i 's/#include <acpi\/acpi.h>/#include <linux\/acpi.h>/' $TEMP_DIR/acpi_call/acpi_call.c
+  sed -i 's/#include <asm\/uaccess.h>/#include <linux\/uaccess.h>/' $TEMP_DIR/acpi_call/acpi_call.c
+  make -C $TEMP_DIR/acpi_call/
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error building ACPI_call module! Aborting."
+  fi
+  sudo make install -C $TEMP_DIR/acpi_call/
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing ACPI_call module! Aborting."
+  fi
 }
 
 install_i3_window_manager() {
@@ -385,12 +389,17 @@ install_oh_my_bash() {
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 }
 
-create_install_temp_dir
+cleanup_installation() {
+  sudo eopkg rmo
+  #remove temp dirs??
+}
+
+#create_install_temp_dir
 #install_base_utilities
 #install_command_line_fun
 #install_security_utilities
 #create_ssh_key
-#TODO: install_acpi_tlp
+#install_power_management
 #TODO: install_i3_window_manager
 #install_base_development_system
 #TODO: install_solus_packaging
@@ -421,3 +430,4 @@ create_install_temp_dir
 #link_dotfiles
 #install_vim
 #TODO: install_oh_my_bash
+#cleanup_installation
