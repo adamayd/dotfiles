@@ -7,14 +7,16 @@ error_exit()
 }
 
 update_repos() { 
-  sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm http://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release.fc$(rpm -E %fedora).noarch.rpm 
+  sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+  #sudo dnf install -y http://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release.fc$(rpm -E %fedora).noarch.rpm 
   sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
   sudo ln -s $HOME/dotfiles/fedora/repos/vscode.repo /etc/yum.repos.d/vscode.repo
   sudo dnf update -y && sudo dnf upgrade -y
 }
 
 install_base_utilities() {
-  sudo dnf install -y ranger exfat-utils fuse-exfat strace curl wget tmux xclip jq
+  #TODO: Exfat in kernel fix
+  sudo dnf install -y ranger strace curl wget tmux xclip jq
   if [[ $? -ne 0 ]]; then
     error_exit "Error installing base utilities! Aborting."
   fi
@@ -44,6 +46,7 @@ create_ssh_key() {
 }
 
 install_acpi_tlp() {
+  #TODO: F32 TLP for Thinkpads
   sudo dnf install -y tlp tlp-rdw smartmontools
   if [[ $? -ne 0 ]]; then
     error_exit "Error installing TLP! Aborting."
@@ -156,13 +159,20 @@ install_kubernetes_tools() {
 install_config_mgmt() {
   # Install Ansible
   sudo dnf install -y ansible
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Ansible! Aborting."
+  fi
 }
 
 install_provisioning() {
-  echo "TODO: Determine how to install terraform on F31"
-  # Install Terraform
   wget -O $HOME/Downloads/terraform_0.12.24_linux_amd64.zip https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error downloading Terraform! Aborting."
+  fi
   sudo unzip -d /usr/local/bin/ $HOME/Downloads/terraform_0.12.24_linux_amd64.zip
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Terraform! Aborting."
+  fi
 }
 
 install_serverless_framework() {
@@ -237,17 +247,18 @@ add_ssh_to_gits() {
   fi
 }
 
-install_brave() {
-  echo "TODO: Determine how to install brave on F31"
-  #TODO: Install Brave
-}
-
 install_chromium() {
   sudo dnf install -y chromium
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Chromium! Aborting."
+  fi
   printf "%s\n" "Press any key to open Chromium and set up syncing.  Close Chromium when finished"
   read -p "Enter s to skip: " SKIPPER
   if [[ $SKIPPER != 's' && $SKIPPER != 'S' ]]; then
-    chromium 
+    chromium-browser
+    if [[ $? -ne 0 ]]; then
+      error_exit "Error running Chromium! Aborting."
+    fi
   fi
 }
 
@@ -266,45 +277,33 @@ install_vscode() {
   fi
 }
 
-install_snapd() {
-  sudo dnf install -y snapd
+add_flatpak_repos() {
+  sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
   if [[ $? -ne 0 ]]; then
-    error_exit "Error installing Snap Daemon! Aborting."
-  fi
-  sudo systemctl start snapd
-  if [[ $? -ne 0 ]]; then
-    error_exit "Error starting Snap Daemon! Aborting."
-  fi
-  sudo systemctl enable snapd
-  if [[ $? -ne 0 ]]; then
-    error_exit "Error enabling Snap Daemon! Aborting."
-  fi
-  sudo ln -s /var/lib/snapd/snap /snap
-  if [[ $? -ne 0 ]]; then
-    error_exit "Error linking to /snap for classic confinement! Aborting."
+    error_exit "Error adding Flatpak repo for Flathub! Aborting."
   fi
 }
 
 install_postman() {
-  sudo snap install postman
+  sudo flatpak install -y postman
   if [[ $? -ne 0 ]]; then
     error_exit "Error installing Postman snap! Aborting."
   fi
 }
 
 install_bitwarden() {
-  sudo snap install bitwarden
+  sudo flatpak install -y bitwarden
   if [[ $? -ne 0 ]]; then
     error_exit "Error installing BitWarden! Aborting."
   fi
 }
 
 install_chats() {
-  sudo snap install slack --classic
+  sudo flatpak install -y slack
   if [[ $? -ne 0 ]]; then
     error_exit "Error installing Slack! Aborting."
   fi
-  sudo snap install discord
+  sudo flatpak install -y discord
   if [[ $? -ne 0 ]]; then
     error_exit "Error installing Discord! Aborting."
   fi
@@ -377,47 +376,47 @@ install_vim() {
 }
 
 install_oh_my_bash() {
-  echo "TODO: Install Oh-My-Bash"
-  # Install Oh-My-Bash
-  #sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Oh-My-Bash! Aborting."
+  fi
 }
 
 #update_repos
-#install_base_utilities
-install_command_line_fun
+#TODO: install_base_utilities - Exfat in kernel
+#install_command_line_fun
 #install_security_utilities
-#create_ssh_key
-#install_acpi_tlp
+#TODO: create_ssh_key - refactor for email input
+#TODO: install_acpi_tlp - F32 TLP manual install for thinkpads
 #install_base_development_system
-install_fedora_packaging
-install_fedora_releng
+#TODO: install_fedora_packaging
+#TODO: install_fedora_releng
 #install_node
 #install_python
 #install_go
 #install_elixir
-#install_java
-#install_build_tools
-install_docker
-install_kubernetes_tools
+#TODO: install_java - combine with gradle/build tools below
+#TODO: install_build_tools
+#TODO: install_docker - docker-ce and cgroups v1
+#TODO: install_kubernetes_tools - finish install
 #install_config_mgmt
 #install_provisioning
-#TODO: install_cloud_cli_tools
+#TODO: install_cloud_cli_tools - finish all of them
 #install_serverless_framework
-#install_firefox_dev
-#install_brave
-#install_chromium
-#TODO: install_qutebrowser
-#install_vscode
-#install_snapd
+#TODO: install_firefox_dev - update to latest logic
+#TODO: install_chromium
+#TODO: install_qutebrowser - config and extras setup
+#TODO: install_vscode - create and copy over config files
+#add_flatpak_repos
 #install_postman
 #install_bitwarden
 #install_chats
-#TODO: install_fonts
-install_i3wm
-install_rice
+#install_fonts
+#install_i3wm
+#TODO: install_rice - no rice set
 #install_powerline
-clone_dotfiles
-#TODO: link_dotfiles
-#TODO: install_vim
-install_oh_my_bash
+#TODO: clone_dotfiles - proper location for script running from web
+#link_dotfiles
+#TODO: install_vim - gruvbox error on initial load for plugin install
+install_oh_my_bash #- link .bashrc correctly and choose powerline-multiline
 
