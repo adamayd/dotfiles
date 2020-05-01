@@ -27,6 +27,7 @@ nnoremap <leader>ns :nohlsearch<CR>
 
 set nobackup        " no backup files
 set nowritebackup   " only in case you don't want a backup file while editing
+" TODO: instead of no backups, make use of a temp directory
 set noswapfile      " no swap files
 
 set foldenable      " enable folding
@@ -38,6 +39,10 @@ set foldmethod=indent " sets the identifier of the folds
 " ***** Word Handling *****
 " makes daw and ciw accept dash separated words as one word
 set iskeyword+=-
+
+" ***** Spell Check *****
+set spell
+set spelllang=en
 
 " ***** Keyboard Mappings *****
 " Moving Between Windows
@@ -59,6 +64,7 @@ Plugin 'ycm-core/YouCompleteMe'
 Plugin 'morhetz/gruvbox'
 Plugin 'mxw/vim-jsx'
 Plugin 'godlygeek/tabular' " must be before vim-markdown
+Plugin 'StanAngeloff/php.vim'
 call vundle#end()
 
 " ***** Turn back on filetype after Vundle *****
@@ -68,9 +74,6 @@ filetype plugin indent on
 " ident files located ~/.vim/indent/*.vim
 " i.e. ~/.vim/indent/python.vim loads with *.py
 
-colorscheme gruvbox
-set background=dark 
-
 " ***** NERDTree Options *****
 " Starts with NERDTree open if no file is passed on command line
 function! StartUp()
@@ -79,14 +82,20 @@ function! StartUp()
   end
 endfunction
 autocmd VimEnter * call StartUp()
-
 let NERDTreeQuitOnOpen=1  " closes NERDTree when file is opened
 " shortcut to run NERDTree
 nmap <leader><space> :NERDTreeToggle<cr>     
+
+" ***** Theme Options *****
+colorscheme gruvbox
+set background=dark 
 
 " ***** Powerline Plugin *****
 set rtp+=~/.local/lib/python3.7/site-packages/powerline/bindings/vim/
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
 python3 del powerline_setup
+
+" ***** PHP Setup *****
+au BufWritePost *.php silent! !eval '[ -f ".git/hooks/ctags" ] && .git/hooks/ctags' &
 

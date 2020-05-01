@@ -373,6 +373,8 @@ install_vim() {
   cd $HOME/.vim/bundle/YouCompleteMe
   #TODO: Install only the languages needed instead of all (ie don't need C#, Rust, etc...)
   python3 install.py --all
+  mkdir $HOME/.vim/spell
+  ln -s $HOME/dotfiles/vim/spell/en.utf-8.add $HOME/.vim/spell/en.utf-8.add
 }
 
 install_oh_my_bash() {
