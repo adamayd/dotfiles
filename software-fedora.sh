@@ -420,5 +420,6 @@ install_oh_my_bash() {
 #TODO: clone_dotfiles - proper location for script running from web
 #link_dotfiles
 #TODO: install_vim - gruvbox error on initial load for plugin install
-install_oh_my_bash #- link .bashrc correctly and choose powerline-multiline
+#TODO: install_oh_my_bash #- link .bashrc correctly and choose powerline-multiline
+#TODO: find place for vifm
 

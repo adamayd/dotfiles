@@ -9,3 +9,4 @@ brew
 vim
 nvmim ??
 brew install bash - need to update the shells list
+vifm
