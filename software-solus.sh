@@ -89,6 +89,7 @@ install_base_development_system() {
 install_solus_packaging() {
   #TODO: install needs for the solus packaging
   echo "TODO to add solus_packaging needs"
+  alias fetchYml="$HOME/Code/solus/packages/common/Scripts/yauto.py"
 }
 
 install_node() {
