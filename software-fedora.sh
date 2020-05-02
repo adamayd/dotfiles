@@ -314,7 +314,7 @@ install_fonts() {
   if [[ $? -ne 0 ]]; then
     error_exit "Error installing fonts! Aborting."
   fi
-  # TODO: web-fonts, ms and mac standard fonts
+  # TODO: web-fonts, ms and mac standard fonts, hack font, anonymous pro
 }
 
 install_i3wm() {
@@ -413,7 +413,7 @@ install_oh_my_bash() {
 #install_postman
 #install_bitwarden
 #install_chats
-#install_fonts
+#TODO: install_fonts - hack font for fedora
 #install_i3wm
 #TODO: install_rice - no rice set
 #install_powerline
