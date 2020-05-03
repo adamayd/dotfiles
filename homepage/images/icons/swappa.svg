@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0rc1 (09960d6f05, 2020-04-09)"
+   height="89.256851"
+   width="89.218399"
+   sodipodi:docname="Logo_swappa_footer.svg"
+   xml:space="preserve"
+   viewBox="0 0 89.218399 89.256851"
+   y="0px"
+   x="0px"
+   id="Layer_1"
+   version="1.1"><metadata
+   id="metadata20"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs18" /><sodipodi:namedview
+   inkscape:current-layer="Layer_1"
+   inkscape:window-maximized="0"
+   inkscape:window-y="23"
+   inkscape:window-x="26"
+   inkscape:cy="44.599998"
+   inkscape:cx="232"
+   inkscape:zoom="2.8405172"
+   showgrid="false"
+   id="namedview16"
+   inkscape:window-height="991"
+   inkscape:window-width="1517"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0"
+   guidetolerance="10"
+   gridtolerance="10"
+   objecttolerance="10"
+   borderopacity="1"
+   bordercolor="#666666"
+   pagecolor="#ffffff" />
+<style
+   id="style2"
+   type="text/css">
+	.st0{fill:none;}
+	.st1{fill:#009A44;}
+</style>
+<title
+   id="title4">logo_strip_large_green</title>
+<rect
+   y="-35.400002"
+   x="0"
+   height="160"
+   width="464"
+   class="st0"
+   id="BOUNDS" />
+<g
+   transform="translate(0,-35.400002)"
+   id="g13">
+	<circle
+   id="circle7"
+   r="44.599998"
+   cy="80"
+   cx="44.599998"
+   class="st0" />
+	<g
+   id="g11">
+		<path
+   inkscape:connector-curvature="0"
+   id="path9"
+   d="m 40.9,47.2 c 0.3,2.9 -0.8,4.4 -3.7,4.9 C 32,53 23.1,55.6 17.1,63.4 8.5,74.6 9.4,85.3 10.7,90.7 11.3,93.1 10.1,95.1 8.1,96 v 0 C 5.6,97 2.9,96 2,93.1 0.7,89 0,84.6 0,80 0,58.7 14.9,40.9 34.8,36.5 c 3.2,-0.7 5,0.6 5.3,3.9 z M 81.2,96 c 3,1.3 5,0.5 6,-2.7 C 93.3,73.8 85.3,52 66.9,41.4 c -4,-2.3 -8.1,-3.9 -12.3,-4.9 -3,-0.7 -5.2,1.2 -5.5,3.9 v 0 c -0.2,2.2 0.9,4.2 3.3,4.9 5.3,1.6 15.1,6.1 20.5,19.2 3.8,9.2 1.6,18.2 -0.2,23.1 -1,2.8 -0.3,4.5 2.4,5.7 z m -68.7,7.7 c -2.6,1.9 -2.9,4.1 -0.7,6.6 13.8,15 36.7,19 55.1,8.4 4,-2.3 7.4,-5.1 10.4,-8.2 2.1,-2.2 1.6,-5.2 -0.6,-6.8 v 0 c -1.8,-1.3 -4,-1.3 -5.8,0.4 -4,3.8 -12.8,10 -26.8,8.1 -9.9,-1.3 -16.6,-7.7 -19.9,-11.8 -1.9,-2.3 -3.7,-2.5 -6.1,-0.8 z M 31.2,71.1 c -4.9,0 -8.9,4 -8.9,8.9 0,4.9 4,8.9 8.9,8.9 4.9,0 8.9,-4 8.9,-8.9 0,-4.9 -4,-8.9 -8.9,-8.9 z m 26.8,0 c -4.9,0 -8.9,4 -8.9,8.9 0,4.9 4,8.9 8.9,8.9 4.9,0 8.9,-4 8.9,-8.9 0,-4.9 -4,-8.9 -8.9,-8.9 z"
+   class="st1" />
+	</g>
+</g>
+</svg>

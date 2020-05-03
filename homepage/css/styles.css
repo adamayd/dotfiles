@@ -1,0 +1,82 @@
+body {
+  background-image: linear-gradient(to bottom, rgba(100,100,100,0.4), rgba(0,0,0,0.4)), url(../images/wallpaper.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  color: #fcfcfc;
+  font-family: 'Anonymous Pro', 'Hack', sans-serif;
+}
+h1, h2, h3 {
+  text-align: center;
+}
+ul {
+  list-style: none;
+}
+nav {
+  margin: 0 auto;
+}
+nav > ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+nav > ul  > li  {
+  width: 72px;
+  margin: 0 auto;
+}
+li {
+  filter: grayscale(100%);
+  transition: filter 0.3s;
+}
+li:hover {
+  filter: grayscale(0);
+}
+a {
+  text-decoration: none;
+  color: #fcfcfc;
+  transition: color 0.3s;
+}
+a:hover {
+  color: #0cfcac;
+}
+.favorite-icon {
+  height: 64px;
+  width: 64px;
+}
+a > p {
+  margin: 0;
+  text-align: center;
+}
+nav > ul > li > a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+article {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+article > div > ul {
+  padding: 0;
+}
+article > div > ul > li {
+  margin: 20px;
+  height: 48px;
+}
+article > div > ul > li > a {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.small-icon {
+  max-width: 48px;
+  height: auto;
+  padding-right: 10px;
+  flex-shrink: 0;
+}
+article > div > ul > li > a > p {
+  text-align: left;
+}
