@@ -14,7 +14,6 @@ set smartindent     " built in indentation correction
 
 " ***** Line Numbers *****
 set number          " show line numbers
-set relativenumber  " show line number relative to current line
 set cursorline      " highline line number of current line
 set scrolloff=5     " sets the context lines above and below the cursor
 
@@ -34,7 +33,7 @@ set smartcase       " restores case if capital letter is used in search pattern
 set incsearch       " search as characters are entered
 set hlsearch        " highlights matches
 " removes highlighted matches with leader nh
-nnoremap <silent> <leader>nh :nohlsearch<CR>
+nnoremap <silent> <leader>ns :nohlsearch<CR>
 
 " ***** History *****
 set nobackup        " no backup files
