@@ -16,7 +16,7 @@ update_repos() {
 
 install_base_utilities() {
   #TODO: Exfat in kernel fix
-  sudo dnf install -y ranger strace curl wget tmux xclip jq
+  sudo dnf install -y ranger vifm strace curl wget tmux xclip jq fzf bat
   if [[ $? -ne 0 ]]; then
     error_exit "Error installing base utilities! Aborting."
   fi
@@ -317,6 +317,14 @@ install_fonts() {
   # TODO: web-fonts, ms and mac standard fonts, hack font, anonymous pro
 }
 
+install_graphics_apps() {
+  sudo dnf install -y inkscape gimp
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing fonts! Aborting."
+  fi
+  # TODO: darktable, shotwell??
+}
+
 install_i3wm() {
   echo "TODO: Install i3wm or sway"
   #TODO: Install i3wm
@@ -368,11 +376,10 @@ link_dotfiles() {
 
 install_vim() {
   sudo dnf install -y vim 
-  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  vim +PluginInstall +qall
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  vim +PlugInstall +qall
   cd $HOME/.vim/bundle/YouCompleteMe
-  #TODO: Install only the languages needed instead of all (ie don't need C#, Rust, etc...)
-  python3 install.py --all
+  python3 install.py --clangd-completer --go-completer --ts-completer --java-complete
   mkdir $HOME/.vim/spell
   ln -s $HOME/dotfiles/vim/spell/en.utf-8.add $HOME/.vim/spell/en.utf-8.add
 }
@@ -414,7 +421,8 @@ install_oh_my_bash() {
 #install_bitwarden
 #install_chats
 #TODO: install_fonts - hack font for fedora
-#install_i3wm
+#TODO: install_i3wm
+#TODO: install_graphics_apps # darktable, shotwell??
 #TODO: install_rice - no rice set
 #install_powerline
 #TODO: clone_dotfiles - proper location for script running from web
