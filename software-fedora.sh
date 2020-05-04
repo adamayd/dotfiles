@@ -378,9 +378,9 @@ install_vim() {
   sudo dnf install -y vim 
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   vim +PlugInstall +qall
-  cd $HOME/.vim/bundle/YouCompleteMe
-  python3 install.py --clangd-completer --go-completer --ts-completer --java-complete
-  mkdir $HOME/.vim/spell
+  python3 $HOME/.vim/plugged/YouCompleteMe/install.py --clangd-completer --go-completer --ts-completer --java-complete
+  cd $HOME
+  mkdir -p $HOME/.vim/spell $HOME/.vim/undodir
   ln -s $HOME/dotfiles/vim/spell/en.utf-8.add $HOME/.vim/spell/en.utf-8.add
 }
 

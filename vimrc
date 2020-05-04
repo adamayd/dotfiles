@@ -77,7 +77,7 @@ Plug 'vim-utils/vim-man'
 call plug#end()
 
 " ***** Theme Options *****
-colorscheme gruvbox
+silent! colorscheme gruvbox
 set background=dark 
 
 " ***** NERDTree Options *****
@@ -104,6 +104,8 @@ set rtp+=~/.local/lib/python3.7/site-packages/powerline/bindings/vim/
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
 python3 del powerline_setup
+" sets the statusbar to show (0-never, 1-more than 1 window, 2-always)
+set laststatus=2
 
 " ***** PHP Setup *****
 au BufWritePost *.php silent! !eval '[ -f ".git/hooks/ctags" ] && .git/hooks/ctags' &
