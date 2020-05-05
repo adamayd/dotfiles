@@ -143,12 +143,30 @@ install_build_tools() {
 }
 
 install_docker() {
-  echo "TODO: Determine the podman and podman-compose route"
   #TODO: Install Podman in place of Docker and Docker Compose
-  #sudo dnf install -y docker
+  #sudo dnf remove -y docker docker-client docker-client-latest docker-common \
+                  #docker-latest docker-latest-logrotate docker-logrotate \
+                  #docker-selinux docker-engine-selinux docker-engine
+  #sudo dnf install -y dnf-plugins-core
+  #sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
   #if [[ $? -ne 0 ]]; then
-    #error_exit "Error installing Docker! Aborting."
+    #error_exit "Error adding Docker-CE repo! Aborting."
   #fi
+  #sudo dnf install -y docker-ce docker-ce-cli containerd.io
+  #if [[ $? -ne 0 ]]; then
+    #error_exit "Error installing Docker-CE! Aborting."
+  #fi
+  sudo dnf install -y moby-engine moby-engine-vim
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Moby-Engine! Aborting."
+  fi
+  sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
+  sudo systemctl enable docker
+  sudo usermod -aG docker $USER
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing Docker-Compose! Aborting."
+  fi
 }
 
 install_kubernetes_tools() {
@@ -406,7 +424,7 @@ install_oh_my_bash() {
 #install_elixir
 #TODO: install_java - combine with gradle/build tools below
 #TODO: install_build_tools
-#TODO: install_docker - docker-ce and cgroups v1
+install_docker # docker-ce and cgroups v1
 #TODO: install_kubernetes_tools - finish install
 #install_config_mgmt
 #install_provisioning
