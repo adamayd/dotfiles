@@ -4,24 +4,26 @@ This document is a roadmap for installation of OS and software for a few distros
 
 ## OS Installation
 
-The thought is to dual boot Arch (in Xorg) and Fedora Workstation (in Wayland) with possibly using Solus in a VM for contributing purposes.  
+The thought is to dual boot Arch (install in Xorg) and Fedora Workstation (in Wayland) with Solus in a VM for contributing purposes.  
 
 ### Arch Linux
 
 Bash will continue to be used for installation from the ISO.  The scripts will be updated to provide more flexibility for the target machine (currently T430 or T490).  Currently experiencing issue with bootloader on T490 after install.  Need to check BIOS settings for correct UEFI setup.
 
-### Fedora Workstation and Solus 
+### Workstation Virtual Machines 
 
-Using built in installers for each OS. Currently running Fedora Workstation on bare metal but occasionally hop to Solus.
+Using built-in installers for each OS. Currently running Fedora Workstation on bare metal but could switch to VM. Using Solus and Pop_OS for the purpose of contributing back to these distros in addition to Arch and Fedora.
+
+* Fedora Workstation 32
+* Solus Linux 4.1
+* Pop_OS 20.04
 
 ### Server Virtural Machines
 
 Plan to keep at least the following server VMs for development and testing for now possibly until the a better understanding of container based development environments
 
-* CentOS 7
 * CentOS 8
 * Ubuntu Current LTS
-* Ubuntu Current Release
 
 ## Software Installation
 
@@ -31,8 +33,8 @@ All software installation will be moved to ansible playbooks.
 
 * i3wm / sway - look at justmeandopensource for i3 dotfiles
 * rofi
-* urxvt / termite / TBD...
-* ranger
+* urxvt / termite / alacritty /TBD...
+* ranger / vifm
 * feh and utils ...
 * neomutt - look at luke smith
 * hexchat, slack, discord, irssi, gitter
@@ -59,7 +61,7 @@ Should always support at least the following:
   * ESLint
   * Testing - Mocha, Jest, Cypress
 * Python (3)
-  * pipenv
+  * pipenv / virtualenv
   * Django
   * Flask
   * Testing
@@ -68,7 +70,7 @@ Should always support at least the following:
 
 ### Databases
 
-* MySQL
+* MariaDB 
 * PostgreSQL
 * Mongo
 
@@ -78,7 +80,8 @@ Lets containerize all the things.  Learning more about containers, I want to mov
 
 Install the following:
 
-* Docker CE client / service
+* Docker Community Edition / Moby Engine / Podman (Fedora)
+* Docker Compose
 * MiniKube for kubernetes local testing
 
 ### Microservices Architecture
@@ -94,6 +97,8 @@ For interaction with cloud providers.  Currently using AWS and DO but hope to ex
 
 * AWS CLI - pip install
 * Digital Ocean Cloud Controller Manager (CCM) - git clone
+* Azure
+* Google Cloud Platform
 
 ### CI/CD
 
