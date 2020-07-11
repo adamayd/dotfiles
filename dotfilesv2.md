@@ -83,6 +83,7 @@ Install the following:
 * Docker Community Edition / Moby Engine / Podman (Fedora)
 * Docker Compose
 * MiniKube for kubernetes local testing
+* ctop
 
 ### Microservices Architecture
 
