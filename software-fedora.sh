@@ -77,8 +77,19 @@ install_base_development_system() {
 }
 
 install_fedora_packaging() {
-  echo "TODO: Install Packaging tooling for F31"
-  #TODO: Install tooling for Fedora Packaging
+  sudo dnf install -y fedora-packager @development-tools
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing the Fedora packaging tools! Aborting."
+  fi
+  sudo usermod -aG mock $USER
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error adding $USER to mock group! Aborting."
+  fi
+  rpmdev-setuptree
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error setting up rpm dev tree! Aborting."
+  fi
+  # TODO: Refactor to use a separate user for packaging
 }
 
 install_fedora_releng() {
@@ -410,42 +421,42 @@ install_oh_my_bash() {
 }
 
 #update_repos
-#TODO: install_base_utilities - Exfat in kernel
+#install_base_utilities #TODO: - Exfat in kernel
 #install_command_line_fun
 #install_security_utilities
-#TODO: create_ssh_key - refactor for email input
-#TODO: install_acpi_tlp - F32 TLP manual install for thinkpads
+#create_ssh_key #TODO: - refactor for email input
+#install_acpi_tlp #TODO: - F32 TLP manual install for thinkpads
 #install_base_development_system
-#TODO: install_fedora_packaging
+install_fedora_packaging
 #TODO: install_fedora_releng
 #install_node
 #install_python
 #install_go
 #install_elixir
-#TODO: install_java - combine with gradle/build tools below
+#install_java #TODO: - combine with gradle/build tools below
 #TODO: install_build_tools
-install_docker # docker-ce and cgroups v1
-#TODO: install_kubernetes_tools - finish install
+#install_docker # docker-ce and cgroups v1
+#install_kubernetes_tools #TODO: - finish install
 #install_config_mgmt
 #install_provisioning
-#TODO: install_cloud_cli_tools - finish all of them
+#install_cloud_cli_tools #TODO: - finish all of them
 #install_serverless_framework
-#TODO: install_firefox_dev - update to latest logic
-#TODO: install_chromium
-#TODO: install_qutebrowser - config and extras setup
-#TODO: install_vscode - create and copy over config files
+#install_firefox_dev #TODO: - update to latest logic
+#install_chromium #TODO: 
+#install_qutebrowser #TODO: - config and extras setup
+#install_vscode #TODO: - create and copy over config files
 #add_flatpak_repos
 #install_postman
 #install_bitwarden
 #install_chats
-#TODO: install_fonts - hack font for fedora
+#install_fonts #TODO: - hack font for fedora
 #TODO: install_i3wm
 #TODO: install_graphics_apps # darktable, shotwell??
 #TODO: install_rice - no rice set
 #install_powerline
 #TODO: clone_dotfiles - proper location for script running from web
 #link_dotfiles
-#TODO: install_vim - gruvbox error on initial load for plugin install
-#TODO: install_oh_my_bash #- link .bashrc correctly and choose powerline-multiline
+#install_vim #TODO: - gruvbox error on initial load for plugin install
+#install_oh_my_bash #TODO: #- link .bashrc correctly and choose powerline-multiline
 #TODO: find place for vifm
 
