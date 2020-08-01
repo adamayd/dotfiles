@@ -16,7 +16,7 @@ update_repos() {
 
 install_base_utilities() {
   #TODO: Exfat in kernel fix
-  sudo dnf install -y ranger vifm strace curl wget tmux xclip jq fzf bat
+  sudo dnf install -y ranger vifm strace curl wget tmux xclip jq fzf bat fuse-exfat exfat-utils
   if [[ $? -ne 0 ]]; then
     error_exit "Error installing base utilities! Aborting."
   fi
