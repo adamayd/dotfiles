@@ -306,6 +306,13 @@ install_vscode() {
   fi
 }
 
+install_gui_tools() {
+  sudo dnf install -y hexchat 
+  if [[ $? -ne 0 ]]; then
+    error_exit "Error installing GUI Tools! Aborting."
+  fi
+}
+
 add_flatpak_repos() {
   sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
   if [[ $? -ne 0 ]]; then
@@ -445,6 +452,7 @@ install_fedora_packaging
 #install_chromium #TODO: 
 #install_qutebrowser #TODO: - config and extras setup
 #install_vscode #TODO: - create and copy over config files
+#install_gui_tools #TODO: - get all GUI tools
 #add_flatpak_repos
 #install_postman
 #install_bitwarden
