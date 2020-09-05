@@ -8,7 +8,7 @@ error_exit()
 
 update_repos() { 
   sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-  #sudo dnf install -y http://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release.fc$(rpm -E %fedora).noarch.rpm 
+  sudo dnf install -y http://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release.fc$(rpm -E %fedora).noarch.rpm 
   sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
   sudo ln -s $HOME/dotfiles/fedora/repos/vscode.repo /etc/yum.repos.d/vscode.repo
   sudo dnf update -y && sudo dnf upgrade -y
@@ -434,7 +434,7 @@ install_oh_my_bash() {
 #create_ssh_key #TODO: - refactor for email input
 #install_acpi_tlp #TODO: - F32 TLP manual install for thinkpads
 #install_base_development_system
-install_fedora_packaging
+#install_fedora_packaging
 #TODO: install_fedora_releng
 #install_node
 #install_python
@@ -448,23 +448,23 @@ install_fedora_packaging
 #install_provisioning
 #install_cloud_cli_tools #TODO: - finish all of them
 #install_serverless_framework
-#install_firefox_dev #TODO: - update to latest logic
-#install_chromium #TODO: 
-#install_qutebrowser #TODO: - config and extras setup
-#install_vscode #TODO: - create and copy over config files
-#install_gui_tools #TODO: - get all GUI tools
-#add_flatpak_repos
-#install_postman
-#install_bitwarden
-#install_chats
-#install_fonts #TODO: - hack font for fedora
+install_firefox_dev #TODO: - update to latest logic and create failsafe for browser opening
+install_chromium #TODO: 
+install_qutebrowser #TODO: - config and extras setup
+install_vscode #TODO: - create and copy over config files
+install_gui_tools #TODO: - get all GUI tools
+add_flatpak_repos
+install_postman
+install_bitwarden
+install_chats
+install_fonts #TODO: - hack font for fedora
 #TODO: install_i3wm
 #TODO: install_graphics_apps # darktable, shotwell??
 #TODO: install_rice - no rice set
-#install_powerline
+install_powerline
 #TODO: clone_dotfiles - proper location for script running from web
-#link_dotfiles
-#install_vim #TODO: - gruvbox error on initial load for plugin install
-#install_oh_my_bash #TODO: #- link .bashrc correctly and choose powerline-multiline
+link_dotfiles
+install_vim #TODO: - gruvbox error on initial load for plugin install
+install_oh_my_bash #TODO: #- link .bashrc correctly and choose powerline-multiline
 #TODO: find place for vifm
 
