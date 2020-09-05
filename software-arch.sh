@@ -1,20 +1,11 @@
 #! /bin/bash
 
-error_exit()
-{
+error_exit() {
   echo "$1" 1>&2
   exit 1
 }
 
-if cd $1; then
-  echo "Found It!!"
-else
-  error_exit "Change Directory Error!  Aborting."
-fi
-
-# Attach to Wifi
-connect_wifi()
-{
+connect_wifi() {
   clear
   nmcli dev wifi 
   read -p 'Enter the SSID of the network: ' SSID
@@ -26,28 +17,36 @@ connect_wifi()
   }
 }
 
-connect_wifi
+enable_arch_keys() {
+  sudo pacman -S --noconfirm archlinux-keyring
+}
 
-exit 0
-
-# Install CLI Installation Utilities
-sudo pacman -S --noconfirm vim bash-completion zsh ranger lm_sensors git tlp htop archey3 unzip acpi
+install_cli_utils() {
+sudo pacman -S --noconfirm bash-completion lm_sensors git tlp htop archey3 unzip acpi
+yay -S --noconfirm auto-cpufreq-git
 # TODO: neofetch vs archey3, dmidecode, cmatrix
+}
 
-# Turn on SSD Trimming
+enable_ssd_trimming() {
 sudo systemctl enable fstrim.timer
+}
 
-# Install AUR Package Manager
-git clone https://aur.archlinux.org/pikaur.git && cd pikaur
+install_aur_helper() {
+git clone https://aur.archlinux.org/yay.git && cd yay
 makepkg -si
-cd && rm -rf pikaur
+cd && rm -rf yay
+}
 
-# Install SSH
-sudo pacman -S --noconfirm openssh
+create_ssh_key() {
+  sudo pacman -S --noconfirm openssh
+  if [ ! -d "$HOME/.ssh" ]; then
+    ssh-keygen -t rsa -b 4096 -C adam.ayd@gmail.com
+    eval "$(ssh-agent -s)"
+    ssh-add $HOME/.ssh/id_rsa
+  fi
+}
 ./sshsetup.sh
-#chmod 755 $HOME/T460dotfiles/xprofile.sh
-#printf "%s\n" "$HOME/T460dotfiles/xprofile.sh" > $HOME/.xprofile
-#ln -s ~/T460dotfiles/sshrc ~/.sshrc
+#ln -s ~/dotfiles/sshrc ~/.sshrc
 # ****** May need to look into taking SSH keys over in another way *****
 
 # Install Pass Password Manager
@@ -59,69 +58,86 @@ pass init $PGPEMAIL
 # ***** May need to look into taking PGP key with as well as SSH keys *****
 
 # Clone Dotfiles Repo and Source Files
-cd && git clone https://github.com/adamayd/T460dotfiles.git
-printf "%s\n" "source $HOME/T460dotfiles/zshrc" > $HOME/.zshrc
-printf "%s\n" "source $HOME/T460dotfiles/bashrc" > $HOME/.bashrc
-printf "%s\n" "so $HOME/T460dotfiles/vimrc" > $HOME/.vimrc
+cd && git clone https://github.com/adamayd/dotfiles.git
+printf "%s\n" "source $HOME/dotfiles/zshrc" > $HOME/.zshrc
+printf "%s\n" "source $HOME/dotfiles/bashrc" > $HOME/.bashrc
+printf "%s\n" "so $HOME/dotfiles/vimrc" > $HOME/.vimrc
 mkdir -p $HOME/.config/termite
-ln -s $HOME/T460dotfiles/config/termite/config $HOME/.config/termite/config
-printf "%s\n\t%s\n" "[include]" "path = $HOME/T460dotfiles/gitconfig" > $HOME/.gitconfig 
+ln -s $HOME/dotfiles/config/termite/config $HOME/.config/termite/config
+printf "%s\n\t%s\n" "[include]" "path = $HOME/dotfiles/gitconfig" > $HOME/.gitconfig 
 
-# Install XOrg and i3WM
-sudo pacman -S xorg-server xorg-apps i3 feh scrot xclip rofi xorg-xcalc termite dmenu
+install_xorg() {
+sudo pacman -S --noconfirm xorg-server xorg-apps xclip xorg-xcalc 
+}
+
+install_i3() {
+sudo pacman -S --noconfirm i3 feh scrot rofi termite dmenu
 mkdir -p $HOME/.config/i3/
-ln -s $HOME/T460dotfiles/config/i3/config $HOME/.config/i3/config
-ln -s $HOME/T460dotfiles/i3status.conf $HOME/.i3status.conf
+ln -s $HOME/dotfiles/config/i3/config $HOME/.config/i3/config
+ln -s $HOME/dotfiles/i3status.conf $HOME/.i3status.conf
+}
 
-# Install Light DM
+install_light_dm() {
 sudo pacman -S --noconfirm lightdm lightdm-gtk-greeter
 sudo systemctl enable lightdm.service
 # TODO: link /etc/lightdm/ligthdm-gtk-greeter.conf
 # TODO: finish avatar and background install
+}
 
-# Install Audio
+install_audio() {
 sudo pacman -S --noconfirm alsa-utils pulseaudio pulseaudio-alsa
 amixer sset Master unmute 50
 speaker-test -c 2 -l 2
+}
 
-# Install Bluetooth
+install_bluetooth() {
 sudo pacman -S --noconfirm bluez bluez-utils pulseaudio-bluetooth
+} 
 
-# Install Intel Video
+install_intel_video() {
 sudo pacman -S --noconfirm xf86-video-intel
-cp -f ~/T460dotfiles/remoteconf/20-intel.conf /etc/X11/xorg.conf.d
+#cp -f ~/dotfiles/remoteconf/20-intel.conf /etc/X11/xorg.conf.d
+}
 
 # Install Synaptics Clickpad
 sudo pacman -S --noconfirm synaptics
 # TODO: libinput for Clickpad
-cp -f ~/T460dotfiles/remoteconf/70-synaptics.conf /etc/X11/xorg.conf.d
+cp -f ~/dotfiles/remoteconf/70-synaptics.conf /etc/X11/xorg.conf.d
 
-# Install Filesystem Support
+install_fs_utils() {
 sudo pacman -S exfat-utils dosfstools udisks2 autofs
-pikaur -S hfsprogs
+# TODO: FAILED - yay -S hfsprogs
 # TODO: ntfs / samba
 # TODO: cd/dvd/bd support
+}
 
-# Install System Fonts
+install_system_fonts() {
 sudo pacman -S --noconfirm ttf-dejavu xorg-fonts-100dpi powerline powerline-fonts noto-fonts-emoji
-pikaur -S system-san-francisco-font-git ttf-font-awesome ttf-ms-fonts ttf-mac-fonts ttf-font-icons ttf-vista-fonts
+yay -S otf-san-francisco ttf-font-awesome ttf-ms-fonts ttf-mac-fonts ttf-font-icons ttf-vista-fonts
+# TODO: look for OTF replacements instead of ttf
+}
 
-# Install Printing Services
+install_printing_services() {
 sudo pacman -S --noconfirm cups cups-pdf
 sudo systemctl enable org.cups.cupsd.service
-sudo cp -f $HOME/T460dotfiles/remoteconf/cups-pdf.conf /etc/cups/cups-pdf.conf
+sudo cp -f $HOME/dotfiles/remoteconf/cups-pdf.conf /etc/cups/cups-pdf.conf
 # TODO: install Samsung drivers
 # TODO: network printing
+}
 
-# Install Scanning Services
+# TODO: Install Scanning Services
 # SANE services
 # Brother drivers brscan4
 # network scanning
 # gscan2pdf 
 
-# Install VPN & Remote Desktop
+install_remote_desktop() {
 sudo pacman -S --noconfirm rdesktop ppp
-pikaur -S netextender
+}
+
+# Install Ranger Preview Dependencies
+# sudo pacman -S ranger
+# TODO: w3m? pdf2text?? exiftool??
 
 # Install Notification System
 sudo pacman -S --noconfirm dunst
@@ -130,47 +146,54 @@ sudo pacman -S --noconfirm dunst
 # Install GUI File Explorer and Preview Dependencies
 # TODO: yeah that, pick a gui file manager first
 
-# Install Ranger Preview Dependencies
-# TODO: w3m? pdf2text?? exiftool??
-
 # Install NeoMutt Email
 sudo pacman -S --noconfirm neomutt dialog offlineimap msmtp
 mkdir $HOME/.mutt
-ln -s $HOME/T460dotfiles/muttrc $HOME/.mutt/muttrc
+ln -s $HOME/dotfiles/muttrc $HOME/.mutt/muttrc
 #git clone https://github.com/LukeSmithxyz/mutt-wizard.git ~/.config/mutt
 #cd ~/.config/mutt && ./mutt-wizard.sh
+
+# Install VIm
+sudo pacman -S --noconfirm vim
+# TODO: vim plugins and config
 
 # Install CLI Base Software
 sudo pacman -S --noconfirm mpv calcurse cmus w3m transmission-cli perl-image-exiftool rsync #TODO: slack-term wormhole irssi vitetris
 
 # Install GUI Base Software
-sudo pacman -S --noconfirm gimp libreoffice-fresh transmission-gtk pdfsam
+# TODO: sudo pacman -S --noconfirm gimp darktable obs libreoffice-fresh transmission-gtk pdfsam
+# TODO: bitwarden 
 
 # Install CLI Dev Environment
+# TODO: Break this into language sections JavaScript/Typscript, Python, C/C++, Go
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-source ~/T460dotfiles/nvmrc && nvm install --lts
-ln -s ~/T460dotfiles/nvmrc ~/.nvmrc
+source ~/dotfiles/nvmrc && nvm install --lts
+ln -s ~/dotfiles/nvmrc ~/.nvmrc
 # TODO: Get nvm check out of shellsrc, maybe xinit.rc??
 sudo pacman -S --noconfirm python-pip python2-pip ruby mongodb tmux jdk8-openjdk
-pikaur -S rbenv
+yay -S rbenv
 # TODO: create NVM install script that installs global packages in each verison of Node
 npm i -g yarn create-react-app @vue/cli eslint gatsby-cli eslint @gridsome/cli jest
 
 # Install GUI Dev Software
-sudo pacman -S --noconfirm chromium firefox-developer-edition pycharm-community-edition 
-pikaur -S postman-bin slack-desktop gitter gitkraken robo3t-bin
+sudo pacman -S --noconfirm chromium firefox-developer-edition vscode
+yay -S postman-bin gitkraken robo3t-bin
 
-# Install .NET Core
-sudo pacman -S --noconfirm dotnet-runtime dotnet-sdk code
+# Install Chat software
+# discord, slack, zoom, gitter, matrix, hexchat, irssi
 
 # Install Embedded Software
-pikaur -S cutecom beye
+yay -S cutecom beye
 
-# Install Elixir/Erlang Software
-#install asdf
-#install phoenix
-#install nerves
+# Install Android Dev Software
+#pacman -S --noconfirm android-studio android-tools android-udev mtpfs
+# adb and fastboot
+sudo pacman -S --noconfirm bc bison base-devel ccache curl flex png++ gccbase-devel git gnupg gperf imagemagick lib32-ncurses lib32-readline lib32-zlib lz4 ncurses sdl openssl wxgtk3 libxml2 lzop pngcrush rsync schedtool squashfs-tools libxslt zip zlib maven
+yay -S esound
 
+# TODO: Containerize Servers
+# Container Services
+# install docker heroku kubernetes lxd 
 # Install LAMP
 #install apache
 #copy apached config
@@ -181,13 +204,10 @@ pikaur -S cutecom beye
 #link php to mariadb
 #enable mysql service
 
-# Container Services
-# install docker heroku kubernetes lxd 
-
-# Install Android Dev Software
-#pacman -S --noconfirm android-studio android-tools android-udev mtpfs
-sudo pacman -S --noconfirm bc bison base-devel ccache curl flex png++ gccbase-devel git gnupg gperf imagemagick lib32-ncurses lib32-readline lib32-zlib lz4 ncurses sdl openssl wxgtk3 libxml2 lzop pngcrush rsync schedtool squashfs-tools libxslt zip zlib maven
-pikaur -S esound
+# TODO: VM Other Distros
+# Solus + packaging
+# Fedora + packaging
+# Pop_OS! + packaging
 
 # Rice to fix on i3
 # Powerline everywhere
@@ -195,9 +215,24 @@ pikaur -S esound
 # Lock Screen
 # Light DM Avatar and Background
 # libinput-gestures (3 finger swipes)
+# Rice to fix on OpenBox/Budgie
+# Add Oh My Bash
 
-# Rice to fix on OpenBox
-# TBD
 
-# Add Oh My Zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+connect_wifi
+enable_arch_keys
+install_cli
+enable_ssd_trimming
+install_aur_helper
+install_audio
+install_bluetooth
+install_xorg
+install_i3
+install_light_dm
+install_intel_video
+install_fs_utils
+install_system_fonts
+install_printing_services
+install_remote_desktop
+
+exit 0
