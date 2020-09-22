@@ -72,6 +72,7 @@ Plug 'junegunn/fzf' ", { 'do': { -> fzf#install() } }
 Plug 'ycm-core/YouCompleteMe'
 Plug 'mxw/vim-jsx'
 Plug 'StanAngeloff/php.vim'
+Plug 'beanworks/vim-phpfmt'
 Plug 'vim-utils/vim-man'
 call plug#end()
 
@@ -88,6 +89,7 @@ function! StartUp()
 endfunction
 autocmd VimEnter * call StartUp()
 let NERDTreeQuitOnOpen=1  " closes NERDTree when file is opened
+let NERDTreeShowHidden=1  " shows hidden files by default
 " shortcut to run NERDTree
 nmap <silent> <leader><space> :NERDTreeToggle<cr>     
 
@@ -100,6 +102,7 @@ noremap <silent> <leader>gf :YcmCompleter FixIt<cr>
 
 " ***** Powerline Plugin *****
 set rtp+=~/.local/lib/python3.7/site-packages/powerline/bindings/vim/
+"set rtp+=/Users/aayd/Library/Python/3.8/lib/python/site-packages/powerline/bindings/vim/
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
 python3 del powerline_setup
@@ -108,4 +111,6 @@ set laststatus=2
 
 " ***** PHP Setup *****
 au BufWritePost *.php silent! !eval '[ -f ".git/hooks/ctags" ] && .git/hooks/ctags' &
+autocmd FileType php setlocal noexpandtab
+let g:phpfmt_standard = '~/.composer/vendor/wp-coding-standards/wpcs/WordPress-Extra/ruleset.xml'
 
