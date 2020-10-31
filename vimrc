@@ -68,11 +68,11 @@ Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/fzf' ", { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'ycm-core/YouCompleteMe'
 Plug 'mxw/vim-jsx'
-Plug 'StanAngeloff/php.vim'
 Plug 'vim-utils/vim-man'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 " ***** Theme Options *****

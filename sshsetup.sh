@@ -7,8 +7,7 @@ read -p "Enter the email address you want associated with your SSH key: " EMAILS
 ssh-keygen -t rsa -b 4096 -C "$EMAILSSH"
 
 # Start Agent
-ln -s $HOME/T460dotfiles/ssh/config $HOME/.ssh/config
-# printf '%s\t%s\n' "AddKeysToAgent" "yes" >> $HOME/.ssh/config
+ln -s $HOME/dotfiles/ssh/config $HOME/.ssh/config
 eval "$(ssh-agent -s)"
 
 # Add Key to Agent
@@ -17,8 +16,8 @@ ssh-add ~/.ssh/$SSHKEYNAME
 
 # Move User Agent Service and Enable
 mkdir -p $HOME/.config/systemd/user/
-cp $HOME/T460dotfiles/config/systemd/user/ssh-agent.service $HOME/.config/systemd/user/
-ln -s $HOME/T460dotfiles/pam_environment $HOME/.pam_environment
+cp $HOME/dotfiles/config/systemd/user/ssh-agent.service $HOME/.config/systemd/user/
+ln -s $HOME/dotfiles/pam_environment $HOME/.pam_environment
 systemctl --user enable ssh-agent
 
 # Helpful info that is also easy to find notes later
