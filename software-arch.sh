@@ -157,6 +157,12 @@ ln -s $HOME/dotfiles/muttrc $HOME/.mutt/muttrc
 sudo pacman -S --noconfirm vim
 # TODO: vim plugins and config
 
+install_neovim() {
+	sudo pacman -S --noconfirm neovim
+	git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger/plugins/ranger_devicons
+	pip install --user pynvim ueberzug
+}
+
 # Install CLI Base Software
 sudo pacman -S --noconfirm mpv calcurse cmus w3m transmission-cli perl-image-exiftool rsync #TODO: slack-term wormhole irssi vitetris
 
@@ -234,5 +240,6 @@ install_fs_utils
 install_system_fonts
 install_printing_services
 install_remote_desktop
+install_neovim
 
 exit 0
