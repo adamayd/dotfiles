@@ -24,7 +24,7 @@ enable_arch_keys() {
 install_cli_utils() {
 sudo pacman -S --noconfirm bash-completion lm_sensors git tlp htop archey3 unzip acpi
 yay -S --noconfirm auto-cpufreq-git
-# TODO: neofetch vs archey3, dmidecode, cmatrix
+# TODO: neofetch vs archey3, dmidecode, cmatrix, fzf, ripgrep, universal-ctags
 }
 
 enable_ssd_trimming() {
