@@ -12,6 +12,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-airline/vim-airline'
 Plug 'lilydjwg/colorizer'
 Plug 'morhetz/gruvbox'
+Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 call plug#end()
 
 colorscheme gruvbox
@@ -24,7 +25,7 @@ source $HOME/.config/nvim/config-plug/fzf.vim
 source $HOME/.config/nvim/config-plug/coc.vim
 source $HOME/.config/nvim/config-plug/airline.vim
 " nvim-colorizer - lua
-" vim-go
+source $HOME/.config/nvim/config-plug/vim-go.vim
 
 
 nmap <leader>gs :G<CR>
