@@ -1,0 +1,2 @@
+" Vim-Go configuration
+
