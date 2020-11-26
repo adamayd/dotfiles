@@ -10,13 +10,14 @@ Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-rooter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-airline/vim-airline'
+Plug 'raimondi/delimitmate'
 Plug 'lilydjwg/colorizer'
 Plug 'morhetz/gruvbox'
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 call plug#end()
 
-colorscheme gruvbox
 set background=dark
+colorscheme gruvbox
 
 source $HOME/.config/nvim/config-plug/startify.vim
 source $HOME/.config/nvim/config-plug/fugitive.vim
@@ -25,6 +26,7 @@ source $HOME/.config/nvim/config-plug/fzf.vim
 source $HOME/.config/nvim/config-plug/coc.vim
 source $HOME/.config/nvim/config-plug/airline.vim
 " nvim-colorizer - lua
+source $HOME/.config/nvim/config-plug/gruvbox.vim
 source $HOME/.config/nvim/config-plug/vim-go.vim
 
 
@@ -40,3 +42,19 @@ nnoremap <leader>g :Rg<CR>
 nnoremap <leader>t :Tags<CR>
 nnoremap <leader>m :Marks<CR>
 
+set splitbelow
+set splitright
+
+set mouse=a
+
+" Copy to clipboard
+vnoremap <leader>y "+y
+nnoremap <leader>Y "+yg_
+nnoremap <leader>y "+y
+nnoremap <leader>yy "+yy
+
+" Paste from clipboard
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
