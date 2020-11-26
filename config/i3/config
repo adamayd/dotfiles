@@ -16,7 +16,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:System San Francisco Display 9
+font pango:System San Francisco Display 9 
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -54,7 +54,7 @@ bindsym $mod+Shift+q kill
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # Start Rofi (program launcher)
-bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -font "System San Francisco Display 14" -width 100 -padding 500 
+bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -font "System San Francisco Display 13" -width 100 -padding 500 
 
 # change focus
 bindsym $mod+h focus left
