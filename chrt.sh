@@ -40,8 +40,8 @@ PUUID="$(blkid -s PARTUUID -o value /dev/sda2)"
 printf '%s\n%s\n%s\n%s\n%s\n' 'title Arch Linux' 'linux /vmlinuz-linux' 'initrd /intel-ucode.img' 'initrd /initramfs-linux.img' "options root=PARTUUID=$PUUID rw" > /boot/loader/entries/arch.conf
 
 # Prepare for reboot
-pacman -S --noconfirm networkmanager cronie
-curl --remote-name https://raw.githubusercontent.com/adamayd/T460dotfiles/master/software.sh
+pacman -S --noconfirm networkmanager cronie intel-firmware
+curl --remote-name https://raw.githubusercontent.com/adamayd/dotfiles/master/software.sh
 chown adam:users software.sh
 read -p 'Press Enter to continue' 
 chmod 755 software.sh
