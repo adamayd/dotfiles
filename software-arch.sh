@@ -22,19 +22,20 @@ enable_arch_keys() {
 }
 
 install_cli_utils() {
-	sudo pacman -S --noconfirm bash-completion lm_sensors git tlp htop archey3 unzip acpi
-	yay -S --noconfirm auto-cpufreq-git
-	# TODO: neofetch vs archey3, dmidecode, cmatrix, fzf, ripgrep, universal-ctags
+  sudo pacman -S --noconfirm bash-completion lm_sensors git tlp htop archey3 unzip acpi
+  yay -S --noconfirm auto-cpufreq-git
+  # TODO: neofetch vs archey3, dmidecode, cmatrix, fzf, ripgrep, universal-ctags
+  bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 }
 
 enable_ssd_trimming() {
-	sudo systemctl enable fstrim.timer
+  sudo systemctl enable fstrim.timer
 }
 
 install_aur_helper() {
-	git clone https://aur.archlinux.org/yay.git && cd yay
-	makepkg -si
-	cd && rm -rf yay
+  git clone https://aur.archlinux.org/yay.git && cd yay
+  makepkg -si
+  cd && rm -rf yay
 }
 
 create_ssh_key() {
@@ -44,29 +45,43 @@ create_ssh_key() {
     eval "$(ssh-agent -s)"
     ssh-add $HOME/.ssh/id_rsa
   fi
-	#./sshsetup.sh
-	#ln -s ~/dotfiles/sshrc ~/.sshrc
-	# ****** May need to look into taking SSH keys over in another way *****
+  #./sshsetup.sh
+  #ln -s ~/dotfiles/sshrc ~/.sshrc
+  # ****** May need to look into taking SSH keys over in another way *****
 }
 
 install_password_manager() {
-	sudo pacman -S gnupg pass 
-	gpg --full-gen-key
-	read -p 'Enter email address associated with your PGP key' PGPEMAIL
-	pass init $PGPEMAIL
-	# TODO: copy password database over
-	# ***** May need to look into taking PGP key with as well as SSH keys *****
+  sudo pacman -S gnupg pass 
+  gpg --full-gen-key
+  read -p 'Enter email address associated with your PGP key' PGPEMAIL
+  pass init $PGPEMAIL
+  # TODO: copy password database over
+  # ***** May need to look into taking PGP key with as well as SSH keys *****
 }
 
 clone_dotfiles() {
 	cd && git clone https://github.com/adamayd/dotfiles.git
-	printf "%s\n" "source $HOME/dotfiles/zshrc" > $HOME/.zshrc
-	printf "%s\n" "source $HOME/dotfiles/bashrc" > $HOME/.bashrc
-	printf "%s\n" "so $HOME/dotfiles/vimrc" > $HOME/.vimrc
-	mkdir -p $HOME/.config/termite
-	ln -s $HOME/dotfiles/config/termite/config $HOME/.config/termite/config
-	printf "%s\n\t%s\n" "[include]" "path = $HOME/dotfiles/gitconfig" > $HOME/.gitconfig 
+	ln -s $HOME/dotfiles/bashrc $HOME/.bashrc
+	ln -s $HOME/dotfiles/gitconfig > $HOME/.gitconfig 
 }
+
+install_javascript(){
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.1/install.sh | bash
+	source $HOME/dotfiles/nvmrc
+	nvm install --lts
+	# TODO: Get nvm check out of shellsrc, maybe xinit.rc??
+	# TODO: create NVM install script that installs global packages in each verison of Node
+	npm i -g yarn @vue/cli gatsby-cli @gridsome/cli eslint jest
+}
+
+install_python() {
+	sudo pacman -S --noconfirm python-pip python2-pip 
+}
+
+install_golang() {
+	sudo pacman -S --noconfirm go
+}
+
 
 install_xorg() {
 	sudo pacman -S --noconfirm xorg-server xorg-apps xclip xorg-xcalc 
@@ -77,6 +92,8 @@ install_i3() {
 	mkdir -p $HOME/.config/i3/
 	ln -s $HOME/dotfiles/config/i3/config $HOME/.config/i3/config
 	ln -s $HOME/dotfiles/i3status.conf $HOME/.i3status.conf
+	mkdir -p $HOME/.config/termite
+	ln -s $HOME/dotfiles/config/termite/config $HOME/.config/termite/config
 }
 
 install_light_dm() {
@@ -119,6 +136,7 @@ install_system_fonts() {
 	sudo pacman -S --noconfirm ttf-dejavu xorg-fonts-100dpi powerline powerline-fonts noto-fonts-emoji
 	yay -S otf-san-francisco ttf-font-awesome ttf-ms-fonts ttf-mac-fonts ttf-font-icons ttf-vista-fonts
 	# TODO: look for OTF replacements instead of ttf
+	# TODO: Nerdfonts, DevIcons
 }
 
 install_notifications() {
@@ -145,6 +163,7 @@ install_scanning_services() {
 
 install_vim() {
 	sudo pacman -S --noconfirm vim
+	printf "%s\n" "so $HOME/dotfiles/vimrc" > $HOME/.vimrc
 	# TODO: vim plugins and config
 }
 
@@ -175,28 +194,9 @@ install_cli_base() {
 	#TODO: slack-term wormhole irssi vitetris
 }
 
-	# Install GUI Base Software
-	# Install GUI File Explorer and Preview Dependencies
-	# TODO: yeah that, pick a gui file manager first
-	# TODO: sudo pacman -S --noconfirm gimp darktable obs libreoffice-fresh transmission-gtk pdfsam
-	# TODO: bitwarden 
-
-install_javascript(){
-	echo "This is javascript"
-	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-	source ~/dotfiles/nvmrc && nvm install --lts
-	ln -s ~/dotfiles/nvmrc ~/.nvmrc
-	# TODO: Get nvm check out of shellsrc, maybe xinit.rc??
-	# TODO: create NVM install script that installs global packages in each verison of Node
-	npm i -g yarn create-react-app @vue/cli eslint gatsby-cli eslint @gridsome/cli jest
-}
-
-install_python() {
-	sudo pacman -S --noconfirm python-pip python2-pip 
-}
-
-install_golang() {
-	echo "Installing GoLang"
+install_flatpak() {
+	sudo pacman -S --noconfirm
+	# TODO: install base repos
 }
 
 install_chromium() {
@@ -217,6 +217,17 @@ install_vscode() {
 install_postman() {
 	echo "Installing Postman"
 	yay -S postman-bin
+}
+
+# Install GUI Base Software
+# Install GUI File Explorer and Preview Dependencies
+# TODO: yeah that, pick a gui file manager first
+# TODO: sudo pacman -S --noconfirm gimp darktable obs libreoffice-fresh transmission-gtk pdfsam
+
+install_bitwarden() {
+	flatpak install bitwarden
+	# TODO: install without confirmation
+	# TODO: add temp path for configuration before reboot
 }
 
 install_chats() {
@@ -269,36 +280,38 @@ install_android_sdk() {
 
 
 #connect_wifi
-enable_arch_keys
-install_cli
-enable_ssd_trimming
-install_aur_helper
-create_ssh_key
-install_password_manager
-#install_xorg
-#install_i3
-#install_light_dm
-install_fs_utils
-install_intel_video
-install_audio
-install_bluetooth
-install_synaptics
-install_system_fonts
-install_notifications
-#install_printing_services
-#install_scanning_services
-install_vim
-install_neovim
-install_ranger
-install_neomutt
-install_cli_base
+#enable_arch_keys
+#install_cli_utils
+#enable_ssd_trimming
+#install_aur_helper
+#create_ssh_key
+#install_password_manager
 #install_javascript
 #install_python
 #install_golang
+#install_xorg
+#install_i3
+#install_light_dm
+#install_fs_utils
+#install_intel_video
+#install_audio
+#install_bluetooth
+#install_synaptics
+#install_system_fonts
+#install_notifications
+#install_printing_services
+#install_scanning_services
+#install_vim
+#install_neovim
+#install_ranger
+#install_neomutt
+#install_cli_base
+#install_flatpak
 #install_chromium
 #install_firefox_developer_edition
 #install_vscode
 #install_postman
+#install_bitwarden
 #install_chats
 #install_remote_desktop
 #install_embedded_software
