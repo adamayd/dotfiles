@@ -16,7 +16,7 @@ update_repos() {
 
 install_base_utilities() {
   #TODO: Exfat in kernel fix
-  sudo dnf install -y ranger vifm strace curl wget tmux xclip jq fzf bat fuse-exfat exfat-utils
+  sudo dnf install -y ranger vifm strace curl wget tmux xclip jq fzf bat fuse-exfat exfat-utils dnf-plugins-core
 }
 
 install_command_line_fun() {
@@ -25,6 +25,7 @@ install_command_line_fun() {
 
 
 install_security_utilities() {
+  # TODO: Look at keybase for storing keys on nuke & pave
   sudo dnf install -y gnupg1 gnupg2 pass openssh
   # TODO: fix gpg key generation to work without prompts
   # cat /etc/passwd | grep $USER | cut -d: -f5 #user real name
@@ -34,6 +35,7 @@ install_security_utilities() {
 }
 
 create_ssh_key() {
+  # TODO: Look at keybase for storing keys on nuke & pave
   read -p "Enter the email address you want associated with your SSH key: " EMAILSSH 
   ln -s $HOME/dotfiles/ssh/config $HOME/.ssh/config
   if [ ! -d "$HOME/.ssh" ]; then
@@ -44,9 +46,10 @@ create_ssh_key() {
 }
 
 install_acpi_tlp() {
-  #TODO: F32 TLP for Thinkpads
   sudo dnf install -y tlp tlp-rdw smartmontools
-  sudo dnf install -y kernel-devel akmod-acpi_call akmod-tp_smapi
+  sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+  sudo dnf install https://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release.fc$(rpm -E %fedora).noarch.rpm
+  sudo dnf install -y kernel-devel akmod-acpi_call
   sudo tlp start
 }
 
@@ -79,7 +82,7 @@ install_node() {
   sudo dnf install -y yarnpkg
 
   # Install Node Utilities
-  sudo yarn global add create-react-app @vue/cli eslint gatsby-cli @gridsome/cli jest
+  yarnpkg global add create-react-app eslint gatsby-cli jest
 }
 
 install_python() {
@@ -88,6 +91,8 @@ install_python() {
 
 install_go() {
   sudo dnf install -y golang
+  curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.35.0
+  go get github.com/go-delve/delve/cmd/dlv
 }
 
 install_java() {
@@ -106,17 +111,15 @@ install_virt() {
 
 install_docker() {
   #TODO: Install Podman in place of Docker and Docker Compose
-  #sudo dnf remove -y docker docker-client docker-client-latest docker-common \
-                  #docker-latest docker-latest-logrotate docker-logrotate \
-                  #docker-selinux docker-engine-selinux docker-engine
-  #sudo dnf install -y dnf-plugins-core
-  #sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-  #sudo dnf install -y docker-ce docker-ce-cli containerd.io
-  sudo dnf install -y moby-engine moby-engine-vim
-  sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
+  sudo dnf remove -y docker docker-client docker-client-latest docker-common \
+                  docker-latest docker-latest-logrotate docker-logrotate \
+                  docker-selinux docker-engine-selinux docker-engine
+  sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+  sudo dnf install -y docker-ce docker-ce-cli containerd.io
+  #sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
   sudo systemctl enable docker
   sudo usermod -aG docker $USER
-  sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 }
 
 install_kubernetes_tools() {
@@ -128,11 +131,12 @@ install_kubernetes_tools() {
 
 install_config_mgmt() {
   sudo dnf install -y ansible
+  # TODO: add ansible user and ssh key for the user.
 }
 
 install_provisioning() {
-  wget -O $HOME/Downloads/terraform_0.12.24_linux_amd64.zip https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
-  sudo unzip -d /usr/local/bin/ $HOME/Downloads/terraform_0.12.24_linux_amd64.zip
+  sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+  sudo dnf install -y terraform
 }
 
 install_serverless_framework() {
@@ -240,6 +244,10 @@ install_bitwarden() {
   sudo flatpak install -y bitwarden
 }
 
+install_keybase() {
+  sudo dnf install -y https://prerelease.keybase.io/keybase_amd64.rpm
+}
+
 install_chats() {
   sudo flatpak install -y slack
   sudo flatpak install -y discord
@@ -307,40 +315,41 @@ install_oh_my_bash() {
 #update_repos || error_exit "Update Repos"
 #install_base_utilities || error_exit "Base Utilites" #TODO: Exfat in kernel
 #install_command_line_fun || error_exit "Command Line Fun"
-#install_security_utilities || error_exit "" #TODO: GPG command arguments build out
-#create_ssh_key || error_exit "" #TODO: - refactor for email input
-#install_acpi_tlp || error_exit "" #TODO: - F32 TLP manual install for thinkpads
-#install_base_development_system || error_exit ""
-#install_fedora_packaging || error_exit ""
-#TODO: install_fedora_releng || error_exit ""
-#install_node || error_exit ""
-#install_python || error_exit ""
-#install_go || error_exit ""
-#install_java || error_exit "" #TODO: - combine with gradle/build tools below
+#install_security_utilities || error_exit "Security Utilities" #TODO: GPG command arguments build out
+#create_ssh_key || error_exit "Creating SSH Key" #TODO: - refactor for email input
+#install_acpi_tlp || error_exit "ACPI/TLP" #TODO: - F32 TLP manual install for thinkpads
+#install_base_development_system || error_exit "Base Development"
+#install_fedora_packaging || error_exit "Fedora Packaging"
+#TODO: install_fedora_releng || error_exit "Fedora Release Engineering"
+#install_node || error_exit "Node JS"
+#install_python || error_exit "Python"
+install_go || error_exit "Go Lang"
+#install_java || error_exit "Java" #TODO: - combine with gradle/build tools below
 #install_virt || error_exit "Virtual Machine" #TODO: error break for virt bios detection
-#install_docker || error_exit "" # docker-ce and cgroups v1
-#install_kubernetes_tools || error_exit "" #TODO: - finish install
-#install_config_mgmt || error_exit ""
-#install_provisioning || error_exit ""
-#install_cloud_cli_tools || error_exit "" #TODO: - finish all of them
-#install_serverless_framework || error_exit ""
-#install_firefox_dev || error_exit "" #TODO: - update to latest logic and create failsafe for browser opening
-#install_chromium || error_exit "" #TODO: 
-#install_qutebrowser || error_exit "" #TODO: - config and extras setup
-#install_vscode || error_exit "" #TODO: - create and copy over config files
-#install_gui_tools || error_exit "" #TODO: - get all GUI tools
-#add_flatpak_repos || error_exit ""
-#install_postman || error_exit ""
-#install_bitwarden || error_exit ""
-#install_chats || error_exit "" #TODO: matrix
-#install_fonts || error_exit "" #TODO: - hack font for fedora
-#TODO: install_i3wm || error_exit ""
-#TODO: install_graphics_apps || error_exit "" # darktable, shotwell??
-#TODO: install_rice || error_exit "" - no rice set
-#install_powerline || error_exit ""
-#TODO: clone_dotfiles || error_exit "" - proper location for script running from web
-#link_dotfiles || error_exit "" - #TODO: Link dotfiles with appropriate installs instead of at once
-#install_vim || error_exit "" #TODO: - gruvbox error on initial load for plugin install
-#install_oh_my_bash || error_exit "" #TODO: #- link .bashrc correctly and choose powerline-multiline
+#install_docker || error_exit "Docker" # docker-ce and cgroups v1
+#install_kubernetes_tools || error_exit "Kubernetes" #TODO: - finish install
+#install_config_mgmt || error_exit "Configuration Management"
+install_provisioning || error_exit "Provisioning"
+install_cloud_cli_tools || error_exit "Cloud CLI Tools" #TODO: - finish all of them
+#install_serverless_framework || error_exit "Serverless Framework"
+install_firefox_dev || error_exit "Firefox Developer Edition" #TODO: - update to latest logic and create failsafe for browser opening
+install_chromium || error_exit "Chromium" #TODO: 
+#install_qutebrowser || error_exit "QuteBrowser" #TODO: - config and extras setup
+install_vscode || error_exit "VS Code" #TODO: - create and copy over config files
+#install_gui_tools || error_exit "GUI Tools" #TODO: - get all GUI tools
+add_flatpak_repos || error_exit "Flatpak Repos"
+#install_postman || error_exit "Postman"
+install_bitwarden || error_exit "Bitwarden"
+install_keybase || error_exit "Keybase"
+install_chats || error_exit "Chats" #TODO: matrix
+install_fonts || error_exit "Fonts" #TODO: - hack font for fedora
+#TODO: install_i3wm || error_exit "I3 Window Manager"
+#TODO: install_graphics_apps || error_exit "Graphics Apps" # darktable, shotwell??
+#TODO: install_rice || error_exit "Rice" - no rice set
+install_powerline || error_exit "Powerline"
+#TODO: clone_dotfiles || error_exit "Dotfiles" - proper location for script running from web
+#link_dotfiles || error_exit "Linking Dotfiles" - #TODO: Link dotfiles with appropriate installs instead of at once
+install_vim || error_exit "Vim" #TODO: - gruvbox error on initial load for plugin install
+install_oh_my_bash || error_exit "Oh My Bash" #TODO: #- link .bashrc correctly and choose powerline-multiline
 #TODO: vifm to look and operate more like ranger with previews.
 
