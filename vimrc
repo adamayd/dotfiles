@@ -102,9 +102,10 @@ noremap <silent> <leader>gd :YcmCompleter GoTo<cr>
 noremap <silent> <leader>gf :YcmCompleter FixIt<cr>
 
 " ***** FuGitive Options *****
+set diffopt+=vertical
 nmap <leader>gs :G<cr>
-nmap <leader>gh :diffgit //2<cr>
-nmap <leader>gj :diffgit //3<cr>
+nmap <leader>gh :diffget //2<cr>
+nmap <leader>gj :diffget //3<cr>
 
 " ***** Powerline Plugin *****
 set rtp+=~/.local/lib/python3.7/site-packages/powerline/bindings/vim/

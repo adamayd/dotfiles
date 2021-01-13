@@ -7,8 +7,12 @@ error_exit()
 }
 
 update_repos() { 
-  sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+  sudo dnf -y install dnf-plugins-core
+  sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm 
+  sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
   sudo dnf install -y http://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release.fc$(rpm -E %fedora).noarch.rpm 
+  sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+  sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
   sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
   sudo ln -s $HOME/dotfiles/fedora/repos/vscode.repo /etc/yum.repos.d/vscode.repo
   sudo dnf update -y && sudo dnf upgrade -y
@@ -82,7 +86,11 @@ install_node() {
   sudo dnf install -y yarnpkg
 
   # Install Node Utilities
+<<<<<<< HEAD
   yarnpkg global add create-react-app eslint gatsby-cli jest
+=======
+  yarnpkg --global add create-react-app @vue/cli eslint gatsby-cli @gridsome/cli jest
+>>>>>>> 12fb28143713546302ea0ec2e642f1e671751265
 }
 
 install_python() {
@@ -105,7 +113,7 @@ install_java() {
 
 install_virt() {
   cat /proc/cpuinfo | egrep "vmx|svm" #TODO: error break
-  sudo dnf group install --with-optional virtualization
+  sudo dnf group install -y --with-optional virtualization
   sudo systemctl enable libvirtd
 }
 
@@ -116,10 +124,21 @@ install_docker() {
                   docker-selinux docker-engine-selinux docker-engine
   sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
   sudo dnf install -y docker-ce docker-ce-cli containerd.io
+=======
+                  #docker-latest docker-latest-logrotate docker-logrotate \
+                  #docker-selinux docker-engine-selinux docker-engine
+  sudo dnf install -y dnf-plugins-core
+  sudo dnf install -y docker-ce docker-ce-cli containerd.io
+  #sudo dnf install -y moby-engine moby-engine-vim
+>>>>>>> 12fb28143713546302ea0ec2e642f1e671751265
   #sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
   sudo systemctl enable docker
   sudo usermod -aG docker $USER
   sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+<<<<<<< HEAD
+=======
+  sudo chmod +x /usr/local/bin/docker-compose
+>>>>>>> 12fb28143713546302ea0ec2e642f1e671751265
 }
 
 install_kubernetes_tools() {
@@ -135,8 +154,7 @@ install_config_mgmt() {
 }
 
 install_provisioning() {
-  sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
-  sudo dnf install -y terraform
+  sudo dnf -y install terraform
 }
 
 install_serverless_framework() {
@@ -148,7 +166,10 @@ install_cloud_cli_tools() {
   # Install AWS and Boto3
   #TODO: boto3 error on install asking for dependency botocore
   sudo dnf install -y python3-boto3
-  pip3 install --user awscli
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o $HOME/Downloads/awscliv2.zip
+  unzip $HOME/Downloads/awscliv2.zip
+  sudo ./$HOME/Downloads/aws/install
+  pip3 install --user aws-mfa
   #TODO: Install Azure CLI
   #TODO: Install GCP CLI
 }
@@ -217,6 +238,7 @@ install_chromium() {
   if [[ $SKIPPER != 's' && $SKIPPER != 'S' ]]; then
     chromium-browser
   fi
+  #FIXME: chrome://flags/#enable-webrtc-pipewire-capturer for screen capturing to work in all chromium based applications
 }
 
 install_qutebrowser() {
@@ -229,7 +251,13 @@ install_vscode() {
 }
 
 install_gui_tools() {
-  sudo dnf install -y hexchat 
+  sudo dnf install -y hexchat gnome-tweaks mousetweaks
+}
+
+install_zoom() {
+  wget https://zoom.us/client/latest/zoom_x86_64.rpm -O $HOME/Downloads/zoom_x86_64.rpm
+  sudo dnf install -y $HOME/Downloads/zoom_x86_64.rpm
+  ln -s $HOME/dotfiles/config/zoomus.conf $HOME/.config/zoomus.conf
 }
 
 add_flatpak_repos() {
@@ -279,10 +307,10 @@ install_powerline() {
   #TODO: Vim powerline not working
 }
 
-clone_dotfiles() {
-  echo "TODO: Determine the best place for cloning dotfile"
-  #TODO: Clone dotfiles repo - this is only neccessary if I'm going to curl the script down
-  #git clone https://github.com/adamayd/dotfiles.git $HOME/dotfiles
+ssh_dotfiles() {
+  git remote remove origin
+  git remote add origin git@github.com:adamayd/dotfiles.git
+  git push -u origin master
 }
 
 link_dotfiles() {
@@ -295,7 +323,12 @@ link_dotfiles() {
   ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
   ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
   ln -s $HOME/dotfiles/gitconfig $HOME/.gitconfig
-  sudo ln -s $HOME/dotfiles/gnome/firefox-developer-edition.desktop /usr/share/applications/
+}
+
+update_grub() {
+  sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=2/g' /etc/default/grub
+  sudo echo "GRUB_TIMEOUT_STYLE=\"hidden\"" >> /etc/default/grub
+  sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 }
 
 install_vim() {
@@ -314,8 +347,9 @@ install_oh_my_bash() {
 
 #update_repos || error_exit "Update Repos"
 #install_base_utilities || error_exit "Base Utilites" #TODO: Exfat in kernel
+#install_base_development_system || error_exit "Base Development"
 #install_command_line_fun || error_exit "Command Line Fun"
-#install_security_utilities || error_exit "Security Utilities" #TODO: GPG command arguments build out
+#install_security_utilities || error_exit "Security Utilites" #TODO: GPG command arguments build out
 #create_ssh_key || error_exit "Creating SSH Key" #TODO: - refactor for email input
 #install_acpi_tlp || error_exit "ACPI/TLP" #TODO: - F32 TLP manual install for thinkpads
 #install_base_development_system || error_exit "Base Development"
@@ -351,5 +385,43 @@ install_powerline || error_exit "Powerline"
 #link_dotfiles || error_exit "Linking Dotfiles" - #TODO: Link dotfiles with appropriate installs instead of at once
 install_vim || error_exit "Vim" #TODO: - gruvbox error on initial load for plugin install
 install_oh_my_bash || error_exit "Oh My Bash" #TODO: #- link .bashrc correctly and choose powerline-multiline
+=======
+#install_security_utilities || error_exit "Security Utilites" #TODO: GPG command arguments build out
+#create_ssh_key || error_exit "Creating SSH Key" #TODO: - refactor for email input
+#install_acpi_tlp || error_exit "ACPI TLP" #TODO: - F32 TLP manual install for thinkpads
+#install_fedora_packaging || error_exit ""
+#TODO: install_fedora_releng || error_exit ""
+#install_node || error_exit "Node JS"
+#install_python || error_exit "Python"
+#install_go || error_exit "Go Lang"
+#install_java || error_exit "" #TODO: - combine with gradle/build tools below
+#install_virt || error_exit "Virtual Machine" #TODO: error break for virt bios detection
+#install_docker || error_exit "Docker" # docker-ce and cgroups v1
+#install_kubernetes_tools || error_exit "Kubernetes" #TODO: - finish install
+#install_config_mgmt || error_exit "Configuration Managment"
+#install_provisioning || error_exit "Provisioning"
+#install_cloud_cli_tools || error_exit "Cloud CLI Tools" #TODO: - finish all of them
+#install_serverless_framework || error_exit "Serverless Framework"
+#install_firefox_dev || error_exit "Firefox Developer Edition" #TODO: - update to latest logic and create failsafe for browser opening
+#install_chromium || error_exit "Chromium" #TODO: 
+#install_qutebrowser || error_exit "" #TODO: - config and extras setup
+#install_vscode || error_exit "VS Code" #TODO: - create and copy over config files
+#install_gui_tools || error_exit "GUI Tools" #TODO: - get all GUI tools
+#install_zoom || error_exit "Zoom"
+#add_flatpak_repos || error_exit "Flatpak Repos"
+#install_postman || error_exit "Postman"
+#install_bitwarden || error_exit "Bitwarden"
+#install_chats || error_exit "Chats" #TODO: matrix
+#install_fonts || error_exit "Fonts" #TODO: - hack font for fedora
+#TODO: install_i3wm || error_exit ""
+#TODO: install_graphics_apps || error_exit "" # darktable, shotwell??
+#TODO: install_rice || error_exit "" - no rice set
+#install_powerline || error_exit "Powerline"
+#ssh_dotfiles || error_exit "Adding SSH dotfiles remote"
+#link_dotfiles || error_exit "Linking Dotfiles" - #TODO: Link dotfiles with appropriate installs instead of at once
+#update_grub || error_exit "Grub"
+#install_vim || error_exit "VIm Configuration" #TODO: - gruvbox error on initial load for plugin install
+#install_oh_my_bash || error_exit "Oh My Bash" #TODO: #- link .bashrc correctly and choose powerline-multiline
+>>>>>>> 12fb28143713546302ea0ec2e642f1e671751265
 #TODO: vifm to look and operate more like ranger with previews.
 
