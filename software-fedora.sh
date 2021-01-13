@@ -284,10 +284,10 @@ install_powerline() {
   #TODO: Vim powerline not working
 }
 
-clone_dotfiles() {
-  echo "TODO: Determine the best place for cloning dotfile"
-  #TODO: Clone dotfiles repo - this is only neccessary if I'm going to curl the script down
-  #git clone https://github.com/adamayd/dotfiles.git $HOME/dotfiles
+ssh_dotfiles() {
+  git remote remove origin
+  git remote add origin git@github.com:adamayd/dotfiles.git
+  git push -u origin master
 }
 
 link_dotfiles() {
@@ -341,7 +341,7 @@ install_oh_my_bash() {
 #install_qutebrowser || error_exit "" #TODO: - config and extras setup
 #install_vscode || error_exit "VS Code" #TODO: - create and copy over config files
 #install_gui_tools || error_exit "GUI Tools" #TODO: - get all GUI tools
-install_zoom || error_exit "Zoom"
+#install_zoom || error_exit "Zoom"
 #add_flatpak_repos || error_exit "Flatpak Repos"
 #install_postman || error_exit "Postman"
 #install_bitwarden || error_exit "Bitwarden"
@@ -351,7 +351,7 @@ install_zoom || error_exit "Zoom"
 #TODO: install_graphics_apps || error_exit "" # darktable, shotwell??
 #TODO: install_rice || error_exit "" - no rice set
 #install_powerline || error_exit "Powerline"
-#TODO: clone_dotfiles || error_exit "" - proper location for script running from web
+#ssh_dotfiles || error_exit "Adding SSH dotfiles remote"
 #link_dotfiles || error_exit "Linking Dotfiles" - #TODO: Link dotfiles with appropriate installs instead of at once
 #install_vim || error_exit "VIm Configuration" #TODO: - gruvbox error on initial load for plugin install
 #install_oh_my_bash || error_exit "Oh My Bash" #TODO: #- link .bashrc correctly and choose powerline-multiline
