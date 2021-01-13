@@ -242,13 +242,10 @@ install_zoom() {
   wget https://zoom.us/client/latest/zoom_x86_64.rpm -O $HOME/Downloads/zoom_x86_64.rpm
   sudo dnf install -y $HOME/Downloads/zoom_x86_64.rpm
   ln -s $HOME/dotfiles/config/zoomus.conf $HOME/.config/zoomus.conf
-=======
-  sudo dnf install -y hexchat gnome-tweaks
 }
 
 install_video_playback() {
   sudo dnf install -y mpv
->>>>>>> Stashed changes
 }
 
 add_flatpak_repos() {
@@ -265,10 +262,6 @@ install_bitwarden() {
 
 install_keybase() {
   sudo dnf install -y https://prerelease.keybase.io/keybase_amd64.rpm
-}
-
-install_zoom() {
-  sudo flatpak install -y zoom
 }
 
 install_chats() {
@@ -302,7 +295,7 @@ install_powerline() {
   #TODO: Vim powerline not working
 }
 
-ssh_dotfiles() {
+update_dotfiles() {
   git remote remove origin
   git remote add origin git@github.com:adamayd/dotfiles.git
   git push -u origin master
@@ -378,47 +371,10 @@ install_oh_my_bash() {
 #TODO: install_graphics_apps || error_exit "Graphics Apps" # darktable, shotwell??
 #TODO: install_rice || error_exit "Rice" - no rice set
 #install_powerline || error_exit "Powerline"
-#TODO: clone_dotfiles || error_exit "Dotfiles" - proper location for script running from web
-#link_dotfiles || error_exit "Linking Dotfiles" - #TODO: Link dotfiles with appropriate installs instead of at once
-<<<<<<< Updated upstream
-install_vim || error_exit "Vim" #TODO: - gruvbox error on initial load for plugin install
-install_oh_my_bash || error_exit "Oh My Bash" #TODO: #- link .bashrc correctly and choose powerline-multiline
-=======
-#install_security_utilities || error_exit "Security Utilites" #TODO: GPG command arguments build out
-#create_ssh_key || error_exit "Creating SSH Key" #TODO: - refactor for email input
-#install_acpi_tlp || error_exit "ACPI TLP" #TODO: - F32 TLP manual install for thinkpads
-#install_fedora_packaging || error_exit ""
-#TODO: install_fedora_releng || error_exit ""
-#install_node || error_exit "Node JS"
-#install_python || error_exit "Python"
-#install_go || error_exit "Go Lang"
-#install_java || error_exit "" #TODO: - combine with gradle/build tools below
-#install_virt || error_exit "Virtual Machine" #TODO: error break for virt bios detection
-#install_docker || error_exit "Docker" # docker-ce and cgroups v1
-#install_kubernetes_tools || error_exit "Kubernetes" #TODO: - finish install
-#install_config_mgmt || error_exit "Configuration Managment"
-#install_provisioning || error_exit "Provisioning"
-#install_cloud_cli_tools || error_exit "Cloud CLI Tools" #TODO: - finish all of them
-#install_serverless_framework || error_exit "Serverless Framework"
-#install_firefox_dev || error_exit "Firefox Developer Edition" #TODO: - update to latest logic and create failsafe for browser opening
-#install_chromium || error_exit "Chromium" #TODO: 
-#install_qutebrowser || error_exit "" #TODO: - config and extras setup
-#install_vscode || error_exit "VS Code" #TODO: - create and copy over config files
-#install_gui_tools || error_exit "GUI Tools" #TODO: - get all GUI tools
-#install_zoom || error_exit "Zoom"
-#add_flatpak_repos || error_exit "Flatpak Repos"
-#install_postman || error_exit "Postman"
-#install_bitwarden || error_exit "Bitwarden"
-#install_chats || error_exit "Chats" #TODO: matrix
-#install_fonts || error_exit "Fonts" #TODO: - hack font for fedora
-#TODO: install_i3wm || error_exit ""
-#TODO: install_graphics_apps || error_exit "" # darktable, shotwell??
-#TODO: install_rice || error_exit "" - no rice set
-#install_powerline || error_exit "Powerline"
-#ssh_dotfiles || error_exit "Adding SSH dotfiles remote"
+#update_dotfiles || error_exit "Dotfiles"
 #link_dotfiles || error_exit "Linking Dotfiles" - #TODO: Link dotfiles with appropriate installs instead of at once
 #update_grub || error_exit "Grub"
-#install_vim || error_exit "VIm Configuration" #TODO: - gruvbox error on initial load for plugin install
-#install_oh_my_bash || error_exit "Oh My Bash" #TODO: #- link .bashrc correctly and choose powerline-multiline
+#install_vim || error_exit "Vim"
+#install_oh_my_bash || error_exit "Oh My Bash" #TODO: Link bashrc correctly and choose powerline-multiline
 #TODO: vifm to look and operate more like ranger with previews.
 
