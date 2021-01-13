@@ -302,6 +302,12 @@ link_dotfiles() {
   ln -s $HOME/dotfiles/gitconfig $HOME/.gitconfig
 }
 
+update_grub() {
+  sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=2/g' /etc/default/grub
+  sudo echo "GRUB_TIMEOUT_STYLE=\"hidden\"" >> /etc/default/grub
+  sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+}
+
 install_vim() {
   sudo dnf install -y vim 
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -353,6 +359,7 @@ install_oh_my_bash() {
 #install_powerline || error_exit "Powerline"
 #ssh_dotfiles || error_exit "Adding SSH dotfiles remote"
 #link_dotfiles || error_exit "Linking Dotfiles" - #TODO: Link dotfiles with appropriate installs instead of at once
+#update_grub || error_exit "Grub"
 #install_vim || error_exit "VIm Configuration" #TODO: - gruvbox error on initial load for plugin install
 #install_oh_my_bash || error_exit "Oh My Bash" #TODO: #- link .bashrc correctly and choose powerline-multiline
 #TODO: vifm to look and operate more like ranger with previews.
