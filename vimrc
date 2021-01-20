@@ -3,6 +3,10 @@ if !exists("g:syntax_on")
     syntax enable
 endif
 
+" ***** General *****
+set autoread        " reloads the file automatically when changed
+au CursorHold,CursorHoldI * checktime " triggers autoread when cursor stops
+
 " ***** Indentation *****
 " TODO: Indentation by file type or maybe vim project??
 set tabstop=2	    	" number of visual spaces per TAB
