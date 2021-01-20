@@ -243,6 +243,7 @@ install_vscode() {
 
 install_gui_tools() {
   sudo dnf install -y hexchat gnome-tweaks mousetweaks
+  gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']" # HiDPI Fractional Scaling
 }
 
 install_zoom() {
