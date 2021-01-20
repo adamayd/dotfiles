@@ -151,8 +151,8 @@ install_aws_cli_tools() {
   #TODO: boto3 error on install asking for dependency botocore
   sudo dnf install -y python3-boto3
   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o $HOME/Downloads/awscliv2.zip
-  unzip $HOME/Downloads/awscliv2.zip
-  sudo ./$HOME/Downloads/aws/install
+  unzip -d $HOME/Downloads/ $HOME/Downloads/awscliv2.zip
+  sudo $HOME/Downloads/aws/install
   pip3 install --user aws-mfa
   #TODO: Install Azure CLI
   #TODO: Install GCP CLI
@@ -359,7 +359,7 @@ install_oh_my_bash() {
 #install_kubernetes_tools || error_exit "Kubernetes" #TODO: - finish install
 #install_config_mgmt || error_exit "Configuration Management"
 #install_provisioning || error_exit "Provisioning"
-#install_aws_cli_tools || error_exit "AWS CLI Tools" #TODO: - finish all of them
+install_aws_cli_tools || error_exit "AWS CLI Tools" #TODO: - finish all of them
 #install_gcp_cli_tools || error_exit "Google Cloud SDK"
 #install_serverless_framework || error_exit "Serverless Framework"
 #install_firefox_dev || error_exit "Firefox Developer Edition" #TODO: - update to latest logic and create failsafe for browser opening
