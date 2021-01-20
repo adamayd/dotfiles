@@ -139,7 +139,7 @@ install_config_mgmt() {
 }
 
 install_provisioning() {
-  sudo dnf -y install terraform
+  sudo dnf install -y terraform-0.14.2-1
 }
 
 install_serverless_framework() {
@@ -360,7 +360,7 @@ install_oh_my_bash() {
 #install_config_mgmt || error_exit "Configuration Management"
 #install_provisioning || error_exit "Provisioning"
 #install_aws_cli_tools || error_exit "AWS CLI Tools" #TODO: - finish all of them
-install_gcp_cli_tools || error_exit "Google Cloud SDK"
+#install_gcp_cli_tools || error_exit "Google Cloud SDK"
 #install_serverless_framework || error_exit "Serverless Framework"
 #install_firefox_dev || error_exit "Firefox Developer Edition" #TODO: - update to latest logic and create failsafe for browser opening
 #install_chromium || error_exit "Chromium" #TODO: 
