@@ -113,6 +113,10 @@ install_virt() {
   sudo systemctl enable libvirtd
 }
 
+install_db_clients() {
+  sudo dnf install -y community-mysql postgresql
+}
+
 install_docker() {
   #TODO: Install Podman in place of Docker and Docker Compose
   sudo dnf remove -y docker docker-client docker-client-latest docker-common \
@@ -357,6 +361,7 @@ install_oh_my_bash() {
 #install_java || error_exit "Java" #TODO: - combine with gradle/build tools below
 #install_virt || error_exit "Virtual Machine" #TODO: error break for virt bios detection
 #install_docker || error_exit "Docker" # docker-ce and cgroups v1
+#install_db_clients || error_exit "Database Clients"
 #install_kubernetes_tools || error_exit "Kubernetes" #TODO: - finish install
 #install_config_mgmt || error_exit "Configuration Management"
 #install_provisioning || error_exit "Provisioning"
