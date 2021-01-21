@@ -339,6 +339,7 @@ install_vim() {
   cd $HOME
   mkdir -p $HOME/.vim/spell $HOME/.vim/undodir
   ln -s $HOME/dotfiles/vim/spell/en.utf-8.add $HOME/.vim/spell/en.utf-8.add
+  sudo dnf remove -y nano
 }
 
 install_oh_my_bash() {
