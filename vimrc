@@ -65,6 +65,8 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
+" Toggle Word Wrap
+noremap <silent> <leader>w :set wrap!<cr>
 
 " ***** Plug Plugin Manager *****
 call plug#begin('~/.vim/plugged')
@@ -79,6 +81,7 @@ Plug 'StanAngeloff/php.vim'
 Plug 'beanworks/vim-phpfmt'
 Plug 'vim-utils/vim-man'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'rfratto/vim-go-testify'
 Plug 'hashivim/vim-terraform'
 call plug#end()
 
