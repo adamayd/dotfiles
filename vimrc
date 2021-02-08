@@ -79,6 +79,7 @@ Plug 'StanAngeloff/php.vim'
 Plug 'beanworks/vim-phpfmt'
 Plug 'vim-utils/vim-man'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'hashivim/vim-terraform'
 call plug#end()
 
 " ***** Theme Options *****
