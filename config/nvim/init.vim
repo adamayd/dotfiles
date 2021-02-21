@@ -76,13 +76,20 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 "Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
 Plug 'junegunn/fzf', {'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'airblade/vim-rooter'
+"Plugin for fzf/rg integration
+"Plug 'nvim-lua/popup.nvim'
+"Plug 'nvim-lua/plenary.nvim'
+"Plug 'nvim-telescope/telescope.nvim'
+"Plug 'airblade/vim-rooter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-airline/vim-airline'
 Plug 'raimondi/delimitmate'
 Plug 'lilydjwg/colorizer'
 Plug 'morhetz/gruvbox'
+Plug 'luochen1990/rainbow'
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
+"Plugin for vim testify
+"Plugin for terraform/hcl
 call plug#end()
 
 set background=dark
@@ -92,11 +99,13 @@ source $HOME/.config/nvim/config-plug/startify.vim
 source $HOME/.config/nvim/config-plug/fugitive.vim
 source $HOME/.config/nvim/config-plug/nerdtree.vim
 "source $HOME/.config/nvim/config-plug/rnvimr.vim
+"source $HOME/.config/nvim/config-plug/telescope.vim
 source $HOME/.config/nvim/config-plug/fzf.vim
 source $HOME/.config/nvim/config-plug/coc.vim
 source $HOME/.config/nvim/config-plug/airline.vim
 " nvim-colorizer - lua
 source $HOME/.config/nvim/config-plug/gruvbox.vim
+source $HOME/.config/nvim/config-plug/rainbow.vim
 source $HOME/.config/nvim/config-plug/vim-go.vim
 
 
