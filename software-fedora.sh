@@ -158,6 +158,7 @@ install_aws_cli_tools() {
   unzip -d $HOME/Downloads/ $HOME/Downloads/awscliv2.zip
   sudo $HOME/Downloads/aws/install
   pip3 install --user aws-mfa
+  #TODO: Install Digital Ocean Tools
   #TODO: Install Azure CLI
   #TODO: Install GCP CLI
 }
@@ -254,6 +255,7 @@ install_zoom() {
   wget https://zoom.us/client/latest/zoom_x86_64.rpm -O $HOME/Downloads/zoom_x86_64.rpm
   sudo dnf install -y $HOME/Downloads/zoom_x86_64.rpm
   ln -s $HOME/dotfiles/config/zoomus.conf $HOME/.config/zoomus.conf
+  sudo dnf install -y hexchat gnome-tweaks
 }
 
 install_video_playback() {
@@ -274,6 +276,10 @@ install_bitwarden() {
 
 install_keybase() {
   sudo dnf install -y https://prerelease.keybase.io/keybase_amd64.rpm
+}
+
+install_zoom() {
+  sudo flatpak install -y zoom
 }
 
 install_chats() {
@@ -366,7 +372,7 @@ install_oh_my_bash() {
 #install_kubernetes_tools || error_exit "Kubernetes" #TODO: - finish install
 #install_config_mgmt || error_exit "Configuration Management"
 #install_provisioning || error_exit "Provisioning"
-install_aws_cli_tools || error_exit "AWS CLI Tools" #TODO: - finish all of them
+#install_aws_cli_tools || error_exit "AWS CLI Tools" #TODO: - finish all of them
 #install_gcp_cli_tools || error_exit "Google Cloud SDK"
 #install_serverless_framework || error_exit "Serverless Framework"
 #install_firefox_dev || error_exit "Firefox Developer Edition" #TODO: - update to latest logic and create failsafe for browser opening
