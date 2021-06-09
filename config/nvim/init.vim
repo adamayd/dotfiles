@@ -87,7 +87,7 @@ Plug 'raimondi/delimitmate'
 Plug 'lilydjwg/colorizer'
 Plug 'morhetz/gruvbox'
 Plug 'luochen1990/rainbow'
-Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
+"Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 "Plugin for vim testify
 "Plugin for terraform/hcl
 call plug#end()
@@ -106,7 +106,7 @@ source $HOME/.config/nvim/config-plug/airline.vim
 " nvim-colorizer - lua
 source $HOME/.config/nvim/config-plug/gruvbox.vim
 source $HOME/.config/nvim/config-plug/rainbow.vim
-source $HOME/.config/nvim/config-plug/vim-go.vim
+"source $HOME/.config/nvim/config-plug/vim-go.vim
 
 
 nmap <leader>gs :G<CR>

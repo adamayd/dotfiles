@@ -1,0 +1,15 @@
+[user]
+	name = Adam Ayd
+	email = aayd@roundtableresearch.com
+[pull]
+  rebase = false
+[pager]
+  branch = false
+[alias]
+	co = commit -m
+	coam = commit -am
+	ch = checkout
+	br = branch
+	st = status
+	unstage = reset HEAD --
+	ll = ls-tree -r master --name-only
