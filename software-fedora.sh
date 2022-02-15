@@ -76,7 +76,7 @@ install_fedora_releng() {
 }
 
 install_node() {
-  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.38.0/install.sh | bash
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" 
@@ -84,9 +84,10 @@ install_node() {
 
   # Install Yarn for Node JS
   sudo dnf install -y yarnpkg
+  sudo ln -s /usr/bin/yarnpkg /usr/bin/yarn
 
   # Install Node Utilities
-  yarnpkg global add create-react-app eslint gatsby-cli jest
+  yarn global add create-react-app eslint gatsby-cli jest 
 }
 
 install_python() {
@@ -321,12 +322,6 @@ update_dotfiles() {
 
 link_dotfiles() {
   echo "source $HOME/dotfiles/shellsrc" >> $HOME/.bashrc
-  if [ -L $HOME/.vimrc ]; then
-    rm $HOME/.vimrc
-  elif [ -e $HOME/.vimrc ]; then
-    cp $HOME/.vimrc $HOME/.vimrc_old
-  fi
-  ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
   ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
   ln -s $HOME/dotfiles/gitconfig $HOME/.gitconfig
 }
@@ -338,6 +333,12 @@ update_grub() {
 }
 
 install_vim() {
+  if [ -L $HOME/.vimrc ]; then
+    rm $HOME/.vimrc
+  elif [ -e $HOME/.vimrc ]; then
+    mv $HOME/.vimrc $HOME/.vimrc_old
+  fi
+  ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
   sudo dnf install -y vim 
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   vim +PlugInstall +qall
@@ -348,6 +349,21 @@ install_vim() {
   sudo dnf remove -y nano
 }
 
+install_neovim() {
+  if [ -L $HOME/.config/nvim/init.vim ]; then
+    rm -rf $HOME/.config/nvim
+  elif [ -e $HOME/.config/nvim/init.vim ]; then
+    mv $HOME/.config/nvim $HOME/.config/nvim_old
+    mkdir -p $HOME/.config/nvim
+  fi
+  ln -s $HOME/dotfiles/config/nvim/init.vim $HOME/.config/nvim/init.vim
+  ln -s $HOME/dotfiles/config/nvim/config-plug/ $HOME/.config/nvim/
+  sudo dnf install -y neovim
+  sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  nvim --headless +PlugInstall +qall
+}
+   
 install_oh_my_bash() {
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 }
@@ -396,6 +412,7 @@ install_oh_my_bash() {
 #link_dotfiles || error_exit "Linking Dotfiles" - #TODO: Link dotfiles with appropriate installs instead of at once
 #update_grub || error_exit "Grub"
 #install_vim || error_exit "Vim"
+install_neovim || error_exit "Neovim"
 #install_oh_my_bash || error_exit "Oh My Bash" #TODO: Link bashrc correctly and choose powerline-multiline
 #TODO: vifm to look and operate more like ranger with previews.
 
