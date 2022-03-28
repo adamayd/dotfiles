@@ -1,0 +1,72 @@
+---
+  - name: "Software installation after fresh Fedora install"
+    hosts: localhost
+    connection: local
+    become: yes
+    tasks:
+
+    - name: "Update the system"
+      dnf:
+        name: "*"
+        state: latest
+    
+    - name: "Clone dotfiles repo"
+      ansible.builtin.git:
+        repo: "https://github.com/adamayd/dotfiles.git"
+        dest: /home/adam/dotfiles
+
+    - name: "Install base utilities"
+      dnf:
+        name:
+          - ranger
+          - vifm
+          - strace
+          - curl
+          - wget
+          - tmux
+          - xclip
+          - jq
+          - fzf
+          - bat
+            # TODO:- fuse-exfat
+            # TODO:- exfat-utils
+          - dnf-plugins-core
+        state: latest
+
+    - name: "Command line fun"
+      dnf:
+        name: cmatrix, neofetch, fortune-mod, cowsay
+        state: latest 
+
+    - name: "Go Programming Language"
+      dnf:
+        name: golang
+
+          #- name: "Matrix/Element.io"
+      # flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+    - name: "Git"
+      ansible.builtin.file:
+        src: /home/adam/dotfiles/gitconfig
+        dest: /home/adam/.gitconfig
+        owner: adam
+        group: adam
+        state: link
+
+    - name: Create SSH directory
+      ansible.builtin.file:
+        path: /home/adam/.ssh
+        state: directory
+        mode: '0755'
+
+    - name: Generate SSH Key
+      community.crypto.openssh_keypair:
+        path: /home/adam/.ssh/id_ssh_ed25519
+        type: ed25519
+        comment: adam.ayd@gmail.com
+
+    - name: Install Application Through dnf
+      dnf:
+        name: calibre
+        state: latest
+
