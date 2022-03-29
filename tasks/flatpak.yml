@@ -1,0 +1,14 @@
+---
+  - name: Add Flathub
+    community.general.flatpak_remote:
+      name: flathub
+      state: present
+      flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+
+  - name: Install Flatpaks
+    community.general.flatpak:
+      name: 
+        - im.riot.Riot
+        - com.slack.Slack
+        - com.discordapp.Discord
+      state: present

@@ -1,0 +1,16 @@
+---
+  - name: Create SSH directory
+    ansible.builtin.file:
+      path: /home/adam/.ssh
+      owner: adam
+      group: adam
+      state: directory
+      mode: '0755'
+      
+  - name: Generate SSH Key
+    community.crypto.openssh_keypair:
+      path: /home/adam/.ssh/id_ssh_ed25519
+      type: ed25519
+      comment: adam.ayd@gmail.com
+      owner: adam
+      group: adam

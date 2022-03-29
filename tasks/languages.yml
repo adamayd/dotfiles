@@ -1,0 +1,20 @@
+---
+  - name: Go Language
+    ansible.builtin.dnf:
+      name: golang
+      state: latest
+
+  - name: Python Language
+    ansible.builtin.dnf:
+      name: 
+        - python3
+        - pipenv
+        - python3-setuptools
+      state: latest
+
+  - name: Python Tools
+    ansible.builtin.pip:
+      name: 
+        - flask
+        - django
+

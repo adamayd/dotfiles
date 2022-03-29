@@ -1,0 +1,44 @@
+---
+# Install Docker CE on F35 (cgroups v2 and podman should be ok).
+  - name: Remove Old Docker Versions
+    ansible.builtin.dnf:
+      name: 
+        - docker
+        - docker-client
+        - docker-client-latest
+        - docker-common
+        - docker-latest
+        - docker-latest-logrotate
+        - docker-logrotate
+        - docker-selinux
+        - docker-engine-selinux
+        - docker-engine
+      state: absent
+      autoremove: yes
+
+  - name: Download Docker Repo file
+    ansible.builtin.get_url:
+      url: https://download.docker.com/linux/fedora/docker-ce.repo
+      dest: /etc/yum.repos.d/
+      
+  - name: Install Docker 
+    ansible.builtin.dnf:
+      name: docker-ce, docker-ce-cli, containerd.io
+      state: latest
+
+  - name: Start Docker
+    ansible.builtin.systemd:
+      name: docker
+      state: started
+      enabled: yes
+
+  - name: Create docker Group
+    ansible.builtin.group:
+      name: docker
+      state: present
+
+  - name: Add User to Group
+    ansible.builtin.user:
+      name: adam
+      groups: docker
+      append: yes

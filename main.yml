@@ -1,0 +1,37 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: "Update the system"
+      dnf:
+        name: "*"
+        state: latest
+      
+    - name: "Install base utilities"
+      dnf:
+        name:
+          - ranger
+          - vifm
+          - strace
+          - curl
+          - wget
+          - tmux
+          - xclip
+          - jq
+          - fzf
+          - bat
+          # TODO:- fuse-exfat
+          # TODO:- exfat-utils
+          - dnf-plugins-core
+        state: latest
+      
+
+    - import_tasks: tasks/security.yml
+    - import_tasks: tasks/dotfiles.yml
+    - import_tasks: tasks/languages.yml
+    - import_tasks: tasks/software.yml
+    - import_tasks: tasks/flatpak.yml
+    - import_tasks: tasks/docker.yml
+    - import_tasks: tasks/vscode.yml
+    - import_tasks: tasks/vim.yml
+    - import_tasks: tasks/cloudtools.yml

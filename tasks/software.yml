@@ -1,0 +1,22 @@
+---
+  - name: CLI Apps
+    dnf:
+      name: 
+        - cmatrix
+        - neofetch
+        - fortune-mod
+        - cowsay
+      state: latest 
+    
+  - name: GUI Apps
+    dnf:
+      name: 
+        - calibre
+      state: latest
+
+        ### Issue with Keybase GPG key not generating to new standard for RPM in F35
+        ### https://github.com/keybase/client/issues/24637 - Started again in late Jan 2022
+        #- name: Install Keybase RPM
+        #yum:
+        #name: https://prerelease.keybase.io/keybase_amd64.rpm
+        #state: present

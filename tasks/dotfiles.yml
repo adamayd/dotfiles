@@ -1,0 +1,10 @@
+---
+  - name: "Link .gitconfig"
+    ansible.builtin.file:
+      src: /home/adam/dotfiles/home/gitconfig
+      dest: /home/adam/.gitconfig
+      owner: adam
+      group: adam
+      follow: false
+      state: link
+
