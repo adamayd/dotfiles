@@ -1,0 +1,8 @@
+---
+  - name: Install Powerline Packages
+    ansible.builtin.dnf: "{{ item }}"
+    loop:
+      - "powerline"
+      - "powerline-fonts"
+      - "vim-powerline"
+      - "tmux-powerline"

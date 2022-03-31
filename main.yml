@@ -1,6 +1,11 @@
 ---
 - hosts: all
+
+  vars_files:
+    - config.yml
+
   become: yes
+
   tasks:
     - name: "Update the system"
       dnf:
@@ -9,21 +14,9 @@
       
     - name: "Install base utilities"
       dnf:
-        name:
-          - ranger
-          - vifm
-          - strace
-          - curl
-          - wget
-          - tmux
-          - xclip
-          - jq
-          - fzf
-          - bat
-          # TODO:- fuse-exfat
-          # TODO:- exfat-utils
-          - dnf-plugins-core
+        name: "{{ item }}"
         state: latest
+      loop: "{{ base_utilities }}"
       
 
     - import_tasks: tasks/security.yml
@@ -33,5 +26,6 @@
     - import_tasks: tasks/flatpak.yml
     - import_tasks: tasks/docker.yml
     - import_tasks: tasks/vscode.yml
+    - import_tasks: tasks/terminal.yml
     - import_tasks: tasks/vim.yml
     - import_tasks: tasks/cloudtools.yml

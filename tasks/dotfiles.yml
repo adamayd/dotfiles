@@ -1,10 +1,12 @@
 ---
-  - name: "Link .gitconfig"
+  - name: Link dotfiles
     ansible.builtin.file:
-      src: /home/adam/dotfiles/home/gitconfig
-      dest: /home/adam/.gitconfig
+      src: "{{ dotfiles_path }}/home/{{ item }}"
+      dest: "{{ home_path }}/.{{ item }}"
       owner: adam
       group: adam
       follow: false
+      force: yes
       state: link
+    loop: "{{ dotfiles_files }}"
 

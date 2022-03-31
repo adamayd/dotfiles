@@ -2,6 +2,7 @@
 alias ll='ls -lhA --group-directories-first --color=auto'
 alias mutt='neomutt'
 alias vi='vim'
+alias tf='terraform'
 alias psg="ps -aux | grep -v grep | grep "
 alias passgen="echo && cat /dev/urandom | env LC_CTYPE=C tr -dc [:alnum:] | head -c 15 | base64 && echo"
 

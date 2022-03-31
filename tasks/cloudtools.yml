@@ -4,9 +4,11 @@
       src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
       dest: /home/adam/Downloads
       remote_src: yes
+    register: aws_download
         
   - name: Install AWS CLI v2
-    ansible.builtin.command: /home/adam/Downloads/aws/install
+    ansible.builtin.command: "/home/adam/Downloads/aws/install --update"
+    when: aws_download.changed
 
       # TODO: aws configure with key vault
 
@@ -15,4 +17,18 @@
       name: 
         - boto3
         - aws-mfa
+
+  - name: Add Terraform repo
+    ansible.builtin.yum_repository:
+      name: hashicorp 
+      description: "Hashicorp State - $basearch"
+      baseurl: "https://rpm.releases.hashicorp.com/fedora/$releasever/$basearch/stable"
+      enabled: yes
+      gpgcheck: yes
+      gpgkey: https://rpm.releases.hashicorp.com/gpg 
+
+  - name: Install Terraform
+    ansible.builtin.dnf:
+      name: terraform
+      state: latest
 

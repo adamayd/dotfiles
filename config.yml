@@ -1,0 +1,39 @@
+---
+user: adam
+
+home_path: /home/adam
+downloads_path: /home/adam/Downloads
+
+github_user: adamayd
+
+dotfiles_repo: https://github.com/adamayd/dotfiles
+dotfiles_repo_ssh: git@github.com:adamayd/dotfiles.git 
+dotfiles_path: /home/adam/dotfiles
+dotfiles_files:
+  - bashrc
+  - gitconfig
+  - config/ranger/rc.conf
+
+    #vscode_extenstions:
+    #- eg2.tslint
+
+base_utilities:
+  - ranger
+  - vifm
+  - strace
+  - curl
+  - wget
+  - tmux
+  - xclip
+  - jq
+  - fzf
+  - bat
+  - dnf-plugins-core
+  # TODO:- fuse-exfat
+  # TODO:- exfat-utils
+
+powerline_default_top_theme: powerline
+powerline_shell_vcs_branch: yes
+powerline_vim: yes
+powerline_tmux: yes
+

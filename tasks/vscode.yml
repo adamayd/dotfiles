@@ -9,7 +9,8 @@
       gpgkey: https://packages.microsoft.com/keys/microsoft.asc
 
   - name: Install VS Code
-    dnf:
+    ansible.builtin.dnf:
       name: code
       state: latest
 
+  # code --install-extensions
