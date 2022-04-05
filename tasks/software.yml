@@ -1,4 +1,16 @@
 ---
+  - name: Install Powerline
+    ansible.builtin.pip:
+      name: "{{ item }}"
+    loop:
+      - "powerline-status"
+      - "powerline-gitstatus"
+
+  - name: Install Powerline Fonts
+    ansible.builtin.dnf:
+      name: powerline-fonts
+      state: latest
+      
   - name: Install CLI Apps
     dnf:
       name: "{{ item }}"

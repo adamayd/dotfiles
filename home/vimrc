@@ -116,8 +116,7 @@ nmap <leader>gh :diffget //2<cr>
 nmap <leader>gj :diffget //3<cr>
 
 " ***** Powerline Plugin *****
-set rtp+=~/.local/lib/python3.7/site-packages/powerline/bindings/vim/
-"set rtp+=/Users/aayd/Library/Python/3.8/lib/python/site-packages/powerline/bindings/vim/
+set rtp+=~/usr/local/lib/python3.10/site-packages/powerline/bindings/vim/
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
 python3 del powerline_setup

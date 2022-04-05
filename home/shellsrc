@@ -38,8 +38,8 @@ if [ -e $HOME/.rubyrc ]; then
     source $HOME/.rubyrc
 fi
 
-if [ -e ~/.local/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh ]; then
-    . ~/.local/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
+if [ -e /usr/local/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh ]; then
+    . /usr/local/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh
 fi
 
 # Added by serverless binary installer
