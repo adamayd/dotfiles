@@ -29,11 +29,21 @@ base_utilities:
   - fzf
   - bat
   - dnf-plugins-core
+  - make
+  - automake
+  - kernel-devel
   # TODO:- fuse-exfat
   # TODO:- exfat-utils
 
-powerline_default_top_theme: powerline
-powerline_shell_vcs_branch: yes
-powerline_vim: yes
-powerline_tmux: yes
+apps_cli:
+  - cmatrix
+  - neofetch
+  - fortune-mod
+  - cowsay
 
+apps_gui:
+  - google-chrome-stable
+  - calibre
+
+nvm_env: 
+  nvm_dir: /home/adam/.nvm

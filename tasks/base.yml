@@ -1,0 +1,12 @@
+---
+  - name: "Install base utilities"
+    ansible.builtin.dnf:
+      name: "{{ item }}"
+      state: latest
+    loop: "{{ base_utilities }}"
+
+  - name: Install development tools group
+    ansible.builtin.dnf:
+      name: "@Development Tools"
+      state: latest
+      

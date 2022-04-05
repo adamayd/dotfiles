@@ -1,18 +1,15 @@
 ---
-  - name: CLI Apps
+  - name: Install CLI Apps
     dnf:
-      name: 
-        - cmatrix
-        - neofetch
-        - fortune-mod
-        - cowsay
+      name: "{{ item }}"
       state: latest 
+    loop: "{{ apps_cli }}"
     
-  - name: GUI Apps
+  - name: Install GUI Apps
     dnf:
-      name: 
-        - calibre
+      name: "{{ item }}"
       state: latest
+    loop: "{{ apps_gui }}"
 
         ### Issue with Keybase GPG key not generating to new standard for RPM in F35
         ### https://github.com/keybase/client/issues/24637 - Started again in late Jan 2022

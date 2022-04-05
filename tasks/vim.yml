@@ -1,0 +1,52 @@
+---
+  - name: Create ViM directories
+    ansible.builtin.file:
+      path: "{{ home_path }}/.vim/{{ item }}"
+      state: directory
+      mode: 0755
+      owner: adam
+      group: adam
+    loop:
+      - "undodir"
+      - "spell"
+      - "autoload"
+
+  - name: Link dotfiles
+    ansible.builtin.file:
+      src: "{{ dotfiles_path }}/home/{{ item }}"
+      dest: "{{ home_path }}/.{{ item }}"
+      owner: adam
+      group: adam
+      follow: false
+      force: yes
+      state: link
+    loop:
+      - "vimrc"
+      - "vim/spell/en.utf-8.add"
+
+    
+  - name: Install vim-plug
+    ansible.builtin.get_url:
+      url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+      dest: "{{ home_path }}/.vim/autoload/plug.vim"
+      owner: adam
+      group: adam
+      mode: 0755
+    register: vim_plug_download
+
+      # Evaluate the order on this because it is getting missing plugin errors at first run due to dotfiles being linked.
+      #- name: Run ViM to install plugins
+      #ansible.builtin.command: "vim +PlugInstall +qall"
+      #become: yes
+      #become_user: adam
+      #when: vim_plug_download.changed
+
+  - name: Run YCM install 
+    ansible.builtin.command: "python3 {{ home_path }}/.vim/plugged/YouCompleteMe/install.py --clangd-completer --go-completer --ts-completer --java-complete"
+    become: yes
+    become_user: adam
+
+  - name: Remove nano
+    ansible.builtin.dnf:
+      name: nano
+      state: absent

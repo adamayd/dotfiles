@@ -1,4 +1,63 @@
 ---
+  - name: Install C/C++
+    ansible.builtin.dnf:
+      name:
+        - gcc
+        - gcc-c++
+        - cmake
+      state: latest
+
+  - name: Download Node Version Manager
+    ansible.builtin.get_url:
+      url: "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh"
+      dest: "{{ downloads_path }}"
+      owner: adam
+      group: adam
+      mode: 0755
+    register: node_download
+
+      #TODO: Fix the NVM installation process
+  - name: Install Node Version Manager 
+    ansible.builtin.command: 
+      cmd: "{{ item }}"
+    become: yes
+    become_user: adam
+    environment: "{{ nvm_env }}"
+    when: node_download.changed
+    loop:
+      - "{{ downloads_path}}/install.sh"
+
+  - name: Adjust permissions on NVM load script 
+    ansible.builtin.file:
+      path: /home/adam/.nvm/nvm.sh
+      owner: adam
+      group: adam
+      mode: 0755
+    become: yes
+    become_user: adam
+    when: node_download.changed
+
+  - name: Load Node Version Manager 
+    ansible.builtin.command: 
+      cmd: "{{ item }}"
+    become: yes
+    become_user: adam
+    environment: "{{ nvm_env }}"
+    when: node_download.changed
+    loop:
+      - "{{ home_path }}/.nvm/nvm.sh"
+        
+  - name: Install Node Versions
+    ansible.builtin.command: "nvm {{ item }}"
+    become: yes
+    become_user: adam
+    loop:
+      - "install 12"
+      - "install 14"
+      - "install 16"
+      - "use 16"
+    when: node_download.changed
+
   - name: Go Language
     ansible.builtin.dnf:
       name: golang
@@ -8,8 +67,9 @@
     ansible.builtin.dnf:
       name: 
         - python3
-        - pipenv
+        - python3-devel
         - python3-setuptools
+        - pipenv
       state: latest
 
   - name: Python Tools
