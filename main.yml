@@ -23,3 +23,4 @@
     #- import_tasks: tasks/vscode.yml
     #- import_tasks: tasks/terminal.yml
     #- import_tasks: tasks/cloudtools.yml
+    #- import_tasks: tasks/redhat-build.yml

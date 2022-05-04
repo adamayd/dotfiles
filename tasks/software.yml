@@ -12,13 +12,13 @@
       state: latest
       
   - name: Install CLI Apps
-    dnf:
+    ansible.builtin.dnf:
       name: "{{ item }}"
       state: latest 
     loop: "{{ apps_cli }}"
     
   - name: Install GUI Apps
-    dnf:
+    ansible.builtin.dnf:
       name: "{{ item }}"
       state: latest
     loop: "{{ apps_gui }}"

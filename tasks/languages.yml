@@ -78,3 +78,17 @@
         - flask
         - django
 
+  - name: .NET Core SDKs
+    ansible.builtin.dnf:
+      name:
+        - dotnet-sdk-3.1
+        - dotnet-sdk-5.0
+        - dotnet-sdk-6.0
+      state: latest
+
+  - name: Azure Functions Core Tools
+    ansible.builtin.command: "npm i -g azure-functions-core-tools@4 --unsafe-perm true"
+    become: yes
+    become_user: adam
+    
+

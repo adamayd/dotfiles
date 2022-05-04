@@ -1,0 +1,25 @@
+---
+  - name: Install OSBuild
+    ansible.builtin.dnf:
+      name:
+        - osbuild
+        - osbuild-ostree
+        - osbuild-composer
+        - osbuild-tools
+        - composer-cli
+        - podman
+        - cockpit
+        - cockpit-composer
+      state: latest
+
+  - name: Start OSBuild Composer
+    ansible.builtin.systemd:
+      name: osbuild-composer.socket
+      state: started
+      enabled: yes
+
+  - name: Start Cockpit
+    ansible.builtin.systemd:
+      name: cockpit
+      state: started
+      enabled: yes

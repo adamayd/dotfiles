@@ -44,6 +44,15 @@ apps_cli:
 apps_gui:
   - google-chrome-stable
   - calibre
+  - gnome-tweaks
+  - evolution
+
+apps_flatpak:
+  - im.riot.Riot
+  - com.slack.Slack
+  - com.discordapp.Discord
+  - cc.arduino.arduinoide
+  - org.fritzing.Fritzing
 
 nvm_env: 
   nvm_dir: /home/adam/.nvm
