@@ -7,6 +7,20 @@
         - cmake
       state: latest
 
+  - name: Install Node Globally
+    ansible.builtin.dnf:
+      name: nodejs
+      state: latest
+
+  - name: Node Tooling
+    community.general.npm:
+      name: "{{ item }}"
+      global: yes
+    loop:
+      - yarn
+      - eslint
+      - prettier
+
   - name: Download Node Version Manager
     ansible.builtin.get_url:
       url: "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh"

@@ -18,6 +18,16 @@
         - boto3
         - aws-mfa
 
+  - name: AWS Cloud Development Kit
+    community.general.npm:
+      name: aws-cdk
+      global: yes
+
+  - name: AWS Amplify
+    community.general.npm:
+      name: "@aws-amplify/cli"
+      global: yes
+
   - name: Add Terraform repo
     ansible.builtin.yum_repository:
       name: hashicorp 
