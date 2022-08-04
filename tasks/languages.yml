@@ -104,5 +104,4 @@
     ansible.builtin.command: "npm i -g azure-functions-core-tools@4 --unsafe-perm true"
     become: yes
     become_user: adam
-    
 

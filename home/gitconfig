@@ -1,6 +1,8 @@
 [user]
 	name = Adam Ayd
 	email = adam.ayd@gmail.com
+[init]
+  defaultBranch = main
 [pager]
   branch = false
 [alias]
