@@ -116,8 +116,11 @@ export PATH="$HOME/Library/Python/3.8/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
+# Ruby
+export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/2.7.0/bin:$PATH"
+
 # Composer
 #export PATH="$HOME/.composer/vendor/bin${PATH+:$PATH}";
 
-source $HOME/dotfiles/home/shellsrc
+source $HOME/dotfiles/shellsrc
 
