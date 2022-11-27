@@ -172,7 +172,10 @@ chflags nohidden ~/Library
 ###############################################################################
 
 # Set the icon size of Dock items
-defaults write com.apple.dock tilesize -int 30
+defaults write com.apple.dock tilesize -int 50
+
+# Hide recent Dock items
+defaults write com.apple.dock show-recents -bool false
 
 # Speed up Mission Control animations
 defaults write com.apple.dock expose-animation-duration -float 0.15
@@ -195,11 +198,11 @@ defaults write com.apple.universalaccess reduceTransparency -bool true
 # 10: Put display to sleep
 # 11: Launchpad
 # 12: Notification Center
-# Bottom right screen corner → Mission Control
-defaults write com.apple.dock wvous-br-corner -int 2
+# Bottom right screen corner → Launchpad
+defaults write com.apple.dock wvous-br-corner -int 11
 defaults write com.apple.dock wvous-br-modifier -int 0
-# Top right screen corner → Put display to sleep
-defaults write com.apple.dock wvous-tr-corner -int 10
+# Top right screen corner → N/A
+defaults write com.apple.dock wvous-tr-corner -int 0
 defaults write com.apple.dock wvous-tr-modifier -int 0
 # Bottom left screen corner → Desktop
 defaults write com.apple.dock wvous-bl-corner -int 4
@@ -259,6 +262,20 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
 
 ###############################################################################
+# Trackpad                                                                    #
+###############################################################################
+
+# Disable Force Click on trackpad
+defaults write com.apple.trackpad.forceClick -bool false
+
+###############################################################################
+# Visual Studio Code                                                          #
+###############################################################################
+
+# Enable VIM repeat in VS Code
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+
+###############################################################################
 # Kill/restart affected applications                                          #
 ###############################################################################
 
@@ -270,11 +287,4 @@ if [[ ! ($* == *--no-restart*) ]]; then
 fi
 
 printf "Please log out and log back in to make all settings take effect.\n"
-
-###############################################################################
-# Visual Studio Code                                                          #
-###############################################################################
-
-# Enable VIM repeat in VS Code
-defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
