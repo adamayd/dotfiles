@@ -1,5 +1,5 @@
 # Aliases
-alias ll='ls -lhA --group-directories-first --color=auto'
+alias ll='ls -lhA --color=auto'
 alias mutt='neomutt'
 alias vi='vim'
 alias tf='terraform'
@@ -19,6 +19,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# AWS CLI Aliases
+alias awsec2ips="aws ec2 describe-instances \
+  --filters 'Name=instance-state-name,Values=running' \
+  --query 'reverse(sort_by(Reservations[].Instances[], &Tags[?Key==\`Name\`].Value|to_string(a[0])))[].{id: InstanceId, ip: PrivateIpAddress, name: Tags[?Key==\`Name\`].Value|@[0]}'"
+
 # Go Path
 if [ -e $HOME/go ]; then
     export GOPATH="$HOME/go"
@@ -26,17 +31,17 @@ if [ -e $HOME/go ]; then
 fi
 
 ## ASDF Version Manager
-if [ -e $HOME/.asdfrc ]; then
-    source $HOME/.asdfrc
-fi
+#if [ -e $HOME/.asdfrc ]; then
+#    source $HOME/.asdfrc
+#fi
 
 ## Gradle
-export PATH=$PATH:/opt/gradle-6.3/bin
+#export PATH=$PATH:/opt/gradle-6.3/bin
 
 ## Ruby 
-if [ -e $HOME/.rubyrc ]; then
-    source $HOME/.rubyrc
-fi
+#if [ -e $HOME/.rubyrc ]; then
+#    source $HOME/.rubyrc
+#fi
 
 if [ -e /usr/local/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh ]; then
     . /usr/local/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh
@@ -45,6 +50,3 @@ fi
 # Added by serverless binary installer
 export PATH="$HOME/.serverless/bin:$PATH"
 
-# tabtab source for packages
-# uninstall by removing these lines
-[ -f ~/.config/tabtab/__tabtab.bash ] && . ~/.config/tabtab/__tabtab.bash || true

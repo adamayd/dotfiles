@@ -1,6 +1,0 @@
-AddKeysToAgent	yes
-
-host github.com
-  HostName github.com
-  IdentityFile ~/.ssh/github_rsa
-  User git

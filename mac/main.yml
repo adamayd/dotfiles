@@ -1,8 +1,39 @@
 ---
-- hosts: localhost
+- hosts: all
 
   vars_files:
     - config.yml
 
+  pre_tasks:
+    - name: Include playbook configuration.
+      include_vars: "{{ item }}"
+      with_fileglob:
+        - "{{ playbook_dir }}/config.yml"
+      tags: ['always']
+
+  roles:
+    - role: elliotweiser.osx-command-line-tools
+    - role: geerlingguy.mac.homebrew
+      tags: ['homebrew']
+    - role: geerlingguy.dotfiles
+      when: configure_dotfiles
+      tags: ['dotfile']
+    - role: geerlingguy.mac.mas
+      when: mas_installed_apps or mas_installed_apps_ids
+      tags: ['mas']
+    - role: geerlingguy.mac.dock
+      when: configure_dock
+      tags: ['dock']
+
   tasks:
-    - import_tasks: tasks/settings.yml
+    - import_tasks: tasks/sudoers.yml
+      when: configure_sudoers
+      tags: ['sudoers']
+
+    - import_tasks: tasks/osx.yml
+      when: configure_osx
+      tags: ['osx']
+
+    - import_tasks: tasks/extra-packages.yml
+      tags: ['extra-packages']
+

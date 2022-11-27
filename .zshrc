@@ -101,19 +101,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias ll="ls -lhA"
-alias cec="cd $HOME/Code/empire/Empire-Financial-Research-CMS"
-alias cew="cd $HOME/Code/empire/Empire-Financial-Research-Web"
-alias ceo="cd $HOME/Code/empire/empire_ops"
-alias cac="cd $HOME/Code/altimetry/Altimetry-CMS"
-alias caw="cd $HOME/Code/altimetry/Altimetry-Web"
-alias cao="cd $HOME/Code/altimetry/altimetry_ops"
-alias cr="cd $HOME/Code/roundtable/roundtable"
-alias cro="cd $HOME/Code/roundtable/roundtable_ops"
-alias awsec2ips="aws ec2 describe-instances \
-  --filters 'Name=instance-state-name,Values=running' \
-  --query 'reverse(sort_by(Reservations[].Instances[], &Tags[?Key==\`Name\`].Value|to_string(a[0])))[].{id: InstanceId, ip: PrivateIpAddress, name: Tags[?Key==\`Name\`].Value|@[0]}'"
-
 # Homebrew
 eval export HOMEBREW_PREFIX="/opt/homebrew";
 export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
@@ -122,16 +109,15 @@ export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
 export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
 export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 
-# PHP 7.4 (via Homebrew)
-export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
-export PATH="/opt/homebrew/opt/php@7.4/sbin:$PATH"
+# Ansible
+export PATH="$HOME/Library/Python/3.8/bin:$PATH"
 
 # Node Version Manager
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # Composer
-export PATH="$HOME/.composer/vendor/bin${PATH+:$PATH}";
+#export PATH="$HOME/.composer/vendor/bin${PATH+:$PATH}";
 
-#source $HOME/dotfiles/shellsrc
+source $HOME/dotfiles/home/shellsrc
 
