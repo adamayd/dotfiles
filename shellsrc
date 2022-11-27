@@ -30,23 +30,7 @@ if [ -e $HOME/go ]; then
     export PATH=$PATH:$GOPATH
 fi
 
-## ASDF Version Manager
-#if [ -e $HOME/.asdfrc ]; then
-#    source $HOME/.asdfrc
-#fi
-
-## Gradle
-#export PATH=$PATH:/opt/gradle-6.3/bin
-
-## Ruby 
-#if [ -e $HOME/.rubyrc ]; then
-#    source $HOME/.rubyrc
-#fi
-
 if [ -e /usr/local/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh ]; then
     . /usr/local/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh
 fi
-
-# Added by serverless binary installer
-#export PATH="$HOME/.serverless/bin:$PATH"
 

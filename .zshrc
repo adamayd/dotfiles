@@ -110,7 +110,7 @@ export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
 export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 
 # Ansible
-export PATH="$HOME/Library/Python/3.8/bin:$PATH"
+export PATH="/opt/homebrew/opt/python3/bin:$PATH"
 
 # Node Version Manager
 export NVM_DIR="$HOME/.nvm"
