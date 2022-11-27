@@ -33,3 +33,12 @@
     - import_tasks: tasks/extra-packages.yml
       tags: ['extra-packages']
 
+    - import_tasks: tasks/oh-my-zsh.yml
+      tags: ['oh-my-zsh']
+
+#    - import_tasks: tasks/vs-code.yml
+#      tags: ['vs-code']
+
+    - import_tasks: tasks/vim.yml
+      tags: ['vim']
+
