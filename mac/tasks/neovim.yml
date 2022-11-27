@@ -1,0 +1,73 @@
+---
+  - name: Create Neovim directories
+    ansible.builtin.file:
+      path: "{{ home_path }}/.config/nvim/{{ item }}"
+      state: directory
+      mode: 0755
+      owner: "{{ user }}"
+      group: "{{ group }}"
+    loop:
+      - "undodir"
+      - "spell"
+      - "autoload"
+
+  - name: Ensure Pathogen is in place
+    get_url:
+      dest: "{{ vim_dir }}/autoload/pathogen.vim"
+      url: https://tpo.pe/pathogen.vim
+
+  - name: Deploy plugins
+    git:
+      dest: "{{ vim_dir }}/bundle/{{ item.name }}"
+      repo: "{{ item.url }}"
+      clone: yes
+      update: yes
+      recursive: no
+    loop:
+    - name: vim-airline
+      url: https://github.com/vim-airline/vim-airline
+    - name: nerdtree
+      url: https://github.com/preservim/nerdtree
+    - name: fzf-vim
+      url: https://github.com/junegunn/fzf.vim
+    - name: vim-gitgutter
+      url: https://github.com/airblade/vim-gitgutter
+    - name: vim-fugitive
+      url: https://github.com/tpope/vim-fugitive
+    - name: vim-floaterm
+      url: https://github.com/voldikss/vim-floaterm
+
+  - name: Ensure .vimrc config in place
+    copy:
+      src: vimrc
+      dest: "{{ vimrc }}"
+      backup: yes
+      mode: 0640
+
+    
+  - name: Install vim-plug
+    ansible.builtin.get_url:
+      url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+      dest: "{{ home_path }}.vim/autoload/plug.vim"
+      owner: "{{ user }}"
+      group: "{{ group }}"
+      mode: 0755
+
+  - name: Run Neovim to install plugins
+    ansible.builtin.command: "nvim +PlugInstall +qall"
+
+  - name: Link dotfiles
+    ansible.builtin.file:
+      src: "{{ dotfiles_repo_local_destination }}{{ item }}"
+      dest: "{{ home_path }}{{ item }}"
+      owner: "{{ user }}"
+      group: "{{ group }}"
+      follow: false
+      force: yes
+      state: link
+    loop:
+      - ".config/nvim/init.vim"
+
+      
+      
+# make Vim editor in terminal

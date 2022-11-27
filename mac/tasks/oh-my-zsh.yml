@@ -1,4 +1,10 @@
 ---
-  - name: Install Oh My Zsh
-    ansible.builtin.command: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
+  - name: Download Oh My Zsh Install Script
+    ansible.builtin.get_url:
+      url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+      dest: "{{ downloads_path }}/oh-my-zsh-install.sh"
+      mode: '0755'
+
+  - name: Run Oh My Zsh Install Script
+    ansible.builtin.command: "{{ downloads_path }}oh-my-zsh-install.sh"
 
