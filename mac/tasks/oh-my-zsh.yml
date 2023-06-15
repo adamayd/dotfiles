@@ -8,3 +8,18 @@
   - name: Run Oh My Zsh Install Script
     ansible.builtin.command: "{{ downloads_path }}oh-my-zsh-install.sh"
 
+  - name: Clone iTerm2 Gruvbox Color Scheme
+    ansible.builtin.git:
+      repo: "https://github.com/herrbischoff/iterm2-gruvbox.git"
+      dest: "{{ downloads_path }}/"
+      update: no
+
+## TODO: Figure out how to use ansible to install iTerm2 theme
+## Question: Is iTerm2 installed at this point of the playbook
+
+  - name: Download gruvbox-zsh theme
+    ansible.builtin.get_url:
+      url: "https://raw.githubusercontent.com/sbugzu/gruvbox-zsh/master/gruvbox.zsh-theme"
+      dest: "{{ home_path }}"/.oh-my-zsh/custom/themes/gruvbox.zsh-theme"
+
+

@@ -20,6 +20,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # AWS CLI Aliases
+export AWS_PAGER=""
 alias awsec2ips="aws ec2 describe-instances \
   --filters 'Name=instance-state-name,Values=running' \
   --query 'reverse(sort_by(Reservations[].Instances[], &Tags[?Key==\`Name\`].Value|to_string(a[0])))[].{id: InstanceId, ip: PrivateIpAddress, name: Tags[?Key==\`Name\`].Value|@[0]}'"
